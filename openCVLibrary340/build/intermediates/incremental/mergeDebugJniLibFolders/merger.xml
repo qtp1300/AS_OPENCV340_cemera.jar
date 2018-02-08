@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="F:\18carcarcarcar\practice\03cemera_preview\openCVLibrary340\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="F:\18carcarcarcar\practice\03cemera_preview\openCVLibrary340\src\debug\jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="F:\18carcarcarcar\practice\AS_OPENCV340_cemera.jar\openCVLibrary340\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="F:\18carcarcarcar\practice\AS_OPENCV340_cemera.jar\openCVLibrary340\src\debug\jniLibs"/></dataSet></merger>
