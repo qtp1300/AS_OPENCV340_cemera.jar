@@ -43,4 +43,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation project(':openCVLibrary340')
     implementation files('libs/camerautil.jar')
+    implementation files('libs/core.jar')
 }

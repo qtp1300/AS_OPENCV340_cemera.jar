@@ -5,6 +5,9 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
@@ -31,6 +34,7 @@
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"></action>&ndash;&gt;-->
             <!--</intent-filter>-->
         </activity>
+        <service android:name=".Camera_Server"></service>
     </application>
 
 </manifest>
