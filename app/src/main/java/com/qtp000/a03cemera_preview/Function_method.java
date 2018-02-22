@@ -1,7 +1,15 @@
 package com.qtp000.a03cemera_preview;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.opencv.core.Mat;
@@ -25,7 +33,7 @@ public class Function_method extends Activity
     {
         this.functionactivity = functionActivity2;
     }
-    public function_method(com.car_socket_connect.socket_connect socket_con,int i,Context ctx)
+    public Function_method(com.qtp000.a03cemera_preview.Socket_connect socket_con,int i,Context ctx)
     {
         this.socket_car = socket_con;
         this.state_camera = state_camera;
@@ -83,7 +91,7 @@ public class Function_method extends Activity
     //闸门控制
     public void gateController()
     {
-        Builder gt_builder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder gt_builder = new AlertDialog.Builder(functionactivity);
         gt_builder.setTitle("闸门控制");
         String[] gt = { "开", "关" };
         gt_builder.setSingleChoiceItems(gt, -1,
@@ -204,7 +212,7 @@ public class Function_method extends Activity
                 functionactivity, android.R.layout.simple_spinner_item, itmes);
         spinner.setAdapter(adapter);
         // 下拉列表选择监听
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener()
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {

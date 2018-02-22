@@ -2,4 +2,6 @@
     <string name="app_name">03cemera_preview</string>
     <string name="btn1_string">切换界面</string>
     <string name="btn_back">返回</string>
+    <string name="digital_title">第几行数据:</string>
+
 </resources>

@@ -3,6 +3,7 @@ package com.qtp000.a03cemera_preview;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,7 +137,7 @@ public class FunctionActivity extends Activity {
                                      View convertView, ViewGroup parent)
             {
                 LinearLayout ll = new LinearLayout(FunctionActivity.this);
-                ll.setOrientation(0);
+                ll.setOrientation(LinearLayout.HORIZONTAL);
                 ImageView logo = new ImageView(FunctionActivity.this);
                 logo.setImageResource(logos[groupPosition]);
                 ll.addView(logo);
@@ -183,12 +184,12 @@ public class FunctionActivity extends Activity {
                         if(color == 0xffff00)
                         {
                             fmd.carLicence();
-                            Toast.makeText(FunctionActivity.this, "车牌识别完成", 0).show();
+                            Toast.makeText(FunctionActivity.this, "车牌识别完成", Toast.LENGTH_SHORT).show();
                         }
                         else if(color == 0xffffff)
                         {
                             fmd.checkShecp();
-                            Toast.makeText(FunctionActivity.this, "形状识别完成", 0).show();
+                            Toast.makeText(FunctionActivity.this, "形状识别完成", Toast.LENGTH_SHORT).show();
                         }
                         else
                             fmd.checkShecp();
@@ -202,9 +203,9 @@ public class FunctionActivity extends Activity {
                         fmd.msg = 10;
                         fmd.QrCode();
                         if(fmd.result_qr == null)
-                            Toast.makeText(FunctionActivity.this, "正在识别...请再次点击", 0).show();
+                            Toast.makeText(FunctionActivity.this, "正在识别...请再次点击", Toast.LENGTH_SHORT).show();
                         else
-                            Toast.makeText(FunctionActivity.this, fmd.result_qr, 0).show();
+                            Toast.makeText(FunctionActivity.this, fmd.result_qr, Toast.LENGTH_SHORT).show();
                         System.out.println("二维码已经触发");
                     }
                     if(childPosition == 3)//交通灯
