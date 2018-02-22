@@ -27,6 +27,7 @@ import org.opencv.core.Mat;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -606,7 +607,7 @@ public class Function_method extends Activity
             public void run()
             {
                 Result result = null;
-                RGBLuminanceSource rSource = new RGBLuminanceSource(MainActivity.bitmap);
+                RgbLuminanceSource rSource = new RgbLuminanceSource(MainActivity.bitmap);
                 try
                 {
                     BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(rSource));
@@ -617,7 +618,7 @@ public class Function_method extends Activity
                     Log.e("二维码的内容", result.toString());
                     result_qr = result.toString();
                     System.out.println("开始保存二维码图片");
-                    new FileService().savePhoto(MainActivity.bitmap ,Result_Name.QrCode_Name + ".png");
+                    new FileService().savePhoto(MainActivity.bitmap ,R.string.QrCode_Name + ".png");
                     System.out.println("识别完毕");
                     timer.cancel();
                     return;
@@ -890,7 +891,7 @@ public class Function_method extends Activity
 
         if(licbitmap != null)
         {
-            new FileService().savePhoto(licbitmap ,Result_Name.Licence_Name + ".png");
+            new FileService().savePhoto(licbitmap ,R.string.Licence_Name + ".png");
             textResult = lic_id.doOcr(licbitmap , "chi_sim");
             Log.e("车牌的识别结果为", textResult);
 //			Toast.makeText(functionactivity, textResult, 1).show();
@@ -908,7 +909,7 @@ public class Function_method extends Activity
     public void checkTraffic()
     {
         trabitmap = MainActivity.bitmap;
-        new FileService().savePhoto(MainActivity.bitmap ,Result_Name.Traffic_Name + ".png");
+        new FileService().savePhoto(MainActivity.bitmap ,R.string.Traffic_Name + ".png");
         if(trabitmap == null)
             return;
         List<Integer> trafficList = null;

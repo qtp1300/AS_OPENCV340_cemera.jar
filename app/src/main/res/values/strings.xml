@@ -3,5 +3,9 @@
     <string name="btn1_string">切换界面</string>
     <string name="btn_back">返回</string>
     <string name="digital_title">第几行数据:</string>
+    <string name="QrCode_Name">QrCode_Name</string>
+    <string name="Licence_Name">Licence_Name</string>
+    <string name="Traffic_Name">Traffic_Name</string>
+    <string name="Picture_Name">Picture_Name</string>
 
 </resources>
