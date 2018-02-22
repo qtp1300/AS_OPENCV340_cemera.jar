@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,8 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
+import com.google.zxing.Result;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 
 import org.opencv.core.Mat;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by 祁天培 on 2018/2/9.
@@ -268,7 +285,7 @@ public class Function_method extends Activity
     {
         View view = LayoutInflater.from(functionactivity).inflate(R.layout.item_car, null);
         voiceText = (EditText) view.findViewById(R.id.voiceText);
-        Builder voiceBuilder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder voiceBuilder = new AlertDialog.Builder(functionactivity);
         voiceBuilder.setTitle("语音播报");
         voiceBuilder.setView(view);
         voiceBuilder.setPositiveButton("播报",
@@ -312,7 +329,7 @@ public class Function_method extends Activity
     // 报警器
     public void policeController()
     {
-        Builder builder = new Builder(functionactivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(functionactivity);
         builder.setTitle("报警器");
         String[] item2 = { "开", "关" };
         builder.setSingleChoiceItems(item2,-1,
@@ -339,7 +356,7 @@ public class Function_method extends Activity
     //灯光档位器
     public void gearController()
     {
-        Builder builder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(functionactivity);
         builder.setTitle("档位遥控器");
         String[] gr_item = { "光强加1档", "光强加2档", "光强加3档" };
         builder.setSingleChoiceItems(gr_item, -1,
@@ -367,7 +384,7 @@ public class Function_method extends Activity
     private short[] data = { 0x00, 0x00, 0x00, 0x00, 0x00 };
     public void threeDisplay()
     {
-        Builder Builder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder Builder = new AlertDialog.Builder(functionactivity);
         Builder.setTitle("立体显示");
         String[] three_item = { "颜色信息", "图形信息", "距离信息", "车牌信息", "路况信息", "默认信息" };
         Builder.setSingleChoiceItems(three_item, -1,
@@ -407,7 +424,7 @@ public class Function_method extends Activity
     //向立体显示发送颜色信息
     private void color()
     {
-        Builder colorBuilder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder colorBuilder = new AlertDialog.Builder(functionactivity);
         colorBuilder.setTitle("颜色信息");
         String[] lg_item = { "红色", "绿色", "蓝色", "黄色", "紫色", "青色", "黑色", "白色" };
         colorBuilder.setSingleChoiceItems(lg_item, -1,
@@ -425,7 +442,7 @@ public class Function_method extends Activity
     //向立体显示发送形状信息
     private void shape()
     {
-        Builder shapeBuilder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder shapeBuilder = new AlertDialog.Builder(functionactivity);
         shapeBuilder.setTitle("图形信息");
         String[] shape_item = { "矩形", "圆形", "三角形", "菱形", "梯形", "饼图", "靶图","条形图" };
         shapeBuilder.setSingleChoiceItems(shape_item, -1,
@@ -443,7 +460,7 @@ public class Function_method extends Activity
     //向立体显示发送路况信息
     private void road()
     {
-        Builder roadBuilder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder roadBuilder = new AlertDialog.Builder(functionactivity);
         roadBuilder.setTitle("路况信息");
         String[] road_item = { "隧道有事故，请绕行", "前方施工，请绕行" };
         roadBuilder.setSingleChoiceItems(road_item, -1,
@@ -461,7 +478,7 @@ public class Function_method extends Activity
     //向立体显示发送距离信息
     private void dis()
     {
-        Builder disBuilder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder disBuilder = new AlertDialog.Builder(functionactivity);
         disBuilder.setTitle("距离信息");
         final String[] road_item = { "10cm", "15cm", "20cm", "28cm", "39cm" };
         disBuilder.setSingleChoiceItems(road_item, -1,
@@ -518,7 +535,7 @@ public class Function_method extends Activity
     private String[] lic_item = { "N300Y7A4", "N600H5B4", "N400Y6G6", "J888B8C8" };
     private void lic()
     {
-        Builder licBuilder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder licBuilder = new AlertDialog.Builder(functionactivity);
         licBuilder.setTitle("车牌信息");
         licBuilder.setSingleChoiceItems(lic_item, lic,
                 new DialogInterface.OnClickListener() {
@@ -534,7 +551,7 @@ public class Function_method extends Activity
     //图片信息
     public void pictureController()
     {
-        Builder pt_builder = new AlertDialog.Builder(functionactivity);
+        AlertDialog.Builder pt_builder = new AlertDialog.Builder(functionactivity);
         pt_builder.setTitle("图片遥控器");
         String[] pt_item = { "上翻", "下翻" };
         pt_builder.setSingleChoiceItems(pt_item, -1,
@@ -557,7 +574,7 @@ public class Function_method extends Activity
     //磁悬浮
     public void magnetic_suspension()
     {
-        Builder builder = new Builder(functionactivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(functionactivity);
         builder.setTitle("磁悬浮");
         String[] item2 = { "开", "关" };
         builder.setSingleChoiceItems(item2,-1,
@@ -619,7 +636,7 @@ public class Function_method extends Activity
     /************************************************************************************************************/
     public void TFT_LCD()
     {
-        Builder TFTbuilder = new Builder(functionactivity);
+        AlertDialog.Builder TFTbuilder = new AlertDialog.Builder(functionactivity);
         TFTbuilder.setTitle("TFT显示器");
         String[] TFTitem = { "图片显示模式", "车牌显示","计时模式","距离显示","HEX显示模式" };
         TFTbuilder.setSingleChoiceItems(TFTitem,-1,
@@ -653,7 +670,7 @@ public class Function_method extends Activity
 
     private void TFT_Image()
     {
-        Builder TFT_Image_builder = new Builder(functionactivity);
+        AlertDialog.Builder TFT_Image_builder = new AlertDialog.Builder(functionactivity);
         TFT_Image_builder.setTitle("图片显示模式");
         String[] TFT_Image_item = {"指定显示","上翻一页","下翻一页","自动翻页"};
         TFT_Image_builder.setSingleChoiceItems(TFT_Image_item, -1, new DialogInterface.OnClickListener() {
@@ -684,7 +701,7 @@ public class Function_method extends Activity
 
     private void LCD_vo_show()
     {
-        Builder TFT_Image_builder = new Builder(functionactivity);
+        AlertDialog.Builder TFT_Image_builder = new AlertDialog.Builder(functionactivity);
         TFT_Image_builder.setTitle("指定图片显示");
         String[] TFT_Image_item = {"1","2","3","4","5"};
         TFT_Image_builder.setSingleChoiceItems(TFT_Image_item, -1, new DialogInterface.OnClickListener() {
@@ -720,7 +737,7 @@ public class Function_method extends Activity
     int Car_one, Car_two, Car_three, Car_four, Car_five, Car_six;
     private void TFT_plate_number()
     {
-        Builder TFT_plate_builder = new Builder(functionactivity);
+        AlertDialog.Builder TFT_plate_builder = new AlertDialog.Builder(functionactivity);
         TFT_plate_builder.setTitle("车牌显示模式");
         final String[] TFT_Image_item = {"A123B4","B567C8","D910E1"};
         TFT_plate_builder.setSingleChoiceItems(TFT_Image_item, -1, new DialogInterface.OnClickListener() {
@@ -753,7 +770,7 @@ public class Function_method extends Activity
 
     private void TFT_Timer()
     {
-        Builder TFT_Iimer_builder = new Builder(functionactivity);
+        AlertDialog.Builder TFT_Iimer_builder = new AlertDialog.Builder(functionactivity);
         TFT_Iimer_builder.setTitle("计时模式");
         String[] TFT_Image_item = {"开始","关闭","停止"};
         TFT_Iimer_builder.setSingleChoiceItems(TFT_Image_item, -1, new DialogInterface.OnClickListener() {
@@ -781,7 +798,7 @@ public class Function_method extends Activity
 
     private void Distance()
     {
-        Builder TFT_Distance_builder = new Builder(functionactivity);
+        AlertDialog.Builder TFT_Distance_builder = new AlertDialog.Builder(functionactivity);
         TFT_Distance_builder.setTitle("距离显示模式");
         String[] TFT_Image_item = {"10cm","20cm","30cm"};
         TFT_Distance_builder.setSingleChoiceItems(TFT_Image_item, -1, new DialogInterface.OnClickListener() {
@@ -809,7 +826,7 @@ public class Function_method extends Activity
 
     private void Hex_show()
     {
-        Builder TFT_Hex_builder = new Builder(functionactivity);
+        AlertDialog.Builder TFT_Hex_builder = new AlertDialog.Builder(functionactivity);
         TFT_Hex_builder.setTitle("HEX显示模式");
         String[] TFT_Image_item = {"0xAA、0x01、0xBB","0xAA、0x02、0x77","0x55、0x03、0x33"};
         TFT_Hex_builder.setSingleChoiceItems(TFT_Image_item, -1, new DialogInterface.OnClickListener() {
@@ -879,7 +896,7 @@ public class Function_method extends Activity
 //			Toast.makeText(functionactivity, textResult, 1).show();
         }
         else
-            Toast.makeText(functionactivity, "识别错误...", 1).show();
+            Toast.makeText(functionactivity, "识别错误...", Toast.LENGTH_SHORT).show();
     }
 
     /************************************************************************************************************/
