@@ -12,17 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="88dp"
         android:text="@string/btn1_string"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
     <ImageView
         android:id="@+id/cemera_preview"
         android:layout_width="0dp"
-        android:layout_height="220dp"
+        android:layout_height="313dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="3dp"
@@ -35,8 +35,8 @@
         android:id="@+id/btn_up"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="172dp"
         app:layout_constraintStart_toEndOf="@+id/btn1"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
         app:srcCompat="@android:drawable/arrow_up_float" />
@@ -45,7 +45,7 @@
         android:id="@+id/btn_down"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="108dp"
         app:layout_constraintStart_toStartOf="@+id/btn_up"
         app:layout_constraintTop_toBottomOf="@+id/btn_up"
         app:srcCompat="@android:drawable/arrow_down_float" />
@@ -54,8 +54,8 @@
         android:id="@+id/btn_left"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginTop="244dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_up"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
         app:srcCompat="@android:drawable/arrow_up_float" />
@@ -64,8 +64,8 @@
         android:id="@+id/btn_right"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="244dp"
         app:layout_constraintStart_toEndOf="@+id/btn_up"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
         app:srcCompat="@android:drawable/arrow_down_float" />

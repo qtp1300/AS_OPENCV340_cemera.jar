@@ -47,6 +47,10 @@ public class Function_method extends Activity
     private LicenseIdentify lic_id = new LicenseIdentify();
     private Mat currectMat = null;
 
+    public Function_method(){
+
+    }
+
     public Function_method(FunctionActivity functionActivity2)
     {
         this.functionactivity = functionActivity2;
