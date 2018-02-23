@@ -994,7 +994,7 @@ public class Function_method extends Activity
     {
         shaperesult = "";
         shapebitmap = MainActivity.bitmap;
-        new FileService().savePhoto(shapebitmap ,Result_Name.Picture_Name + ".png");
+        new FileService().savePhoto(shapebitmap ,R.string.Picture_Name + ".png");
         if(shapebitmap == null)
             return;
         ImageShapeBack imageShapeBack = null;
@@ -1090,7 +1090,7 @@ public class Function_method extends Activity
     {
         shaperesult = "";
         backbitmap = MainActivity.bitmap;
-        new FileService().savePhoto(backbitmap ,Result_Name.Picture_Name + ".png");
+        new FileService().savePhoto(backbitmap ,R.string.Picture_Name + ".png");
         if(backbitmap == null)
             return -1;
         ImageBackCheck imageBackCheck = null;

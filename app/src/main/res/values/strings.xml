@@ -7,5 +7,6 @@
     <string name="Licence_Name">Licence_Name</string>
     <string name="Traffic_Name">Traffic_Name</string>
     <string name="Picture_Name">Picture_Name</string>
+    <string name="voicetext">播报的文本:</string>
 
 </resources>
