@@ -54,7 +54,7 @@ public class Function_method extends Activity
     public Function_method(com.qtp000.a03cemera_preview.Socket_connect socket_con,int i,Context ctx)
     {
         this.socket_car = socket_con;
-        this.state_camera = state_camera;
+        this.state_camera = i;
         MainActivityContext = ctx;
 //		this.IPCamera = IPCamera;
     }

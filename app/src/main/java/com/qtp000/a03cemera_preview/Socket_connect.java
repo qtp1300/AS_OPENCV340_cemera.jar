@@ -37,6 +37,7 @@ public class Socket_connect {
     private Context context;
     private Algorithm algorithm;
 
+    public Socket_connect() {}
 
     public Socket_connect(Context context, Handler handler) {
         this.context = context;

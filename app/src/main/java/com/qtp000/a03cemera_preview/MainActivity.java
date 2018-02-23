@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String A_S = "com.a_s";
     private CameraCommandUtil cameraCommandUtil;
     public static String IPCamera = "bkrcjk.eicp.net:88";
+    private Function_method fmod;
     private WifiManager wifiManager;
     // 服务器管理器
     private DhcpInfo dhcpInfo;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         wifi_Init();
         socket_connect = new Socket_connect(this,qrHandler);
         connect_thread();
-        fmod = new function_method(socket_connect,state_camera,MainActivity.this);
+        fmod = new Function_method(socket_connect,state_camera,MainActivity.this);
 
 
     }
