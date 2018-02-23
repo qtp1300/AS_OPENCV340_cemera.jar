@@ -1010,7 +1010,7 @@ public class Function_method extends Activity
             imageShapeBack.ImageBackRun(currectMat);
         //获取处理后的图片
         shapebitmap = imageShapeBack.getBitmap();
-        List<ImageInfo> emitList = imageShapeBack.getImageInfoList();
+        List<ImageShapeBack.ImageInfo> emitList = imageShapeBack.getImageInfoList();
         if(emitList == null ||emitList.size() == 0)
         {
 //			if(bitma!= null)
@@ -1029,7 +1029,7 @@ public class Function_method extends Activity
 
         for(int i = 0;i<emitList.size();i++)
         {
-            ImageInfo imageInfo = emitList.get(i);
+            ImageShapeBack.ImageInfo imageInfo = emitList.get(i);
             if(imageInfo == null)
                 continue;
             int type = imageInfo.type;
