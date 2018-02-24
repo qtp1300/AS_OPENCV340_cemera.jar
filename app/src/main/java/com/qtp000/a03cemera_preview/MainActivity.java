@@ -141,10 +141,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (v.getId()){
                     case R.id.btn_up:
                         btn_up.setImageResource(R.drawable.up);
+                        socket_connect.go(40,70);
 
                         break;
                     case R.id.btn_down:
                         btn_down.setImageResource(R.drawable.down);
+                        socket_connect.back(40,70);
                         break;
                     case R.id.btn_left:
                         btn_left.setImageResource(R.drawable.left);
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             }
-            return true;
+            return false;
         }
     }
 
@@ -187,11 +189,18 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.button1:
                     Toast.makeText(getApplication(),"Button1",Toast.LENGTH_SHORT).show();
+                    state_camera = 4;
+//                    cameraCommandUtil.postHttp(IPCamera, 0, 1);
+//                    phThread.start();
                     break;
                 case R.id.button2:
                     Toast.makeText(getApplication(),"Button2",Toast.LENGTH_SHORT).show();
+                    state_camera = 2;
+//                    cameraCommandUtil.postHttp(IPCamera, 2, 1);
+//                    phThread.start();
                     break;
                 case R.id.button3:
+                    state_camera = 10;
                     Toast.makeText(getApplication(),"Button3",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.button4:
@@ -245,13 +254,13 @@ public class MainActivity extends AppCompatActivity {
 //        btn_left.setOnClickListener(new btnclickListener());
 //        btn_right.setOnClickListener(new btnclickListener());
 
-//        bakbtn1.setOnClickListener(new btnclickListener());
-//        bakbtn2.setOnClickListener(new btnclickListener());
-//        bakbtn3.setOnClickListener(new btnclickListener());
-//        bakbtn4.setOnClickListener(new btnclickListener());
-//        bakbtn5.setOnClickListener(new btnclickListener());
-//        bakbtn6.setOnClickListener(new btnclickListener());
-//        bakbtn7.setOnClickListener(new btnclickListener());
+        bakbtn1.setOnClickListener(new btnclickListener());
+        bakbtn2.setOnClickListener(new btnclickListener());
+        bakbtn3.setOnClickListener(new btnclickListener());
+        bakbtn4.setOnClickListener(new btnclickListener());
+        bakbtn5.setOnClickListener(new btnclickListener());
+        bakbtn6.setOnClickListener(new btnclickListener());
+        bakbtn7.setOnClickListener(new btnclickListener());
         btn_up.setOnTouchListener(new btntouchListener());
         btn_down.setOnTouchListener(new btntouchListener());
         btn_left.setOnTouchListener(new btntouchListener());
@@ -306,7 +315,7 @@ public class MainActivity extends AppCompatActivity {
         {
             while (true)
             {
-                getBitmap();
+                getBitmap();        //获取并显示摄像头图像
                 switch (state_camera) {
                     case 1:
                         cameraCommandUtil.postHttp(IPCamera, 0, 1);
