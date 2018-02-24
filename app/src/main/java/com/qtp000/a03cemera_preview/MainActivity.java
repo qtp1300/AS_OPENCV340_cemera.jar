@@ -39,6 +39,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
+    Button bakbtn1,bakbtn2,bakbtn3,bakbtn4,bakbtn5,bakbtn6,bakbtn7;
 
     ImageView imageView;
     ImageButton btn_up;
@@ -125,6 +126,28 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast_down = Toast.makeText(getApplicationContext(),"下",Toast.LENGTH_SHORT);
                     toast_down.show();
                     break;
+                case R.id.button1:
+                    Toast.makeText(getApplication(),"Button1",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button2:
+                    Toast.makeText(getApplication(),"Button2",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button3:
+                    Toast.makeText(getApplication(),"Button3",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button4:
+                    Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button5:
+                    Toast.makeText(getApplication(),"Button5",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button6:
+                    Toast.makeText(getApplication(),"Button6",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button7:
+                    Toast.makeText(getApplication(),"Button7",Toast.LENGTH_SHORT).show();
+
+                    break;
             }
 
 
@@ -141,6 +164,15 @@ public class MainActivity extends AppCompatActivity {
         btn_right = findViewById(R.id.btn_right);
         btn_down = findViewById(R.id.btn_down);
         textView = findViewById(R.id.textView);
+
+        bakbtn1 = findViewById(R.id.button1);
+        bakbtn2 = findViewById(R.id.button2);
+        bakbtn3 = findViewById(R.id.button3);
+        bakbtn4 = findViewById(R.id.button4);
+        bakbtn5 = findViewById(R.id.button5);
+        bakbtn6 = findViewById(R.id.button6);
+        bakbtn7 = findViewById(R.id.button7);
+
 
 
 

@@ -8,14 +8,14 @@
 
     <Button
         android:id="@+id/btn1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="124dp"
+        android:layout_height="76dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="376dp"
         android:text="@string/btn1_string"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.016"
+        app:layout_constraintHorizontal_bias="0.947"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
@@ -33,42 +33,40 @@
 
     <ImageButton
         android:id="@+id/btn_up"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="172dp"
-        app:layout_constraintStart_toEndOf="@+id/btn1"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="108dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
-        app:srcCompat="@android:drawable/arrow_up_float" />
+        app:srcCompat="@drawable/up" />
 
     <ImageButton
         android:id="@+id/btn_down"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="108dp"
-        app:layout_constraintStart_toStartOf="@+id/btn_up"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toEndOf="@+id/btn_left"
         app:layout_constraintTop_toBottomOf="@+id/btn_up"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/down" />
 
     <ImageButton
         android:id="@+id/btn_left"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="196dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_up"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
-        app:srcCompat="@android:drawable/arrow_up_float" />
+        app:srcCompat="@drawable/left" />
 
     <ImageButton
         android:id="@+id/btn_right"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="117dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="196dp"
         app:layout_constraintStart_toEndOf="@+id/btn_up"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@drawable/right" />
 
     <TextView
         android:id="@+id/textView"
@@ -79,5 +77,71 @@
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:text="Button1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="65dp"
+        android:text="Button2"
+        app:layout_constraintStart_toEndOf="@+id/button1"
+        app:layout_constraintTop_toTopOf="@+id/button1" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="65dp"
+        android:text="Button3"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="@+id/button2" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="128dp"
+        android:text="Button4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="265dp"
+        android:text="Button5"
+        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintTop_toTopOf="@+id/button4" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="316dp"
+        android:text="Button6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="265dp"
+        android:text="Button7"
+        app:layout_constraintStart_toEndOf="@+id/button6"
+        app:layout_constraintTop_toTopOf="@+id/button6" />
 
 </android.support.constraint.ConstraintLayout>
