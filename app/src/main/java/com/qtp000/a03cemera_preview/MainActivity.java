@@ -1,6 +1,5 @@
 package com.qtp000.a03cemera_preview;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -100,7 +100,65 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class btnListener implements View.OnClickListener{
+
+    class btntouchListener implements View.OnTouchListener{
+        /**
+         * Called when a touch event is dispatched to a view. This allows listeners to
+         * get a chance to respond before the target view.
+         *
+         * @param v     The view the touch event has been dispatched to.
+         * @param event The MotionEvent object containing full information about
+         *              the event.
+         * @return True if the listener has consumed the event, false otherwise.
+         */
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN){
+                switch (v.getId()){
+                    case R.id.btn_up:
+                        btn_up.setImageResource(R.drawable.up2);
+                        break;
+                    case R.id.btn_down:
+                        btn_down.setImageResource(R.drawable.down2);
+                        break;
+                    case R.id.btn_left:
+                        btn_left.setImageResource(R.drawable.left2);
+                        break;
+                    case R.id.btn_right:
+                        btn_right.setImageResource(R.drawable.right2);
+                        break;
+                }
+                //获取到的差值相同
+//                if (v.getId() == R.id.btn_up){
+//                    Log.e("EventTime",String.valueOf(event.getEventTime()));
+//                    Log.e("DownTime",String.valueOf(event.getDownTime()));
+//                    Log.e("差",String.valueOf(event.getEventTime() - event.getDownTime()));
+//                }
+
+
+            }
+            if (event.getAction() == MotionEvent.ACTION_UP){
+                switch (v.getId()){
+                    case R.id.btn_up:
+                        btn_up.setImageResource(R.drawable.up);
+
+                        break;
+                    case R.id.btn_down:
+                        btn_down.setImageResource(R.drawable.down);
+                        break;
+                    case R.id.btn_left:
+                        btn_left.setImageResource(R.drawable.left);
+                        break;
+                    case R.id.btn_right:
+                        btn_right.setImageResource(R.drawable.right);
+                        break;
+                }
+            }
+            return true;
+        }
+    }
+
+    class btnclickListener implements View.OnClickListener{
         @Override
         public void onClick(View v){
             int id = v.getId();
@@ -180,12 +238,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private  void addlistener(){
-        btn1.setOnClickListener(new btnListener());
+        btn1.setOnClickListener(new btnclickListener());
 
-        btn_up.setOnClickListener(new btnListener());
-        btn_down.setOnClickListener(new btnListener());
-        btn_left.setOnClickListener(new btnListener());
-        btn_right.setOnClickListener(new btnListener());
+//        btn_up.setOnClickListener(new btnclickListener());
+//        btn_down.setOnClickListener(new btnclickListener());
+//        btn_left.setOnClickListener(new btnclickListener());
+//        btn_right.setOnClickListener(new btnclickListener());
+
+//        bakbtn1.setOnClickListener(new btnclickListener());
+//        bakbtn2.setOnClickListener(new btnclickListener());
+//        bakbtn3.setOnClickListener(new btnclickListener());
+//        bakbtn4.setOnClickListener(new btnclickListener());
+//        bakbtn5.setOnClickListener(new btnclickListener());
+//        bakbtn6.setOnClickListener(new btnclickListener());
+//        bakbtn7.setOnClickListener(new btnclickListener());
+        btn_up.setOnTouchListener(new btntouchListener());
+        btn_down.setOnTouchListener(new btntouchListener());
+        btn_left.setOnTouchListener(new btntouchListener());
+        btn_right.setOnTouchListener(new btntouchListener());
+        bakbtn1.setOnTouchListener(new btntouchListener());
+        bakbtn2.setOnTouchListener(new btntouchListener());
+        bakbtn3.setOnTouchListener(new btntouchListener());
+        bakbtn4.setOnTouchListener(new btntouchListener());
+        bakbtn5.setOnTouchListener(new btntouchListener());
+        bakbtn6.setOnTouchListener(new btntouchListener());
+        bakbtn7.setOnTouchListener(new btntouchListener());
+
 
     }
 
