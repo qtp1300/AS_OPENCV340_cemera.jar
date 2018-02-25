@@ -35,6 +35,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".Function_method"></activity>
+        <activity android:name=".FunctionActivity"></activity>
         <service android:name=".Camera_Server"></service>
     </application>
 

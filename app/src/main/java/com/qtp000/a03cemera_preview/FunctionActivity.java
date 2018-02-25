@@ -31,7 +31,7 @@ public class FunctionActivity extends Activity {
         setContentView(R.layout.function_car);
 
         ExpandableListAdapter adapter = getAdapter();
-        ExpandableListView expandListView = (ExpandableListView)findViewById(R.id.elv_list);
+        ExpandableListView expandListView = findViewById(R.id.elv_list);
         expandListView.setAdapter(adapter);
         expandListView.setOnChildClickListener(new OnChildClickListenerImpl());
     }

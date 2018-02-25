@@ -39,7 +39,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
-    Button bakbtn1,bakbtn2,bakbtn3,bakbtn4,bakbtn5,bakbtn6,bakbtn7;
+    Button bakbtn1, btn_function,bakbtn3,bakbtn4,bakbtn5,bakbtn6,bakbtn7;
 
     ImageView imageView;
     ImageButton btn_up;
@@ -168,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
 //            toast.show();
             switch (id){
                 case R.id.btn1:
-                    Intent intent = new Intent(MainActivity.this , test.class);
-                    startActivity(intent);
+                    Intent intent2test = new Intent(MainActivity.this , test.class);
+                    startActivity(intent2test);
                     break;
                 case R.id.btn_up:
                     Toast toast_up = Toast.makeText(getApplicationContext(),"上",Toast.LENGTH_SHORT);
@@ -193,11 +193,11 @@ public class MainActivity extends AppCompatActivity {
 //                    cameraCommandUtil.postHttp(IPCamera, 0, 1);
 //                    phThread.start();
                     break;
-                case R.id.button2:
-                    Toast.makeText(getApplication(),"Button2",Toast.LENGTH_SHORT).show();
-                    state_camera = 2;
-//                    cameraCommandUtil.postHttp(IPCamera, 2, 1);
-//                    phThread.start();
+                case R.id.btn_function:
+                    Toast.makeText(getApplication(),"跳转至功能页",Toast.LENGTH_SHORT).show();
+                    Intent intent2FunctionActivity = new Intent(MainActivity.this,FunctionActivity.class);
+                    startActivity(intent2FunctionActivity);
+
                     break;
                 case R.id.button3:
                     state_camera = 10;
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
 
         bakbtn1 = findViewById(R.id.button1);
-        bakbtn2 = findViewById(R.id.button2);
+        btn_function = findViewById(R.id.btn_function);
         bakbtn3 = findViewById(R.id.button3);
         bakbtn4 = findViewById(R.id.button4);
         bakbtn5 = findViewById(R.id.button5);
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 //        btn_right.setOnClickListener(new btnclickListener());
 
         bakbtn1.setOnClickListener(new btnclickListener());
-        bakbtn2.setOnClickListener(new btnclickListener());
+        btn_function.setOnClickListener(new btnclickListener());
         bakbtn3.setOnClickListener(new btnclickListener());
         bakbtn4.setOnClickListener(new btnclickListener());
         bakbtn5.setOnClickListener(new btnclickListener());
@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         btn_left.setOnTouchListener(new btntouchListener());
         btn_right.setOnTouchListener(new btntouchListener());
         bakbtn1.setOnTouchListener(new btntouchListener());
-        bakbtn2.setOnTouchListener(new btntouchListener());
+        btn_function.setOnTouchListener(new btntouchListener());
         bakbtn3.setOnTouchListener(new btntouchListener());
         bakbtn4.setOnTouchListener(new btntouchListener());
         bakbtn5.setOnTouchListener(new btntouchListener());
