@@ -39,7 +39,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
-    Button bakbtn1, btn_function,bakbtn3,bakbtn4,bakbtn5,bakbtn6,bakbtn7;
+    Button bakbtn1, btn_function,bakbtn3,bakbtn4,bakbtn5, btn_old_112, btn_stop;
 
     ImageView imageView;
     ImageButton btn_up;
@@ -209,11 +209,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.button5:
                     Toast.makeText(getApplication(),"Button5",Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.button6:
-                    Toast.makeText(getApplication(),"Button6",Toast.LENGTH_SHORT).show();
+                case R.id.old_112:
+                    Toast.makeText(getApplication(),"原112",Toast.LENGTH_SHORT).show();
+                    state_camera = 10;
+                    model_112 = 10;
+                    full_Thread_model_112();
                     break;
-                case R.id.button7:
-                    Toast.makeText(getApplication(),"Button7",Toast.LENGTH_SHORT).show();
+                case R.id.btn_stop:
+                    Toast.makeText(getApplication(),"停止",Toast.LENGTH_SHORT).show();
 
                     break;
             }
@@ -238,8 +241,8 @@ public class MainActivity extends AppCompatActivity {
         bakbtn3 = findViewById(R.id.button3);
         bakbtn4 = findViewById(R.id.button4);
         bakbtn5 = findViewById(R.id.button5);
-        bakbtn6 = findViewById(R.id.button6);
-        bakbtn7 = findViewById(R.id.button7);
+        btn_old_112 = findViewById(R.id.old_112);
+        btn_stop = findViewById(R.id.btn_stop);
 
 
 
@@ -259,8 +262,8 @@ public class MainActivity extends AppCompatActivity {
         bakbtn3.setOnClickListener(new btnclickListener());
         bakbtn4.setOnClickListener(new btnclickListener());
         bakbtn5.setOnClickListener(new btnclickListener());
-        bakbtn6.setOnClickListener(new btnclickListener());
-        bakbtn7.setOnClickListener(new btnclickListener());
+        btn_old_112.setOnClickListener(new btnclickListener());
+        btn_stop.setOnClickListener(new btnclickListener());
         btn_up.setOnTouchListener(new btntouchListener());
         btn_down.setOnTouchListener(new btntouchListener());
         btn_left.setOnTouchListener(new btntouchListener());
@@ -270,8 +273,8 @@ public class MainActivity extends AppCompatActivity {
         bakbtn3.setOnTouchListener(new btntouchListener());
         bakbtn4.setOnTouchListener(new btntouchListener());
         bakbtn5.setOnTouchListener(new btntouchListener());
-        bakbtn6.setOnTouchListener(new btntouchListener());
-        bakbtn7.setOnTouchListener(new btntouchListener());
+        btn_old_112.setOnTouchListener(new btntouchListener());
+        btn_stop.setOnTouchListener(new btntouchListener());
 
 
     }
@@ -538,6 +541,23 @@ public class MainActivity extends AppCompatActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private void full_Thread_model_112()			//112
+    {
+        socket_connect.mark = 5;
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                while(true)
+                {
+                    if(model_112  == 10)
+                        socket_connect.Full_motion_model_112();
+                }
+            }
+        }).start();
     }
 
 

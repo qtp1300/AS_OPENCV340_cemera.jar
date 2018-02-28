@@ -1,0 +1,19 @@
+socket_connect          实现连接与数据发送
+
+在MainActivity的onCreate初始化socket_connect时传入qrHandler
+qrHandler接收到信息被激活
+    msg.what = 10  运行一个定时任务
+
+
+
+摄像头位置通过   MainActivity的state_cemera设定了摄像头位置和动作（固定的），由phThread线程执行
+phThread 在接收到广播时启动
+广播由SearchService发送，内容为摄像头IP，SearchService发送IP后关闭自己这个server
+
+
+phThread每次重复执行时执行getbitmap（）
+getbitmap通过cameraCommandUtil.httpForImage获得摄像头图片，然后用phHandler发送what为10的空消息
+phHandler接收到消息设置显示图片
+
+
+

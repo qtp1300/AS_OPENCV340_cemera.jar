@@ -126,22 +126,22 @@
         app:layout_constraintTop_toTopOf="@+id/button4" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/old_112"
         android:layout_width="135dp"
         android:layout_height="65dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="316dp"
-        android:text="Button6"
+        android:text="原112"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/btn_stop"
         android:layout_width="135dp"
         android:layout_height="65dp"
         android:layout_marginStart="265dp"
-        android:text="Button7"
-        app:layout_constraintStart_toEndOf="@+id/button6"
-        app:layout_constraintTop_toTopOf="@+id/button6" />
+        android:text="停止线程"
+        app:layout_constraintStart_toEndOf="@+id/old_112"
+        app:layout_constraintTop_toTopOf="@+id/old_112" />
 
 </android.support.constraint.ConstraintLayout>

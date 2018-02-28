@@ -8,7 +8,8 @@
     <ExpandableListView
         android:id="@+id/elv_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_launcher_background">
 
     </ExpandableListView>
 </android.support.constraint.ConstraintLayout>
