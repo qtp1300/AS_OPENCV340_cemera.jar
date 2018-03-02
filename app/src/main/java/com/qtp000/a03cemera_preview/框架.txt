@@ -2,7 +2,8 @@ socket_connect          实现连接与数据发送
 
 在MainActivity的onCreate初始化socket_connect时传入qrHandler
 qrHandler接收到信息被激活
-    msg.what = 10  运行一个定时任务
+    msg.what = 10  并且bitmap不为空运行一个定时任务识别二维码，bitmapp为空或识别不出来则msg.what = 20
+    msg.what = 20
 
 
 
