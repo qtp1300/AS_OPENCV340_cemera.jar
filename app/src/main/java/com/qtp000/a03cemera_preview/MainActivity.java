@@ -39,7 +39,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
-    Button bakbtn1, btn_function,bakbtn3,bakbtn4,bakbtn5, btn_old_112, btn_stop;
+    Button bakbtn1, btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
 
     ImageView imageView;
     ImageButton btn_up;
@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.btn_up:
                         btn_up.setImageResource(R.drawable.up);
                         socket_connect.go(40,70);
-
                         break;
                     case R.id.btn_down:
                         btn_down.setImageResource(R.drawable.down);
@@ -154,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.btn_right:
                         btn_right.setImageResource(R.drawable.right);
                         break;
+                    case R.id.btn_moni1:
+                        to_run_moni1();
+                        break;
                 }
             }
             return false;
@@ -164,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v){
             int id = v.getId();
-//            Toast toast = Toast.makeText(getApplicationContext(),"点击了",Toast.LENGTH_SHORT);
-//            toast.show();
+            Toast toast = Toast.makeText(getApplicationContext(),"点击了",Toast.LENGTH_SHORT);
+            toast.show();
             switch (id){
                 case R.id.btn1:
                     Intent intent2test = new Intent(MainActivity.this , test.class);
@@ -174,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_up:
                     Toast toast_up = Toast.makeText(getApplicationContext(),"上",Toast.LENGTH_SHORT);
                     toast_up.show();
+
                     break;
                 case R.id.btn_left:
                     Toast toast_left = Toast.makeText(getApplicationContext(),"左",Toast.LENGTH_SHORT);
@@ -190,6 +193,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.button1:
                     Toast.makeText(getApplication(),"Button1",Toast.LENGTH_SHORT).show();
                     state_camera = 4;
+                    Log.e("按键","Button1");
+                    cameraCommandUtil.postHttp(IPCamera,4,2);
 //                    cameraCommandUtil.postHttp(IPCamera, 0, 1);
 //                    phThread.start();
                     break;
@@ -199,9 +204,11 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent2FunctionActivity);
 
                     break;
-                case R.id.button3:
-                    state_camera = 10;
-                    Toast.makeText(getApplication(),"Button3",Toast.LENGTH_SHORT).show();
+                case R.id.btn_moni1:
+//                    state_camera = 10;
+
+                    Toast.makeText(getApplication(),"模拟1",Toast.LENGTH_SHORT).show();
+                    to_run_moni1();
                     break;
                 case R.id.button4:
                     Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
@@ -238,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
 
         bakbtn1 = findViewById(R.id.button1);
         btn_function = findViewById(R.id.btn_function);
-        bakbtn3 = findViewById(R.id.button3);
+        btn_moni1 = findViewById(R.id.btn_moni1);
         bakbtn4 = findViewById(R.id.button4);
         bakbtn5 = findViewById(R.id.button5);
         btn_old_112 = findViewById(R.id.old_112);
@@ -259,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
 
         bakbtn1.setOnClickListener(new btnclickListener());
         btn_function.setOnClickListener(new btnclickListener());
-        bakbtn3.setOnClickListener(new btnclickListener());
+        btn_moni1.setOnClickListener(new btnclickListener());
         bakbtn4.setOnClickListener(new btnclickListener());
         bakbtn5.setOnClickListener(new btnclickListener());
         btn_old_112.setOnClickListener(new btnclickListener());
@@ -270,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
         btn_right.setOnTouchListener(new btntouchListener());
         bakbtn1.setOnTouchListener(new btntouchListener());
         btn_function.setOnTouchListener(new btntouchListener());
-        bakbtn3.setOnTouchListener(new btntouchListener());
+        btn_moni1.setOnTouchListener(new btntouchListener());
         bakbtn4.setOnTouchListener(new btntouchListener());
         bakbtn5.setOnTouchListener(new btntouchListener());
         btn_old_112.setOnTouchListener(new btntouchListener());
@@ -558,6 +565,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+    }
+
+    private void to_run_moni1(){
+        Thread thread_moni1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                socket_connect.moni1();
+                Log.e("模拟1线程启动","已启动");
+            }
+        });
+        thread_moni1.start();
     }
 
 

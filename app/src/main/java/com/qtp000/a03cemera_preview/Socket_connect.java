@@ -102,6 +102,7 @@ public class Socket_connect {
             byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
             bOutputStream.write(sbyte, 0, sbyte.length);
             bOutputStream.flush();
+//            Log.e("消息发送", "已发送");
         } catch (IOException e) {
             Log.e("消息发送失败", "通信协议出错");
             e.printStackTrace();
@@ -997,6 +998,22 @@ public class Socket_connect {
         send();
         yanchi(1000);
         while (rbyte[2] != (byte) (0xC2)) ;      //等待到达二维码标志物
+    }
+
+
+    public void moni1(){
+        Start_motion(2,5);      //  1:B1    2:A2     3:A4
+
+        yanchi(500);
+        send_Car_text_Fruit();
+        yanchi(3000);
+        MainActivity.state_camera = 9;		//调用摄像头1
+        yanchi(6000);
+        qrhandler.sendEmptyMessage(10);		//识别二维码
+
+
+
+
     }
 
 }

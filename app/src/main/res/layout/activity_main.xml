@@ -98,11 +98,11 @@
         app:layout_constraintTop_toTopOf="@+id/button1" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn_moni1"
         android:layout_width="135dp"
         android:layout_height="65dp"
         android:layout_marginStart="65dp"
-        android:text="Button3"
+        android:text="模拟一"
         app:layout_constraintStart_toEndOf="@+id/btn_function"
         app:layout_constraintTop_toTopOf="@+id/btn_function" />
 
