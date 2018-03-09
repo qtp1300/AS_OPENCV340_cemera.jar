@@ -14,6 +14,9 @@ import com.bkrcl.control_car_video.camerautil.CameraCommandUtil;
 /**
  * Created by 祁天培 on 2018/2/6.
  */
+/*目前用途
+* 调试摄像头
+* */
 
 public class test extends Activity{
 
