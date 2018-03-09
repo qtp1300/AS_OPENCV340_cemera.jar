@@ -70,9 +70,9 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="116dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="428dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="1dp"
         android:layout_marginStart="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -1006,9 +1006,11 @@ public class Socket_connect {
 
         yanchi(500);
         send_Car_text_Fruit();
-        yanchi(3000);
+//        yanchi(3000);
+        while (rbyte[2] != (byte) (0xC2)) ;
         MainActivity.state_camera = 9;		//调用摄像头1
-        yanchi(6000);
+        yanchi(1000);
+
         qrhandler.sendEmptyMessage(10);		//识别二维码
 
 

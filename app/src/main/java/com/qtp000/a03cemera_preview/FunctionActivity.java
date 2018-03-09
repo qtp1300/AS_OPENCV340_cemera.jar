@@ -3,6 +3,7 @@ package com.qtp000.a03cemera_preview;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,6 +25,16 @@ public class FunctionActivity extends Activity {
     private Function_method fmd = new Function_method(FunctionActivity.this);
     private Socket_connect sc;
     private String qr;
+    public static String result;
+    /*自己加的部分
+* 将Mianactivity的qrhandle传进来，方便在主界面下方显示结果
+*/
+    private static Handler mainactivity_handle;
+    public static void set_handle(Handler in_handle){
+        mainactivity_handle = in_handle;
+        Log.e("wait","wait");
+    }
+    /*结束*/
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -190,6 +201,9 @@ public class FunctionActivity extends Activity {
                         {
                             fmd.checkShecp();
                             Toast.makeText(FunctionActivity.this, "形状识别完成", Toast.LENGTH_SHORT).show();
+                            result = fmd.result_tuxing;
+                            mainactivity_handle.sendEmptyMessage(100);
+
                         }
                         else
                             fmd.checkShecp();

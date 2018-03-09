@@ -19,5 +19,154 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.458" />
+        app:layout_constraintVertical_bias="0.93" />
+
+    <Button
+        android:id="@+id/btn_camera_32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="32dp"
+        android:text="32设置预设位1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_camera_34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="34设置预设位2"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera_32"
+        app:layout_constraintTop_toTopOf="@+id/btn_camera_32" />
+
+    <Button
+        android:id="@+id/btn_camera_36"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="36设置预设位3"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera_34"
+        app:layout_constraintTop_toTopOf="@+id/btn_camera_34" />
+
+    <Button
+        android:id="@+id/btn_camera_38"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="38设置预设位4"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera_36"
+        app:layout_constraintTop_toTopOf="@+id/btn_camera_36" />
+
+    <Button
+        android:id="@+id/btn_camera_33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="24dp"
+        android:text="33调用预设位1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_camera_32" />
+
+    <Button
+        android:id="@+id/btn_camera_35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="35调用预设位2"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera_33"
+        app:layout_constraintTop_toTopOf="@+id/btn_camera_33" />
+
+    <Button
+        android:id="@+id/btn_camera_37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="37调用预设位3"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera_35"
+        app:layout_constraintTop_toTopOf="@+id/btn_camera_35" />
+
+    <Button
+        android:id="@+id/btn_camera_39"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="39调用预设位4"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera_37"
+        app:layout_constraintTop_toTopOf="@+id/btn_camera_37" />
+
+    <Button
+        android:id="@+id/btn_camera_init"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="16dp"
+        android:text="初始化摄像头"
+        app:layout_constraintStart_toStartOf="@+id/btn_camera_33"
+        app:layout_constraintTop_toBottomOf="@+id/btn_camera_33" />
+
+    <ImageView
+        android:id="@+id/img_preview2"
+        android:layout_width="0dp"
+        android:layout_height="285dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="384dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/up" />
+
+    <Button
+        android:id="@+id/btn_cemera_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="52dp"
+        android:text="摄像头向上"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_camera_33" />
+
+    <Button
+        android:id="@+id/btn_cemera_down"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="摄像头向下"
+        app:layout_constraintStart_toStartOf="@+id/btn_cemera_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cemera_up" />
+
+    <Button
+        android:id="@+id/btn_cemera_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="摄像头向左"
+        app:layout_constraintEnd_toStartOf="@+id/btn_cemera_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cemera_up" />
+
+    <Button
+        android:id="@+id/btn_cemera_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="摄像头向右"
+        app:layout_constraintStart_toEndOf="@+id/btn_cemera_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cemera_up" />
+
+    <Button
+        android:id="@+id/btn_cemera_fast"
+        android:layout_width="47dp"
+        android:layout_height="wrap_content"
+        android:text="快"
+        app:layout_constraintStart_toStartOf="@+id/btn_cemera_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cemera_up" />
+
+    <Button
+        android:id="@+id/btn_cemera_slow"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:text="慢"
+        app:layout_constraintStart_toStartOf="@+id/btn_cemera_up"
+        app:layout_constraintTop_toBottomOf="@+id/btn_cemera_up" />
 </android.support.constraint.ConstraintLayout>

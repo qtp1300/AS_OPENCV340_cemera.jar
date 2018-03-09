@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn1;
     Button bakbtn1, btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
+    Button btn_cemera_init,btn_cemera_32,btn_cemera_33,btn_cemera_34,btn_cemera_35,btn_cemera_36,btn_cemera_37,btn_cemera_38,btn_cemera_39;
 
     ImageView imageView;
     ImageButton btn_up;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private int TRAFFIC_status = 0;
     private int LICENSE_status = 0;
     private int PICTURE_status = 0;
+    public static int cemera_step = 1;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -97,11 +99,20 @@ public class MainActivity extends AppCompatActivity {
         connect_thread();
         fmod = new Function_method(socket_connect,state_camera,MainActivity.this);
 
+        FunctionActivity.set_handle(this.qrHandler);
+//        fmod.set_handle(this.qrHandler);/*qrhandler phhandler  rehandler*/
+//        qrHandler.sendEmptyMessage(31);
+
+
+
 
     }
 
 
     class btntouchListener implements View.OnTouchListener{
+
+
+
         /**
          * Called when a touch event is dispatched to a view. This allows listeners to
          * get a chance to respond before the target view.
@@ -135,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.e("差",String.valueOf(event.getEventTime() - event.getDownTime()));
 //                }
 
-
             }
             if (event.getAction() == MotionEvent.ACTION_UP){
                 switch (v.getId()){
@@ -153,21 +163,22 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.btn_right:
                         btn_right.setImageResource(R.drawable.right);
                         break;
-                    case R.id.btn_moni1:
-                        to_run_moni1();
-                        break;
+//                    case R.id.btn_moni1:
+//                        to_run_moni1();
+//                        break;
                 }
             }
             return false;
         }
+
     }
 
     class btnclickListener implements View.OnClickListener{
         @Override
         public void onClick(View v){
             int id = v.getId();
-            Toast toast = Toast.makeText(getApplicationContext(),"点击了",Toast.LENGTH_SHORT);
-            toast.show();
+//            Toast toast = Toast.makeText(getApplicationContext(),"点击了",Toast.LENGTH_SHORT);
+//            toast.show();
             switch (id){
                 case R.id.btn1:
                     Intent intent2test = new Intent(MainActivity.this , test.class);
@@ -205,8 +216,6 @@ public class MainActivity extends AppCompatActivity {
 
                     break;
                 case R.id.btn_moni1:
-//                    state_camera = 10;
-
                     Toast.makeText(getApplication(),"模拟1",Toast.LENGTH_SHORT).show();
                     to_run_moni1();
                     break;
@@ -224,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_stop:
                     Toast.makeText(getApplication(),"停止",Toast.LENGTH_SHORT).show();
+
 
                     break;
             }
@@ -253,16 +263,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     }
 
     private  void addlistener(){
         btn1.setOnClickListener(new btnclickListener());
-
-//        btn_up.setOnClickListener(new btnclickListener());
-//        btn_down.setOnClickListener(new btnclickListener());
-//        btn_left.setOnClickListener(new btnclickListener());
-//        btn_right.setOnClickListener(new btnclickListener());
 
         bakbtn1.setOnClickListener(new btnclickListener());
         btn_function.setOnClickListener(new btnclickListener());
@@ -358,6 +362,47 @@ public class MainActivity extends AppCompatActivity {
                     case 10:
                         cameraCommandUtil.postHttp(IPCamera, 35, 0);
                         break;
+                    /*自己加的*/
+                    case 25:
+                        cameraCommandUtil.postHttp(IPCamera,25,0);
+                        break;
+                    case 32:
+                        cameraCommandUtil.postHttp(IPCamera,32,0);
+                        break;
+                    case 33:
+                        cameraCommandUtil.postHttp(IPCamera,33,0);
+                        break;
+                    case 34:
+                        cameraCommandUtil.postHttp(IPCamera,34,0);
+                        break;
+                    case 35:
+                        cameraCommandUtil.postHttp(IPCamera,35,0);
+                        break;
+                    case 36:
+                        cameraCommandUtil.postHttp(IPCamera,36,0);
+                        break;
+                    case 37:
+                        cameraCommandUtil.postHttp(IPCamera,37,0);
+                        break;
+                    case 38:
+                        cameraCommandUtil.postHttp(IPCamera,38,0);
+                        break;
+                    case 39:
+                        cameraCommandUtil.postHttp(IPCamera,39,0);
+                        break;
+                    case 500:            //抬头
+                        cameraCommandUtil.postHttp(IPCamera,0,cemera_step);
+                        break;
+                    case 502:           //低头
+                        cameraCommandUtil.postHttp(IPCamera,2,cemera_step);
+                        break;
+                    case 504:           //向左
+                        cameraCommandUtil.postHttp(IPCamera,4,cemera_step);
+                        break;
+                    case 506:           //向右
+                        cameraCommandUtil.postHttp(IPCamera,6,cemera_step);
+                        break;
+                    /*自己加的*/
                     default:
                         break;
                 }
@@ -447,6 +492,10 @@ public class MainActivity extends AppCompatActivity {
                             "0x"+new Algorithm().BToH((char)((socket_connect.order_data[4])&0xFF))+"; "+
                             "0x"+new Algorithm().BToH((char)((socket_connect.order_data[5])&0xFF)));
                     break;
+                /*自己加的*/
+                case 100:
+                    textView.setText("识别结果"+FunctionActivity.result);
+                /*自己加的*/
                 default:
                     break;
             }

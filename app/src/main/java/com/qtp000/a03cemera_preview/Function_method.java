@@ -46,6 +46,16 @@ public class Function_method extends Activity
     private TextView voiceText;
     private LicenseIdentify lic_id = new LicenseIdentify();
     private Mat currectMat = null;
+//    /*自己加的部分
+    public String result_tuxing;
+//    * 将Mianactivity的qrhandle传进来，方便在主界面下方显示结果
+//    */
+//    private Handler mainactivity_handle;
+//    public void set_handle(Handler in_handle){
+//        mainactivity_handle = in_handle;
+//        Log.e("wait","wait");
+//        }
+//    /*结束*/
 
     public Function_method(){
 
@@ -1082,6 +1092,11 @@ public class Function_method extends Activity
 //				Log.e("**********************", "********************************");
             }
             shaperesult +="\n";
+//            /*自己加的*/
+            result_tuxing = shaperesult;
+//            mainactivity_handle.sendEmptyMessage(100);
+//            /*自己加的*/
+
         }
     }
 
