@@ -1002,16 +1002,16 @@ public class Socket_connect {
 
 
     public void moni1(){
+        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
         Start_motion(2,5);      //  1:B1    2:A2     3:A4
-
-        yanchi(500);
-        send_Car_text_Fruit();
-//        yanchi(3000);
-        while (rbyte[2] != (byte) (0xC2)) ;
-        MainActivity.state_camera = 9;		//调用摄像头1
+        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
+        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
+        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
+        MainActivity.state_camera = 33;		//调用摄像头1位置，右下转二维码位置。
         yanchi(1000);
-
         qrhandler.sendEmptyMessage(10);		//识别二维码
+        send_Caution_Text();                //发送二维码解码信息
+        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
 
 
 
