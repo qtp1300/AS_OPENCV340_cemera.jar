@@ -1,11 +1,11 @@
 {
     "logs": [
         {
-            "outputFile": "F:\\18carcarcarcar\\practice\\03cemera_preview\\openCVLibrary340\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
+            "outputFile": "F:\\18carcarcarcar\\Mine\\Mine\\openCVLibrary340\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
             "map": []
         },
         {
-            "outputFile": "F:\\18carcarcarcar\\practice\\03cemera_preview\\openCVLibrary340\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+            "outputFile": "F:\\18carcarcarcar\\Mine\\Mine\\openCVLibrary340\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
             "map": []
         }
     ]

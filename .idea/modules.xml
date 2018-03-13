@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/03cemera_preview.iml" filepath="$PROJECT_DIR$/03cemera_preview.iml" />
+      <module fileurl="file://F:\18carcarcarcar\Mine\AS_OPENCV340_cemera.jar\03cemera_preview.iml" filepath="F:\18carcarcarcar\Mine\AS_OPENCV340_cemera.jar\03cemera_preview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Mine.iml" filepath="$PROJECT_DIR$/Mine.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/openCVLibrary340/openCVLibrary340.iml" filepath="$PROJECT_DIR$/openCVLibrary340/openCVLibrary340.iml" />
     </modules>
