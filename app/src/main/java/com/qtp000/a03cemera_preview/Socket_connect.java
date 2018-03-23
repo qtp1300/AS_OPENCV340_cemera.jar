@@ -1009,6 +1009,10 @@ public class Socket_connect {
         while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
         MainActivity.state_camera = 33;		//调用摄像头1位置，右下转二维码位置。
         yanchi(1000);
+        MainActivity.state_camera = 506;
+        yanchi(500);
+        MainActivity.state_camera = 506;
+        yanchi(500);
         qrhandler.sendEmptyMessage(10);		//识别二维码
         send_Caution_Text();                //发送二维码解码信息
         MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
