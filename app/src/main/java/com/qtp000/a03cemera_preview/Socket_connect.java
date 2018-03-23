@@ -37,7 +37,8 @@ public class Socket_connect {
     private Context context;
     private Algorithm algorithm;
 
-    public Socket_connect() {}
+    public Socket_connect() {
+    }
 
     public Socket_connect(Context context, Handler handler) {
         this.context = context;
@@ -341,12 +342,13 @@ public class Socket_connect {
         THRID = six;
         send();
         yanchi(1000);
-        MAJOR = 0x12;
-        FIRST = 0x00;
-        SECOND = 0x00;
-        THRID = 0x00;
-        send();
-        yanchi(2000);
+//        MAJOR = 0x12;
+//        FIRST = 0x00;
+//        SECOND = 0x00;
+//        THRID = 0x00;
+//        send();
+
+
     }
 
     // 双色LED灯
@@ -813,6 +815,13 @@ public class Socket_connect {
                 (byte) order_data[5]);
 
         yanchi(2000);
+        MAJOR = 0x12;
+        FIRST = order_data_2[0];
+        SECOND = order_data_2[1];
+        THRID = 0x00;
+        send();
+
+        yanchi(2000);
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xB4;                        //保存红外报警
         FIRST = (short) 0x00;
@@ -833,11 +842,17 @@ public class Socket_connect {
         {
             algorithm.CRC_Code(initial_value, order_data);
         }
+        //祁天培加的
+        else if (num == 4) {
+            algorithm.MOSI_Code(initial_value, order_data,order_data_2);
+
+        }
         //qrhandler_show_task(num,31,order_data);
         qrhandler.sendEmptyMessage(31);
     }
 
     public byte[] order_data = new byte[6];
+    public byte[] order_data_2 = new byte[3];
 
     public int mark = 0;
     private int num = 3;
@@ -1001,23 +1016,29 @@ public class Socket_connect {
     }
 
 
-    public void moni1(){
+    public void moni1() {
         MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
-        Start_motion(2,5);      //  1:B1    2:A2     3:A4
-        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
-        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
-        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
-        MainActivity.state_camera = 33;		//调用摄像头1位置，右下转二维码位置。
+//        Start_motion(2, 5);      //  1:B1    2:A2     3:A4
+//        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
+//        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
+//        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
+        MainActivity.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
         yanchi(1000);
-        MainActivity.state_camera = 506;
-        yanchi(500);
-        MainActivity.state_camera = 506;
-        yanchi(500);
-        qrhandler.sendEmptyMessage(10);		//识别二维码
-        send_Caution_Text();                //发送二维码解码信息
-        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
+//        MainActivity.state_camera = 506;
+//        yanchi(500);
+//        MainActivity.state_camera = 506;
+//        yanchi(500);
+        Log.e("即将识别二维码",MainActivity.result_qr);
+        qrhandler.sendEmptyMessage(10);        //识别二维码
+        yanchi(2000);
+        if(mark == 25)
+        {
+            Log.e("二维码是",MainActivity.result_qr);
+        }
 
-
+//        algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+//        send_Caution_Text();                //发送二维码解码信息
+//        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
 
 
     }
