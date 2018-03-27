@@ -768,8 +768,10 @@ public class Socket_connect {
         //0x42 0x38 0x33 0x00 0x52 0x35
         //H495R6  (7-2)
         //0x48 0x34 0x39 0x35 0x52 0x36
-        infrared((byte) 0x42, (byte) 0x38, (byte) 0x33,
-                (byte) 0x30, (byte) 0x52, (byte) 0x35);    //发送车牌识别结果  默认 A1B2C3
+        //P779G9
+        //0x50 0x37 0x37 0x39 0x47 0x39
+        infrared((byte) 0x50, (byte) 0x37, (byte) 0x37,
+                (byte) 0x39, (byte) 0x47, (byte) 0x39);    //发送车牌识别结果  默认 A1B2C3
         yanchi(2000);
 
         TYPE = (short) 0xAA;
@@ -782,11 +784,11 @@ public class Socket_connect {
 
         //A1B1C2D1E2  （7-1）
         //A2B2C1D1E3（7-2）
-        infrared((byte) 0x01,                        //矩形个数
-                (byte) 0x01,                        //圆个数
-                (byte) 0x02,                        //三角形个数
-                (byte) 0x01,                        //菱形个数
-                (byte) 0x02,                        //五角星个数    也是光源目标档位
+        infrared((byte) 0x02,                        //矩形个数
+                (byte) 0x02,                        //圆个数
+                (byte) 0x04,                        //三角形个数
+                (byte) 0x00,                        //菱形个数
+                (byte) 0x00,                        //五角星个数    也是光源目标档位
                 (byte) 0x00);
         yanchi(2000);
 
@@ -817,7 +819,9 @@ public class Socket_connect {
         yanchi(2000);
         MAJOR = 0x12;
         FIRST = order_data_2[0];
+        Log.e("发送光照",Integer.toString(order_data_2[0]));
         SECOND = order_data_2[1];
+        Log.e("发送RFID",Integer.toString(order_data_2[1]));
         THRID = 0x00;
         send();
 
@@ -860,27 +864,27 @@ public class Socket_connect {
     public void Full_motion_model_112() {
         switch (mark) {
             case 5:
-                Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
-                if (num == 2)
+//                Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
+//                if (num == 2)
                     mark = 10;
-                else
-                    mark = 11;
+//                else
+//                    mark = 11;
                 break;
 
             case 11:
-                MainActivity.state_camera = 8;        //调用摄像头1
-                yanchi(3000);
+//                MainActivity.state_camera = 8;        //调用摄像头1
+//                yanchi(3000);
                 mark = 10;
                 break;
 
             case 10:
-                send_Car_text_Fruit();                //进行传输 形状个数、车牌参数
-                yanchi(3000);
+//                send_Car_text_Fruit();                //进行传输 形状个数、车牌参数
+//                yanchi(3000);
                 mark = 15;
                 break;
             case 15:
                 MainActivity.state_camera = 9;        //调用摄像头1
-                yanchi(6000);
+//                yanchi(6000);
                 mark = 20;
                 break;
             case 20:
@@ -888,17 +892,17 @@ public class Socket_connect {
                 mark = -25;
                 break;
             case 25:
-                algorithm_Data_MyhandlerMsg(3, MainActivity.result_qr);
-                mark = 30;
+//                algorithm_Data_MyhandlerMsg(3, MainActivity.result_qr);
+//                mark = 30;
                 break;
             case 30:
-                MainActivity.state_camera = 10;        //调用摄像头2
+//                MainActivity.state_camera = 10;        //调用摄像头2
                 mark = 40;
                 break;
             case 40:
-                send_Caution_Text();                //发送红外报警数据
-                mark = 400;
-                MainActivity.model_112 = -1;
+//                send_Caution_Text();                //发送红外报警数据
+//                mark = 400;
+//                MainActivity.model_112 = -1;
                 break;
             default:
                 break;
@@ -1017,12 +1021,13 @@ public class Socket_connect {
 
 
     public void moni1() {
+
         MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
 //        Start_motion(2, 5);      //  1:B1    2:A2     3:A4
 //        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
 //        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
 //        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
-        MainActivity.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
+//        MainActivity.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
         yanchi(1000);
 //        MainActivity.state_camera = 506;
 //        yanchi(500);
@@ -1041,6 +1046,57 @@ public class Socket_connect {
 //        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
 
 
+    }
+
+    public void moni1_2() {
+        switch (mark) {
+            case 5:
+                MainActivity.state_camera = 33;        //调用摄像头1
+                Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
+
+//                if (num == 2)
+                mark = 10;
+//                else
+//                    mark = 11;
+                break;
+
+            case 11:
+                MainActivity.state_camera = 33;        //调用摄像头1
+                yanchi(3000);
+                mark = 10;
+                break;
+
+            case 10:
+                send_Car_text_Fruit();                //进行传输 形状个数、车牌参数
+                yanchi(1000);
+                mark = 15;
+                break;
+            case 15:
+                MainActivity.state_camera = 39;        //调用摄像头4
+                yanchi(1000);
+                mark = 20;
+                break;
+            case 20:
+                qrhandler.sendEmptyMessage(10);        //识别二维码
+                mark = -25;
+                break;
+            case 25:
+                algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+                mark = 30;
+                break;
+            case 30:
+                MainActivity.state_camera = 10;        //调用摄像头2
+                mark = 40;
+                break;
+            case 40:
+                send_Caution_Text();                //发送红外报警数据
+                yanchi(2000);
+//                mark = 400;
+                MainActivity.moni1 = false;
+                break;
+            default:
+                break;
+        }
     }
 
 }

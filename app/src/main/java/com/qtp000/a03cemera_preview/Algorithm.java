@@ -1,6 +1,7 @@
 package com.qtp000.a03cemera_preview;
 
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Arrays;
 
@@ -29,8 +30,8 @@ public class Algorithm {
     static int num_char_unlocked = 0;
 
     static int[] finall = new int[6];
-    static int num = 0;
-    static String vau_RFID = "";
+    static int num_mosi = 0;
+//    static String vau_RFID = "";
     /*摩斯电码算法变量*/
 
 //	public static void main(String[] args)
@@ -307,75 +308,107 @@ public class Algorithm {
 
     /*摩斯电码算法——祁天培添加*/
     public void MOSI_Code(String SrcString, byte[] order_buffer,byte[] order_buffer2) {
-        char[] input_char = SrcString.toCharArray();
-        System.out.println(input_char);
-        /*分离出.--.-.-..--.-.-.-.-.-.-.--..-.-.-.--.-.-*/
-        for (int i = 0; i < input_char.length; i++) {
-            if (i <= input_char.length) {
-                if (input_char[i] == '-' || input_char[i] == '.') {
-                    temp[aaa++] = i;
-                    char_a[i_string][char_string++] = input_char[i];
-                    if (input_char[i + 1] != '-' && input_char[i + 1] != '.') {
-                        i_string++;
-                        char_string = 0;
+        i_string = 0;
+        num_char_unlocked = 0;
+
+//        static int[] temp = new int[100];		//点杠
+//        static int aaa = 0;		//temp的数据位置
+//        static char[][] char_a = new char[7][5];
+//        static String[] strings = new String[7];
+//
+//        static int char_string = 0;
+//        static char[] char_null = new char[3];
+//        static char[] char_unlocked = new char[6];
+//        static char[] char_preunlocked = new char[7];
+//        static int[] int_unlocked = new int[6];
+//        static char[] char_reversal = new char[6];
+//        static int num_char_unlocked = 0;
+//
+//        static int[] finall = new int[6];
+//        static int num_mosi = 0;
+
+
+
+        if(SrcString != null && SrcString != "") {
+            char[] input_char = SrcString.toCharArray();
+            System.out.println(input_char);
+            /*分离出.--.-.-..--.-.-.-.-.-.-.--..-.-.-.--.-.-*/
+            for (int i = 0; i < input_char.length; i++) {
+                if (i <= input_char.length) {
+                    if (input_char[i] == '-' || input_char[i] == '.') {
+                        temp[aaa++] = i;
+                        char_a[i_string][char_string++] = input_char[i];
+                        if (input_char[i + 1] != '-' && input_char[i + 1] != '.') {
+                            i_string++;
+                            char_string = 0;
+                        }
                     }
                 }
             }
-        }
-        for (char[] c : char_a) {
-            System.out.println("截取" + new String(c));
-        }
-		/*除去空字符*/
-        for (int i = 0; i < char_a.length; i++) {
-            strings[i] = "";
-            for (int j = 0; j < 5; j++) {
-                if (char_a[i][j] != char_null[1]) {
-                    strings[i] = strings[i] + char_a[i][j];
+            for (char[] c : char_a) {
+                System.out.println("截取" + new String(c));
+            }
+            /*除去空字符*/
+            for (int i = 0; i < char_a.length; i++) {
+                strings[i] = "";
+                for (int j = 0; j < 5; j++) {
+                    if (char_a[i][j] != char_null[1]) {
+                        strings[i] = strings[i] + char_a[i][j];
+                    }
                 }
             }
+            for (String s : strings) {
+                System.out.println("去空" + s);
+            }
+            /*解码*/
+            for (int i = 0; i < strings.length; i++) {
+                char_preunlocked[i] = unlock(strings[i]);
+            }
+
+            System.out.println("解码" + new String(char_preunlocked));
+
+            numorchar();    //分离数字和字符
+            char_unlocked = sort(char_unlocked);    //排序
+            System.out.println("排序" + new String(char_unlocked));
+
+            /*遍历赋值输出*/
+            for (int i = 0; i < char_unlocked.length; i++) {
+                int_unlocked[i] = (int) char_unlocked[i];
+                //			System.out.println("0x"+Integer.toHexString(int_unlocked[i]));
+            }
+
+            //计算
+            finall[0] = int_unlocked[0] + int_unlocked[1];
+            finall[1] = int_unlocked[0] >= int_unlocked[1] ? int_unlocked[0] - int_unlocked[1] : int_unlocked[1] - int_unlocked[0];
+            finall[2] = int_unlocked[2] + int_unlocked[3];
+            finall[3] = int_unlocked[2] >= int_unlocked[3] ? int_unlocked[2] - int_unlocked[3] : int_unlocked[3] - int_unlocked[2];
+            finall[4] = int_unlocked[4] + int_unlocked[5];
+            finall[5] = int_unlocked[4] >= int_unlocked[5] ? int_unlocked[4] - int_unlocked[5] : int_unlocked[5] - int_unlocked[4];
+            order_buffer[0] = (byte) finall[0];
+            order_buffer[1] = (byte) finall[1];
+            order_buffer[2] = (byte) finall[2];
+            order_buffer[3] = (byte) finall[3];
+            order_buffer[4] = (byte) finall[4];
+            order_buffer[5] = (byte) finall[5];
+
+            //        for (int i : finall) {
+            //            System.out.print("0x" + Integer.toHexString(i) + "  ");
+            //        }
+            //        System.out.println("\r\n调光台" + (char) num);
+
+
+            Log.e("光照是", Integer.toBinaryString(num_mosi));
+            order_buffer2[0] = (byte) (char) num_mosi;
+
+
+            String[] str_out = SrcString.split("0x");
+            order_buffer2[1] = (byte) Integer.parseInt(str_out[1],16);
+            Log.e("光照",Integer.toString(order_buffer2[0]));
+            Log.e("RFID",Integer.toString(order_buffer2[1]));
+
+            //        System.out.println("RFID: 0x"+str_out[1]);
         }
-        for (String s : strings) {
-            System.out.println("去空" + s);
-        }
-		/*解码*/
-        for (int i = 0; i < strings.length; i++) {
-            char_preunlocked[i] = unlock(strings[i]);
-        }
 
-        System.out.println("解码" + new String(char_preunlocked));
-
-        numorchar();    //分离数字和字符
-        char_unlocked = sort(char_unlocked);    //排序
-        System.out.println("排序" + new String(char_unlocked));
-
-		/*遍历赋值输出*/
-        for (int i = 0; i < char_unlocked.length; i++) {
-            int_unlocked[i] = (int) char_unlocked[i];
-//			System.out.println("0x"+Integer.toHexString(int_unlocked[i]));
-        }
-
-        //计算
-        finall[0] = int_unlocked[0] + int_unlocked[1];
-        finall[1] = int_unlocked[0] >= int_unlocked[1] ? int_unlocked[0] - int_unlocked[1] : int_unlocked[1] - int_unlocked[0];
-        finall[2] = int_unlocked[2] + int_unlocked[3];
-        finall[3] = int_unlocked[2] >= int_unlocked[3] ? int_unlocked[2] - int_unlocked[3] : int_unlocked[3] - int_unlocked[2];
-        finall[4] = int_unlocked[4] + int_unlocked[5];
-        finall[5] = int_unlocked[4] >= int_unlocked[5] ? int_unlocked[4] - int_unlocked[5] : int_unlocked[5] - int_unlocked[4];
-        order_buffer[0] = (byte)finall[0];
-        order_buffer[1] = (byte)finall[1];
-        order_buffer[2] = (byte)finall[2];
-        order_buffer[3] = (byte)finall[3];
-        order_buffer[4] = (byte)finall[4];
-        order_buffer[5] = (byte)finall[5];
-
-//        for (int i : finall) {
-//            System.out.print("0x" + Integer.toHexString(i) + "  ");
-//        }
-//        System.out.println("\r\n调光台" + (char) num);
-        order_buffer2[0] = (byte)num;
-        String[] str_out = SrcString.split("0x");
-        order_buffer2[1] = (byte)Integer.parseInt(str_out[1]);
-//        System.out.println("RFID: 0x"+str_out[1]);
     }
 
 
@@ -387,13 +420,13 @@ public class Algorithm {
                 num_char_unlocked++;
             }
             else {
-                num = char_preunlocked[i];
+                num_mosi = Integer.parseInt(new Character(char_preunlocked[i]).toString());
             }
         }
     }
     private static char[] sort(char[] in) {
         Arrays.sort(in);
-        if((num % 2) == 0){
+        if((num_mosi % 2) == 0){
             for (int i = 0; i < char_unlocked.length; i++) {
                 char_reversal[i] = char_unlocked[5-i];
             }

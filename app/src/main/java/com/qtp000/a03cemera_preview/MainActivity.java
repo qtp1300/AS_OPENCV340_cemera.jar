@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private int LICENSE_status = 0;
     private int PICTURE_status = 0;
     public static int cemera_step = 1;
+    public static boolean moni1 = false;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -490,11 +491,16 @@ public class MainActivity extends AppCompatActivity {
                             "0x"+new Algorithm().BToH((char)((socket_connect.order_data[2])&0xFF))+"; "+
                             "0x"+new Algorithm().BToH((char)((socket_connect.order_data[3])&0xFF))+"; "+
                             "0x"+new Algorithm().BToH((char)((socket_connect.order_data[4])&0xFF))+"; "+
-                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[5])&0xFF)));
+                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[5])&0xFF))+"; "+
+                            "光照："+new Algorithm().BToH((char)((socket_connect.order_data_2[0])&0xFF))+"; "+
+                            "RFID：0x"+new Algorithm().BToH((char)((socket_connect.order_data_2[1])&0xFF)));
                     break;
                 /*自己加的*/
                 case 100:
                     textView.setText("识别结果"+FunctionActivity.result);
+                    break;
+                case 101:               //
+
                 /*自己加的*/
                 default:
                     break;
@@ -616,7 +622,7 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void to_run_moni1(){
+/*    private void to_run_moni1(){
         Thread thread_moni1 = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -626,6 +632,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         thread_moni1.start();
+    }*/
+    private void to_run_moni1(){
+        moni1 = true;
+        socket_connect.mark = 5;
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                while(moni1)
+                {
+                    socket_connect.moni1_2();
+                }
+            }
+        }).start();
     }
 
 
