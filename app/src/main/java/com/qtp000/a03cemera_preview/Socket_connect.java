@@ -1020,6 +1020,13 @@ public class Socket_connect {
     }
 
 
+
+
+    public void send_TFT_value(){}
+    public void send_LCD_value(){}
+    public void send_QR_value(){}
+
+
     public void moni1() {
 
         MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
@@ -1096,6 +1103,18 @@ public class Socket_connect {
                 break;
             default:
                 break;
+        }
+    }
+    public void moni1_3(){
+        switch(mark){
+            case 5:
+                MainActivity.state_camera = 33;
+                Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
+                mark = 10;
+                break;
+
+            case 10:
+                MainActivity.state_camera = 33;
         }
     }
 
