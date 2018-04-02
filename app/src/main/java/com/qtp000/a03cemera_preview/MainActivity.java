@@ -36,6 +36,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.qtp000.a03cemera_preview.FunctionActivity.result;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private int PICTURE_status = 0;
     public static int cemera_step = 1;
     public static boolean moni1 = false;
+    public static int QR_time = 0;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -439,39 +442,49 @@ public class MainActivity extends AppCompatActivity {
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                Result result = null;
-                                RgbLuminanceSource rSource = new RgbLuminanceSource(bitmap);
-                                try {
-                                    BinaryBitmap binaryBitmap = new BinaryBitmap(
-                                            new HybridBinarizer(rSource));
-                                     Map<DecodeHintType, String> hint = new HashMap<DecodeHintType, String>();
-                                    hint.put(DecodeHintType.CHARACTER_SET, "utf-8");
-                                    QRCodeReader reader = new QRCodeReader();
-                                    result = reader.decode(binaryBitmap, hint);
-                                    if (result.toString() != null) {
-                                        result_qr = result.toString();
-                                        timer.cancel();
-                                        qrHandler.sendEmptyMessage(20);
+                                QR_time = QR_time++;
+                                if (QR_time < 5 ){
+                                    Result result = null;
+                                    RgbLuminanceSource rSource = new RgbLuminanceSource(bitmap);
+                                    try {
+                                        BinaryBitmap binaryBitmap = new BinaryBitmap(
+                                                new HybridBinarizer(rSource));
+                                         Map<DecodeHintType, String> hint = new HashMap<DecodeHintType, String>();
+                                        hint.put(DecodeHintType.CHARACTER_SET, "utf-8");
+                                        QRCodeReader reader = new QRCodeReader();
+                                        result = reader.decode(binaryBitmap, hint);
+                                        if (result.toString() != null) {
+                                            result_qr = result.toString();
+                                            timer.cancel();
+                                            qrHandler.sendEmptyMessage(20);
+                                        }
+    //							else {
+    //								MainActivity.Timer_flag++;
+    //								if(MainActivity.Timer_flag >= 10)
+    //								{
+    //									result_qr = "^-^";
+    //									Toast.makeText(MainActivity.this, result_qr, Toast.LENGTH_SHORT).show();
+    //
+    //									MainActivity.Timer_flag = 0;
+    //									timer.cancel();
+    //									qrHandler.sendEmptyMessage(20);
+    //								}
+    //							}
+                                        //System.out.println("正在识别");
+                                    } catch (NotFoundException e) {
+                                        e.printStackTrace();
+                                    } catch (ChecksumException e) {
+                                        e.printStackTrace();
+                                    } catch (FormatException e) {
+                                        e.printStackTrace();
                                     }
-//							else {
-//								MainActivity.Timer_flag++;
-//								if(MainActivity.Timer_flag >= 10)
-//								{
-//									result_qr = "^-^";
-//									Toast.makeText(MainActivity.this, result_qr, Toast.LENGTH_SHORT).show();
-//
-//									MainActivity.Timer_flag = 0;
-//									timer.cancel();
-//									qrHandler.sendEmptyMessage(20);
-//								}
-//							}
-                                    //System.out.println("正在识别");
-                                } catch (NotFoundException e) {
-                                    e.printStackTrace();
-                                } catch (ChecksumException e) {
-                                    e.printStackTrace();
-                                } catch (FormatException e) {
-                                    e.printStackTrace();
+                                }
+                                if (QR_time ==5 ){
+                                    if(socket_connect.mark <0 ){
+                                        socket_connect.mark = -socket_connect.mark;
+                                    }
+                                    timer.cancel();
+                                    qrHandler.sendEmptyMessage(20);
                                 }
                             }
                         }, 3, 200);
@@ -482,9 +495,10 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 20:
                     Toast.makeText(MainActivity.this, result_qr, Toast.LENGTH_SHORT).show();
-
-                    socket_connect.mark = -socket_connect.mark;
-                    mark = -mark;
+                    if(socket_connect.mark <0 ){
+                        socket_connect.mark = -socket_connect.mark;
+                    }
+                    //mark = -mark;
                     break;
                 case 31:
                     textView.setText("结果:"+ "0x"+new Algorithm().BToH((char)((socket_connect.order_data[0])&0xFF))+"; "+
@@ -498,7 +512,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 /*自己加的*/
                 case 100:
-                    textView.setText("识别结果"+FunctionActivity.result);
+                    textView.setText("识别结果"+ result);
                     break;
                 case 101:               //
 
@@ -637,6 +651,7 @@ public class MainActivity extends AppCompatActivity {
     private void to_run_moni1(){
         moni1 = true;
         socket_connect.mark = 5;
+        QR_time = 0;
         new Thread(new Runnable() {
 
             @Override

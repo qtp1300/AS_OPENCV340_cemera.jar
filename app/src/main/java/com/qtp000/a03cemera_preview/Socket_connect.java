@@ -828,14 +828,14 @@ public class Socket_connect {
         THRID = 0x00;
         send();
 //
-//        yanchi(2000);
-//        TYPE = (short) 0xAA;
-//        MAJOR = (short) 0xB4;                        //保存红外报警
-//        FIRST = (short) 0x00;
-//        SECOND = (short) 0x00;
-//        THRID = (short) 0x00;
-//        send();
-//        yanchi(1000);
+        yanchi(2000);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xB4;                        //保存红外报警
+        FIRST = (short) 0x00;
+        SECOND = (short) 0x00;
+        THRID = (short) 0x00;
+        send();
+        yanchi(1000);
     }
 
     public void algorithm_Data_MyhandlerMsg(int num, String initial_value) {
@@ -1026,16 +1026,17 @@ public class Socket_connect {
 
 
     public void send_TFT_value(){
+        short same = 0x02;
         MAJOR = 0x10;
-        FIRST = 0x01;                // 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
-        SECOND = 0x00;
-        THRID = 0x00;
+        FIRST = same;                // 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
+        SECOND = same;
+        THRID = same;
         send();
         yanchi(1000);
         MAJOR = 0x11;
-        FIRST = 0x00;
-        SECOND = 0x00;
-        THRID = 0x00;
+        FIRST = same;
+        SECOND = same;
+        THRID = same;
         send();
         yanchi(1000);
         MAJOR = 0xB2;           //TFT内容传输完毕标志
@@ -1046,8 +1047,16 @@ public class Socket_connect {
         yanchi(1000);
     }
     public void send_LCD_value(){
-        infrared((byte) 0x50, (byte) 0x37, (byte) 0x37,
-                (byte) 0x39, (byte) 0x47, (byte) 0x39);    //发送车牌识别结果
+        //B830R5  (7-1)
+        //0x42 0x38 0x33 0x00 0x52 0x35
+        //H495R6  (7-2)
+        //0x48 0x34 0x39 0x35 0x52 0x36
+        //P779G9
+        //0x50 0x37 0x37 0x39 0x47 0x39
+        //C423Q8
+        //0x43 0x34 0x32 0x33 0x51 0x38
+        infrared((byte) 0x43, (byte) 0x34, (byte) 0x32,
+                (byte) 0x33, (byte) 0x51, (byte) 0x38);    //发送车牌识别结果
 
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xB3;
@@ -1160,6 +1169,7 @@ public class Socket_connect {
             case 15:
                 //LCD车牌识别
                 while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
+                MainActivity.state_camera = 39;
                 //车牌识别
                 send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
                 mark = 20;
@@ -1169,6 +1179,7 @@ public class Socket_connect {
                 //二维码识别
                 while (rbyte[2] != (byte) (0xE2)) ; //F2代表到达LCD，需要摄像头继续右转
                 //识别
+                MainActivity.state_camera = 39;
                 qrhandler.sendEmptyMessage(10);
                 mark = -25;
                 break;
@@ -1179,7 +1190,7 @@ public class Socket_connect {
                 break;
 
             case 30:
-                MainActivity.state_camera = 10;        //调用摄像头2
+                MainActivity.state_camera = 33;        //调用摄像头2
                 mark = 40;
                 break;
 
