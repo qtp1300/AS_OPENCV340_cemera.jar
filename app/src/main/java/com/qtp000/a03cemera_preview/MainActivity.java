@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     // 小车ip
     private String IPCar;
     // 摄像头IP
-    public static String result_qr = null;
+    public static String result_qr = "#$...(.--.*&-.)&.-..@%%-.-#&&*%$%...--^)&*.--%|0x17";
     public static int model_221 = 0;
     public static int model_112 = 0;
     private Socket_connect socket_connect;
@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     BinaryBitmap binaryBitmap = new BinaryBitmap(
                                             new HybridBinarizer(rSource));
-                                    Map<DecodeHintType, String> hint = new HashMap<DecodeHintType, String>();
+                                     Map<DecodeHintType, String> hint = new HashMap<DecodeHintType, String>();
                                     hint.put(DecodeHintType.CHARACTER_SET, "utf-8");
                                     QRCodeReader reader = new QRCodeReader();
                                     result = reader.decode(binaryBitmap, hint);
@@ -465,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
 //									qrHandler.sendEmptyMessage(20);
 //								}
 //							}
-                                    System.out.println("正在识别");
+                                    //System.out.println("正在识别");
                                 } catch (NotFoundException e) {
                                     e.printStackTrace();
                                 } catch (ChecksumException e) {
@@ -482,6 +482,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 20:
                     Toast.makeText(MainActivity.this, result_qr, Toast.LENGTH_SHORT).show();
+
                     socket_connect.mark = -socket_connect.mark;
                     mark = -mark;
                     break;
@@ -643,7 +644,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 while(moni1)
                 {
-                    socket_connect.moni1_2();
+                    socket_connect.moni1_3();
                 }
             }
         }).start();
