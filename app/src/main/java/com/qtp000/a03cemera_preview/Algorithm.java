@@ -1,6 +1,5 @@
 package com.qtp000.a03cemera_preview;
 
-import android.content.Intent;
 import android.util.Log;
 
 import java.util.Arrays;
@@ -16,18 +15,18 @@ public class Algorithm {
 //    static String str_input2 = "*/(.-*=-...%@-.-.*/#!-..)@#!&.)#(..-.%*#*";
 //    static String str_input3 = "*/-....%(.-*=-...%@-.-.*/#!-..)@#!&.)#(..-.%*#*|0x1";
 //    static String str_input = ".**%*(*=....#/#!*!.-..)@.-.*/#...--(@$&.)#.-..%*#*|0x3";
-    static int[] temp = new int[100];		//点杠
-    static int aaa = 0;		//temp的数据位置
-    static char[][] char_a = new char[7][5];
-    static String[] strings = new String[7];
-    static int i_string = 0;
-    static int char_string = 0;
-    static char[] char_null = new char[3];
-    static char[] char_unlocked = new char[6];
-    static char[] char_preunlocked = new char[7];
-    static int[] int_unlocked = new int[6];
-    static char[] char_reversal = new char[6];
-    static int num_char_unlocked = 0;
+    static private int[] temp = new int[100];		//点杠
+    static private int temp_num = 0;		//temp的数据位置
+    static private char[][] char_a = new char[7][5];
+    static private String[] strings = new String[7];
+    static private int i_string = 0;
+    static private int char_string = 0;
+    static private char[] char_null = new char[3];
+    static private char[] char_unlocked = new char[6];
+    static private char[] char_preunlocked = new char[7];
+    static private int[] int_unlocked = new int[6];
+    static private char[] char_reversal = new char[6];
+    static private int num_char_unlocked = 0;
 
     static int[] finall = new int[6];
     static int num_mosi = 0;
@@ -308,24 +307,12 @@ public class Algorithm {
 
     /*摩斯电码算法——祁天培添加*/
     public void MOSI_Code(String SrcString, byte[] order_buffer,byte[] order_buffer2) {
+
         i_string = 0;
+        char_string = 0;
+        temp_num = 0;
         num_char_unlocked = 0;
 
-//        static int[] temp = new int[100];		//点杠
-//        static int aaa = 0;		//temp的数据位置
-//        static char[][] char_a = new char[7][5];
-//        static String[] strings = new String[7];
-//
-//        static int char_string = 0;
-//        static char[] char_null = new char[3];
-//        static char[] char_unlocked = new char[6];
-//        static char[] char_preunlocked = new char[7];
-//        static int[] int_unlocked = new int[6];
-//        static char[] char_reversal = new char[6];
-//        static int num_char_unlocked = 0;
-//
-//        static int[] finall = new int[6];
-//        static int num_mosi = 0;
 
 
 
@@ -336,7 +323,7 @@ public class Algorithm {
             for (int i = 0; i < input_char.length; i++) {
                 if (i <= input_char.length) {
                     if (input_char[i] == '-' || input_char[i] == '.') {
-                        temp[aaa++] = i;
+                        temp[temp_num++] = i;
                         char_a[i_string][char_string++] = input_char[i];
                         if (input_char[i + 1] != '-' && input_char[i + 1] != '.') {
                             i_string++;

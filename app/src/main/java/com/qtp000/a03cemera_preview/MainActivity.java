@@ -207,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.button1:
                     Toast.makeText(getApplication(),"Button1",Toast.LENGTH_SHORT).show();
-                    state_camera = 4;
                     Log.e("按键","Button1");
                     cameraCommandUtil.postHttp(IPCamera,4,2);
 //                    cameraCommandUtil.postHttp(IPCamera, 0, 1);
@@ -663,6 +662,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).start();
+
+
+
+
     }
 
 
