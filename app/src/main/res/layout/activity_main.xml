@@ -96,7 +96,7 @@
         android:layout_marginTop="32dp"
         android:text="功能页面"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/car_1" />
 
     <Button
         android:id="@+id/btn_moni1"
@@ -109,12 +109,12 @@
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/car_1"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="128dp"
-        android:text="Button4"
+        android:text="1车牌"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
@@ -124,8 +124,8 @@
         android:layout_height="65dp"
         android:layout_marginStart="360dp"
         android:text="模拟二"
-        app:layout_constraintStart_toEndOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="@+id/button4" />
+        app:layout_constraintStart_toEndOf="@+id/car_1"
+        app:layout_constraintTop_toTopOf="@+id/car_1" />
 
     <Button
         android:id="@+id/old_112"
@@ -183,13 +183,13 @@
         app:layout_constraintTop_toTopOf="@+id/sanjiaoxing" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/car_2"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginStart="24dp"
-        android:text="Button"
-        app:layout_constraintStart_toEndOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="@+id/button4" />
+        android:layout_marginStart="8dp"
+        android:text="2车牌"
+        app:layout_constraintStart_toEndOf="@+id/car_1"
+        app:layout_constraintTop_toTopOf="@+id/car_1" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -201,5 +201,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
+
+    <Button
+        android:id="@+id/car_test"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:text="测车牌"
+        app:layout_constraintStart_toEndOf="@+id/car_2"
+        app:layout_constraintTop_toTopOf="@+id/car_2" />
 
 </android.support.constraint.ConstraintLayout>

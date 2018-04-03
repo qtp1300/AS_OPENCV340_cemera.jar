@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     Button btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
     Button btn_cemera_init,btn_cemera_32,btn_cemera_33,btn_cemera_34,btn_cemera_35,btn_cemera_36,btn_cemera_37,btn_cemera_38,btn_cemera_39;
     Button btn_lingxing,btn_juxing,btn_yuanxing,btn_sanjiao;
+    Button btn_car_1,btn_car_2,btn_car_test;
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
 
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     public static int cemera_step = 1;
     public static boolean moni1 = false;
     public static int QR_time = 0;
+    public static int run_time = 1;
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -238,9 +240,9 @@ public class MainActivity extends AppCompatActivity {
                     textView_isrunning.setText("运行中");
 //                    btn_moni1.setSelected(true);
                     break;
-                case R.id.button4:
-                    Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
-                    break;
+//                case R.id.car_1:
+//                    Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
+//                    break;
                 case R.id.btn_moni2:
                     Toast.makeText(getApplication(),"Button5",Toast.LENGTH_SHORT).show();
                     break;
@@ -254,6 +256,20 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplication(),"停止",Toast.LENGTH_SHORT).show();
                     moni1 = false;
                     break;
+                case R.id.car_1:
+                    run_time = 1;
+                    Toast.makeText(getApplication(),"一轮",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.car_2:
+                    run_time = 2;
+                    Toast.makeText(getApplication(),"二轮",Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.car_test:
+                    run_time = 3;
+                    Toast.makeText(getApplication(),"测试",Toast.LENGTH_SHORT).show();
+                    break;
+
+
             }
 
 
@@ -282,10 +298,14 @@ public class MainActivity extends AppCompatActivity {
 
         btn_function = findViewById(R.id.btn_function);
         btn_moni1 = findViewById(R.id.btn_moni1);
-        bakbtn4 = findViewById(R.id.button4);
+        bakbtn4 = findViewById(R.id.car_1);
         bakbtn5 = findViewById(R.id.btn_moni2);
         btn_old_112 = findViewById(R.id.old_112);
         btn_stop = findViewById(R.id.btn_stop);
+
+        btn_car_1 = findViewById(R.id.car_1);
+        btn_car_2 = findViewById(R.id.car_2);
+        btn_car_test = findViewById(R.id.car_test);
 
 
 
@@ -305,6 +325,11 @@ public class MainActivity extends AppCompatActivity {
         bakbtn5.setOnClickListener(new btnclickListener());
         btn_old_112.setOnClickListener(new btnclickListener());
         btn_stop.setOnClickListener(new btnclickListener());
+
+        btn_car_1.setOnClickListener(new btnclickListener());
+        btn_car_2.setOnClickListener(new btnclickListener());
+        btn_car_test.setOnClickListener(new btnclickListener());
+
 //        btn_up.setOnTouchListener(new btntouchListener());
 //        btn_down.setOnTouchListener(new btntouchListener());
 //        btn_left.setOnTouchListener(new btntouchListener());
@@ -590,6 +615,9 @@ public class MainActivity extends AppCompatActivity {
                 case 212:
                     progressBar.setProgress(98);
                     break;
+                case 213:
+                    progressBar.setProgress(100);
+                    break;
 
 
                 /*自己加的*/
@@ -740,6 +768,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("模拟1状态:","应该结束了");
                 qrHandler.sendEmptyMessage(101);
 //                textView_isrunning.setText("运行结束");
+                qrHandler.sendEmptyMessage(213);
             }
         }).start();
 
