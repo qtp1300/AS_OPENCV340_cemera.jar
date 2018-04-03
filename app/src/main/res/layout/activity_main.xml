@@ -122,7 +122,7 @@
         android:id="@+id/btn_moni2"
         android:layout_width="135dp"
         android:layout_height="65dp"
-        android:layout_marginStart="376dp"
+        android:layout_marginStart="360dp"
         android:text="模拟二"
         app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toTopOf="@+id/button4" />
@@ -151,7 +151,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginStart="24dp"
-        android:text="圆"
+        android:text="圆默认"
         app:layout_constraintStart_toEndOf="@+id/juxing"
         app:layout_constraintTop_toTopOf="@+id/juxing" />
 
@@ -181,5 +181,25 @@
         android:text="运行状态"
         app:layout_constraintStart_toEndOf="@+id/sanjiaoxing"
         app:layout_constraintTop_toTopOf="@+id/sanjiaoxing" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="24dp"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/button4"
+        app:layout_constraintTop_toTopOf="@+id/button4" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
 </android.support.constraint.ConstraintLayout>

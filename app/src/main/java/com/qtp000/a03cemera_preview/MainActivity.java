@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     Button btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
     Button btn_cemera_init,btn_cemera_32,btn_cemera_33,btn_cemera_34,btn_cemera_35,btn_cemera_36,btn_cemera_37,btn_cemera_38,btn_cemera_39;
     Button btn_lingxing,btn_juxing,btn_yuanxing,btn_sanjiao;
-    public static short set_shape = 0x02;
+    public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
+    ProgressBar progressBar;
 
     ImageView imageView;
     ImageButton btn_up;
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
 
-        init_btn();
+        init_view();
         addlistener();
         search();
         Camer_Init();
@@ -259,8 +261,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void init_btn(){
+    private void init_view(){
         btn1 = findViewById(R.id.btn1);
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setMax(100);
 
         imageView = findViewById(R.id.cemera_preview);
         btn_up = findViewById(R.id.btn_up);
@@ -339,6 +343,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+//    public Handler mineHandle = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if(msg.what == 1){
+////                msg.arg1 =
+//            }
+//        }
+//    }
 
     // 图片
     public static Bitmap bitmap;
@@ -538,6 +550,47 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 101:               //
                     textView_isrunning.setText("运行结束");
+//                case 102:
+//                    if (msg.arg1 == 30){
+//
+//                    }
+                 case 201:
+                     progressBar.setProgress(9);
+                     break;
+                case 202:
+                    progressBar.setProgress(18);
+                    break;
+                case 203:
+                    progressBar.setProgress(27);
+                    break;
+                case 204:
+                    progressBar.setProgress(36);
+                    break;
+                case 205:
+                    progressBar.setProgress(45);
+                    break;
+                case 206:
+                    progressBar.setProgress(54);
+                    break;
+                case 207:
+                    progressBar.setProgress(63);
+                    break;
+                case 208:
+                    progressBar.setProgress(72);
+                    break;
+                case 209:
+                    progressBar.setProgress(81);
+                    break;
+                case 210:
+                    progressBar.setProgress(90);
+                    break;
+                case 211:
+                    progressBar.setProgress(94);
+                    break;
+                case 212:
+                    progressBar.setProgress(98);
+                    break;
+
 
                 /*自己加的*/
                 default:

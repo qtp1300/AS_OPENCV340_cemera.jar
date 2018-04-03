@@ -33,6 +33,7 @@ public class Socket_connect {
     public short TAIL = 0xBB;
 
     private Handler qrhandler;
+//    private Handler mineHandle;
     @SuppressWarnings("unused")
     private Context context;
     private Algorithm algorithm;
@@ -43,6 +44,7 @@ public class Socket_connect {
     public Socket_connect(Context context, Handler handler) {
         this.context = context;
         this.qrhandler = handler;
+//        this.mineHandle =
         algorithm = new Algorithm();
     }
 
@@ -1228,7 +1230,9 @@ public class Socket_connect {
         switch (mark) {
             case 5:
                 MainActivity.state_camera = 33;      //一号预设位，正前方
+                qrhandler.sendEmptyMessage(201);
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+                qrhandler.sendEmptyMessage(202);
                 mark = 10;
                 break;
             case 10:
@@ -1236,30 +1240,37 @@ public class Socket_connect {
                 Log.e("等待:","WIFI");
                 //二维码   接受F5    发B4   摄像头向左
                 while (rbyte[2] != (byte) (0xF5)) ; //F5代表到达二维码处，需要摄像头左转
+                qrhandler.sendEmptyMessage(203);
                 Log.e("WiFi收到",new String(rbyte));
                 //识别
                 MainActivity.state_camera = 35;      //二号预设位，左方
+                qrhandler.sendEmptyMessage(204);
+                yanchi(200);
                 qrhandler.sendEmptyMessage(10);
                 mark = -15;
                 break;
 
             case 15:
                 algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+                qrhandler.sendEmptyMessage(205);
                 mark = 20;
                 break;
 
             case 20:
                 send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
+                qrhandler.sendEmptyMessage(206);
                 mark = 25;
                 break;
 
             case 25:
                 //TFT      接收F4    发B2
                 while (rbyte[2] != (byte) (0xF4)) ;
+                qrhandler.sendEmptyMessage(207);
                 MainActivity.state_camera = 37;      //三号预设位，右前方
                 yanchi(2000);
                 //识别形状
                 send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
+                qrhandler.sendEmptyMessage(208);
                 mark = 30;
                 break;
 
@@ -1267,16 +1278,20 @@ public class Socket_connect {
                 //LCD车牌识别
                 //LCD      接收F2    发B3
                 while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
+                qrhandler.sendEmptyMessage(209);
                 MainActivity.state_camera = 39;     //四号预设位，右方
+                qrhandler.sendEmptyMessage(210);
                 yanchi(2000);
                 //车牌识别
                 send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
+                qrhandler.sendEmptyMessage(211);
                 mark = 35;
                 break;
 
 
             case 35:
                 MainActivity.state_camera = 33;        //调用摄像头1
+                qrhandler.sendEmptyMessage(212);
                 mark = 40;
                 break;
 
