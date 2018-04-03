@@ -827,7 +827,7 @@ public class Socket_connect {
         Log.e("发送RFID",Integer.toString(order_data_2[1]));
         THRID = 0x00;
         send();
-//
+
         yanchi(2000);
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xB4;                        //保存红外报警
@@ -1169,6 +1169,7 @@ public class Socket_connect {
                 MainActivity.state_camera = 33;
                 //TFT识别形状
                 while (rbyte[2] != (byte) (0xF4)) ; //F2代表到达TFT，需要识别形状
+                yanchi(2000);
                 //识别形状
                 send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
                 mark = 15;
@@ -1178,6 +1179,7 @@ public class Socket_connect {
                 //LCD车牌识别
                 while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
                 MainActivity.state_camera = 39;
+                yanchi(2000);
                 //车牌识别
                 send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
                 mark = 20;
