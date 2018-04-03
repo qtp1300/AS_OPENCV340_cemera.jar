@@ -208,9 +208,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.button1:
                     Toast.makeText(getApplication(),"Button1",Toast.LENGTH_SHORT).show();
                     Log.e("按键","Button1");
-                    cameraCommandUtil.postHttp(IPCamera,4,2);
-//                    cameraCommandUtil.postHttp(IPCamera, 0, 1);
-//                    phThread.start();
                     break;
                 case R.id.btn_function:
                     Toast.makeText(getApplication(),"跳转至功能页",Toast.LENGTH_SHORT).show();
@@ -278,17 +275,17 @@ public class MainActivity extends AppCompatActivity {
         bakbtn5.setOnClickListener(new btnclickListener());
         btn_old_112.setOnClickListener(new btnclickListener());
         btn_stop.setOnClickListener(new btnclickListener());
-        btn_up.setOnTouchListener(new btntouchListener());
-        btn_down.setOnTouchListener(new btntouchListener());
-        btn_left.setOnTouchListener(new btntouchListener());
-        btn_right.setOnTouchListener(new btntouchListener());
-        bakbtn1.setOnTouchListener(new btntouchListener());
-        btn_function.setOnTouchListener(new btntouchListener());
-        btn_moni1.setOnTouchListener(new btntouchListener());
-        bakbtn4.setOnTouchListener(new btntouchListener());
-        bakbtn5.setOnTouchListener(new btntouchListener());
-        btn_old_112.setOnTouchListener(new btntouchListener());
-        btn_stop.setOnTouchListener(new btntouchListener());
+//        btn_up.setOnTouchListener(new btntouchListener());
+//        btn_down.setOnTouchListener(new btntouchListener());
+//        btn_left.setOnTouchListener(new btntouchListener());
+//        btn_right.setOnTouchListener(new btntouchListener());
+//        bakbtn1.setOnTouchListener(new btntouchListener());
+//        btn_function.setOnTouchListener(new btntouchListener());
+//        btn_moni1.setOnTouchListener(new btntouchListener());
+//        bakbtn4.setOnTouchListener(new btntouchListener());
+//        bakbtn5.setOnTouchListener(new btntouchListener());
+//        btn_old_112.setOnTouchListener(new btntouchListener());
+//        btn_stop.setOnTouchListener(new btntouchListener());
 
 
     }
