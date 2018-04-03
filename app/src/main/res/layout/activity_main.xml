@@ -90,21 +90,22 @@
 
     <Button
         android:id="@+id/btn_function"
-        android:layout_width="135dp"
+        android:layout_width="87dp"
         android:layout_height="65dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:text="功能页面"
-        app:layout_constraintStart_toEndOf="@+id/button1"
-        app:layout_constraintTop_toTopOf="@+id/button1" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
 
     <Button
         android:id="@+id/btn_moni1"
         android:layout_width="135dp"
         android:layout_height="65dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="64dp"
         android:text="模拟一"
-        app:layout_constraintStart_toEndOf="@+id/btn_function"
-        app:layout_constraintTop_toTopOf="@+id/btn_function" />
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button" />
 
     <Button
         android:id="@+id/button4"
@@ -143,5 +144,14 @@
         android:text="停止线程"
         app:layout_constraintStart_toEndOf="@+id/old_112"
         app:layout_constraintTop_toTopOf="@+id/old_112" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="135dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="65dp"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/button1"
+        app:layout_constraintTop_toTopOf="@+id/button1" />
 
 </android.support.constraint.ConstraintLayout>

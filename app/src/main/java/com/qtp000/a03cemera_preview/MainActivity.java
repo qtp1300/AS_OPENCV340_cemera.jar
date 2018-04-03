@@ -233,8 +233,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_stop:
                     Toast.makeText(getApplication(),"停止",Toast.LENGTH_SHORT).show();
-
-
+                    moni1 = false;
                     break;
             }
 
@@ -331,37 +330,37 @@ public class MainActivity extends AppCompatActivity {
             {
                 getBitmap();        //获取并显示摄像头图像
                 switch (state_camera) {
-                    case 1:
-                        cameraCommandUtil.postHttp(IPCamera, 0, 1);
-                        break;
-                    case 2:
-                        cameraCommandUtil.postHttp(IPCamera, 2, 1);
-                        break;
-                    case 3:
-                        cameraCommandUtil.postHttp(IPCamera, 4, 1);
-                        break;
-                    case 4:
-                        cameraCommandUtil.postHttp(IPCamera, 6, 1);
-                        break;
-                    // /预设位1到3
-                    case 5:
-                        cameraCommandUtil.postHttp(IPCamera, 30, 0);
-                        break;
-                    case 6:
-                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
-                        break;
-                    case 7:
-                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
-                        break;
-                    case 8:
-                        cameraCommandUtil.postHttp(IPCamera, 31, 0);
-                        break;
-                    case 9:
-                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
-                        break;
-                    case 10:
-                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
-                        break;
+//                    case 1:
+//                        cameraCommandUtil.postHttp(IPCamera, 0, 1);
+//                        break;
+//                    case 2:
+//                        cameraCommandUtil.postHttp(IPCamera, 2, 1);
+//                        break;
+//                    case 3:
+//                        cameraCommandUtil.postHttp(IPCamera, 4, 1);
+//                        break;
+//                    case 4:
+//                        cameraCommandUtil.postHttp(IPCamera, 6, 1);
+//                        break;
+//                    // /预设位1到3
+//                    case 5:
+//                        cameraCommandUtil.postHttp(IPCamera, 30, 0);
+//                        break;
+//                    case 6:
+//                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
+//                        break;
+//                    case 7:
+//                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
+//                        break;
+//                    case 8:
+//                        cameraCommandUtil.postHttp(IPCamera, 31, 0);
+//                        break;
+//                    case 9:
+//                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
+//                        break;
+//                    case 10:
+//                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
+//                        break;
                     /*自己加的*/
                     case 25:
                         cameraCommandUtil.postHttp(IPCamera,25,0);
