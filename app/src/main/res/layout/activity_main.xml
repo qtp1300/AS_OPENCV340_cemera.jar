@@ -79,12 +79,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button1"
-        android:layout_width="135dp"
+        android:id="@+id/lingxing"
+        android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="28dp"
-        android:text="Button1"
+        android:text="菱"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
@@ -102,27 +102,28 @@
         android:id="@+id/btn_moni1"
         android:layout_width="135dp"
         android:layout_height="65dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="28dp"
         android:text="模拟一"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/sanjiaoxing"
+        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="135dp"
+        android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="128dp"
         android:text="Button4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/btn_moni2"
         android:layout_width="135dp"
         android:layout_height="65dp"
-        android:layout_marginStart="265dp"
-        android:text="Button5"
+        android:layout_marginStart="376dp"
+        android:text="模拟二"
         app:layout_constraintStart_toEndOf="@+id/button4"
         app:layout_constraintTop_toTopOf="@+id/button4" />
 
@@ -146,12 +147,39 @@
         app:layout_constraintTop_toTopOf="@+id/old_112" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="135dp"
+        android:id="@+id/yuanxing"
+        android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginStart="65dp"
-        android:text="Button"
-        app:layout_constraintStart_toEndOf="@+id/button1"
-        app:layout_constraintTop_toTopOf="@+id/button1" />
+        android:layout_marginStart="24dp"
+        android:text="圆"
+        app:layout_constraintStart_toEndOf="@+id/juxing"
+        app:layout_constraintTop_toTopOf="@+id/juxing" />
+
+    <Button
+        android:id="@+id/juxing"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="24dp"
+        android:text="1矩"
+        app:layout_constraintStart_toEndOf="@+id/lingxing"
+        app:layout_constraintTop_toTopOf="@+id/lingxing" />
+
+    <Button
+        android:id="@+id/sanjiaoxing"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="24dp"
+        android:text="2三角"
+        app:layout_constraintStart_toEndOf="@+id/yuanxing"
+        app:layout_constraintTop_toTopOf="@+id/yuanxing" />
+
+    <TextView
+        android:id="@+id/isrunning"
+        android:layout_width="wrap_content"
+        android:layout_height="63dp"
+        android:layout_marginStart="8dp"
+        android:text="运行状态"
+        app:layout_constraintStart_toEndOf="@+id/sanjiaoxing"
+        app:layout_constraintTop_toTopOf="@+id/sanjiaoxing" />
 
 </android.support.constraint.ConstraintLayout>

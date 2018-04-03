@@ -41,15 +41,17 @@ import static com.qtp000.a03cemera_preview.FunctionActivity.result;
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
-    Button bakbtn1, btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
+    Button btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
     Button btn_cemera_init,btn_cemera_32,btn_cemera_33,btn_cemera_34,btn_cemera_35,btn_cemera_36,btn_cemera_37,btn_cemera_38,btn_cemera_39;
+    Button btn_lingxing,btn_juxing,btn_yuanxing,btn_sanjiao;
+    public static short set_shape = 0x02;
 
     ImageView imageView;
     ImageButton btn_up;
     ImageButton btn_down;
     ImageButton btn_left;
     ImageButton btn_right;
-    TextView textView;
+    TextView textView,textView_isrunning;
     public static int state_camera;
     public static final String A_S = "com.a_s";
     private CameraCommandUtil cameraCommandUtil;
@@ -205,9 +207,22 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast_down = Toast.makeText(getApplicationContext(),"下",Toast.LENGTH_SHORT);
                     toast_down.show();
                     break;
-                case R.id.button1:
-                    Toast.makeText(getApplication(),"Button1",Toast.LENGTH_SHORT).show();
-                    Log.e("按键","Button1");
+                case R.id.lingxing:
+                    Toast.makeText(getApplication(),"菱形 0x04",Toast.LENGTH_SHORT).show();
+                    set_shape = 0x04;
+//                    Log.e("按键","Button1");
+                    break;
+                case R.id.juxing:
+                    Toast.makeText(getApplication(),"矩形 0x01",Toast.LENGTH_SHORT).show();
+                    set_shape = 0x01;
+                    break;
+                case R.id.yuanxing:
+                    Toast.makeText(getApplication(),"圆形 0x02",Toast.LENGTH_SHORT).show();
+                    set_shape = 0x02;
+                    break;
+                case R.id.sanjiaoxing:
+                    Toast.makeText(getApplication(),"三角形 0x03",Toast.LENGTH_SHORT).show();
+                    set_shape = 0x03;
                     break;
                 case R.id.btn_function:
                     Toast.makeText(getApplication(),"跳转至功能页",Toast.LENGTH_SHORT).show();
@@ -218,11 +233,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_moni1:
                     Toast.makeText(getApplication(),"模拟1",Toast.LENGTH_SHORT).show();
                     to_run_moni1();
+                    textView_isrunning.setText("运行中");
+//                    btn_moni1.setSelected(true);
                     break;
                 case R.id.button4:
                     Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
                     break;
-                case R.id.button5:
+                case R.id.btn_moni2:
                     Toast.makeText(getApplication(),"Button5",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.old_112:
@@ -251,12 +268,18 @@ public class MainActivity extends AppCompatActivity {
         btn_right = findViewById(R.id.btn_right);
         btn_down = findViewById(R.id.btn_down);
         textView = findViewById(R.id.textView);
+        textView_isrunning = findViewById(R.id.isrunning);
 
-        bakbtn1 = findViewById(R.id.button1);
+        btn_lingxing = findViewById(R.id.lingxing);
+        btn_juxing = findViewById(R.id.juxing);
+        btn_yuanxing = findViewById(R.id.yuanxing);
+        btn_sanjiao = findViewById(R.id.sanjiaoxing);
+
+
         btn_function = findViewById(R.id.btn_function);
         btn_moni1 = findViewById(R.id.btn_moni1);
         bakbtn4 = findViewById(R.id.button4);
-        bakbtn5 = findViewById(R.id.button5);
+        bakbtn5 = findViewById(R.id.btn_moni2);
         btn_old_112 = findViewById(R.id.old_112);
         btn_stop = findViewById(R.id.btn_stop);
 
@@ -267,7 +290,11 @@ public class MainActivity extends AppCompatActivity {
     private  void addlistener(){
         btn1.setOnClickListener(new btnclickListener());
 
-        bakbtn1.setOnClickListener(new btnclickListener());
+        btn_lingxing.setOnClickListener(new btnclickListener());
+        btn_juxing.setOnClickListener(new btnclickListener());
+        btn_yuanxing.setOnClickListener(new btnclickListener());
+        btn_sanjiao.setOnClickListener(new btnclickListener());
+
         btn_function.setOnClickListener(new btnclickListener());
         btn_moni1.setOnClickListener(new btnclickListener());
         bakbtn4.setOnClickListener(new btnclickListener());
@@ -278,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
 //        btn_down.setOnTouchListener(new btntouchListener());
 //        btn_left.setOnTouchListener(new btntouchListener());
 //        btn_right.setOnTouchListener(new btntouchListener());
-//        bakbtn1.setOnTouchListener(new btntouchListener());
+//        btn_lingxing.setOnTouchListener(new btntouchListener());
 //        btn_function.setOnTouchListener(new btntouchListener());
 //        btn_moni1.setOnTouchListener(new btntouchListener());
 //        bakbtn4.setOnTouchListener(new btntouchListener());
@@ -510,6 +537,7 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("识别结果"+ result);
                     break;
                 case 101:               //
+                    textView_isrunning.setText("运行结束");
 
                 /*自己加的*/
                 default:
@@ -654,8 +682,11 @@ public class MainActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 while(moni1)
                 {
-                    socket_connect.moni1_3();
+                    socket_connect.moni1_4();
                 }
+                Log.e("模拟1状态:","应该结束了");
+                qrHandler.sendEmptyMessage(101);
+//                textView_isrunning.setText("运行结束");
             }
         }).start();
 

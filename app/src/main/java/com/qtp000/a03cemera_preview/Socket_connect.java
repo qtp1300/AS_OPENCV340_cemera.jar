@@ -751,7 +751,7 @@ public class Socket_connect {
         SECOND = (short) fulfil_dot;
         THRID = (short) 0x00;
         send();
-        while (rbyte[2] != (byte) (0xF4)) ;        //等待 小车到达TFT标志物
+//        while (rbyte[2] != (byte) (0xF4)) ;        //等待 小车到达TFT标志物
 /*        while (rbyte[2] != (byte) (0xC1)) ;        //等待 小车到达TFT标志物*/
     }
 
@@ -1024,7 +1024,9 @@ public class Socket_connect {
 
 
     public void send_TFT_value() {
-        short same = 0x02;
+
+        short same;
+        same = MainActivity.set_shape;
         MAJOR = 0x10;
         FIRST = same;                // 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
         SECOND = same;
@@ -1046,21 +1048,29 @@ public class Socket_connect {
     }
 
     public void send_LCD_value() {
+        //AI57N9
+        infrared((byte) 0x41, (byte) 0x49, (byte) 0x35, (byte) 0x37, (byte) 0x4E, (byte) 0x39);
         //B830R5  (7-1)
         //0x42 0x38 0x33 0x00 0x52 0x35
         //H495R6  (7-2)
         //0x48 0x34 0x39 0x35 0x52 0x36
         //P779G9
         //0x50 0x37 0x37 0x39 0x47 0x39
-        //C423Q8            一轮
+        //C423Q8
         //0x43 0x34 0x32 0x33 0x51 0x38
-        infrared((byte) 0x43, (byte) 0x34, (byte) 0x32, (byte) 0x33, (byte) 0x51, (byte) 0x38);    //发送车牌识别结果
-        //L6683B            二轮
+        //infrared((byte) 0x43, (byte) 0x34, (byte) 0x32, (byte) 0x33, (byte) 0x51, (byte) 0x38);    //发送车牌识别结果
+        //L6683B
         //0x4C 0x36 0x36 0x38 0x33 0x42
         //infrared((byte) 0x4C, (byte) 0x36, (byte) 0x36, (byte) 0x38, (byte) 0x33, (byte) 0x42);    //发送车牌识别结果
-        //A886F7            测试
+        //A886F7
         //0x41 0x38 0x38 0x36 0x46 0x37
-//        infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
+        //infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
+        //0x46 0x35 0x37 0x33 0x59 0x38    第一轮
+//        infrared((byte) 0x46, (byte) 0x35, (byte) 0x37, (byte) 0x33, (byte) 0x59, (byte) 0x38);    //发送车牌识别结果
+        //0x4A 0x33 0x38 0x36 0x44 0x34     第二轮
+//        infrared((byte) 0x4A, (byte) 0x33, (byte) 0x38, (byte) 0x36, (byte) 0x44, (byte) 0x34);    //发送车牌识别结果
+        //0x41 0x38 0x38 0x36 0x46 0x37     测试
+        //infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
 
 //        infrared((byte) 0x43, (byte) 0x34, (byte) 0x32,
 //                (byte) 0x33, (byte) 0x51, (byte) 0x38);    //发送车牌识别结果
@@ -1221,11 +1231,12 @@ public class Socket_connect {
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 mark = 10;
                 break;
-
-
             case 10:
+//                MainActivity.state_camera = 37;
+                Log.e("等待:","WIFI");
                 //二维码   接受F5    发B4   摄像头向左
                 while (rbyte[2] != (byte) (0xF5)) ; //F5代表到达二维码处，需要摄像头左转
+                Log.e("WiFi收到",new String(rbyte));
                 //识别
                 MainActivity.state_camera = 35;      //二号预设位，左方
                 qrhandler.sendEmptyMessage(10);
@@ -1260,7 +1271,7 @@ public class Socket_connect {
                 yanchi(2000);
                 //车牌识别
                 send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
-                mark = 20;
+                mark = 35;
                 break;
 
 
