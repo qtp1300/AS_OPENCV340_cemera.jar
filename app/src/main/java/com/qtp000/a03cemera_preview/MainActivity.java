@@ -39,6 +39,7 @@ import java.util.TimerTask;
 
 import static com.qtp000.a03cemera_preview.FunctionActivity.result;
 
+
 public class MainActivity extends AppCompatActivity {
 
     Button btn1;
