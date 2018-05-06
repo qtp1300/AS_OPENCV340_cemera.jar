@@ -32,6 +32,11 @@ android {
             path "CMakeLists.txt"
         }
     }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -44,4 +49,7 @@ dependencies {
     implementation project(':openCVLibrary340')
     implementation files('libs/camerautil.jar')
     implementation files('libs/core.jar')
+    compile(name:'usbSerialForAndroid-debug', ext:'aar')
+    compile(name:'WaitProgressDialog-debug', ext:'aar')
+    compile(name:'BottomNavigationViewLibrary-debug', ext:'aar')
 }

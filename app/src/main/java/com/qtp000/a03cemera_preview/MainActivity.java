@@ -1,12 +1,16 @@
 package com.qtp000.a03cemera_preview;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbManager;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -31,8 +35,15 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.hoho.android.usbserial.util.HexDump;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -97,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         // Example of a call to a native method
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
@@ -105,7 +119,12 @@ public class MainActivity extends AppCompatActivity {
         addlistener();
         search();
         Camer_Init();
-        wifi_Init();
+
+        //wifi_Init();                    //用wifi时启用这个
+        ethernet_Init();                //用有线时启用这个
+
+        //serial_Init();
+
         socket_connect = new Socket_connect(this,qrHandler);
         connect_thread();
         fmod = new Function_method(socket_connect,state_camera,MainActivity.this);
@@ -356,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent arg1)
         {
             IPCamera = arg1.getStringExtra("IP");
+            Values.purecameraip = arg1.getStringExtra("pureip");
             phThread.start();
         }
     };
@@ -365,7 +385,14 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 10)
             {
+                Log.e("显示图片：","已经进行到此步骤");
                 imageView.setImageBitmap(bitmap);
+                if(bitmap == null || bitmap.equals("")){
+                    Log.e("图片：","为空");
+                }
+                else {
+                    Log.e("图片：","不空");
+                }
             }
         }
     };
@@ -490,6 +517,124 @@ public class MainActivity extends AppCompatActivity {
         dhcpInfo = wifiManager.getDhcpInfo();
         IPCar = Formatter.formatIpAddress(dhcpInfo.gateway);
     }
+    private void ethernet_Init(){
+        Intent ipintent = new Intent();
+        //ComponentName的参数1:目标app的包名,参数2:目标app的Service完整类名
+        ipintent.setComponent(new ComponentName("com.android.settings", "com.android.settings.ethernet.CameraInitService"));
+        //设置要传送的数据
+        ipintent.putExtra("purecameraip", Values.purecameraip);
+        startService(ipintent);   //摄像头设为静态192.168.16.20时，可以不用发送
+
+    }
+
+//    private static final int MESSAGE_REFRESH= 101;
+//    private static final long REFRESH_TIMEOUT_MILLIS = 5000;
+//    private UsbManager mUsbManager;
+//    private List<UsbSerialPort> mEntries = new ArrayList<UsbSerialPort>();
+//    private final String TAG = FirstActivity.class.getSimpleName();
+    private void serial_Init(){
+//        mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS); //启动usb的识别和获取
+//        Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
+    }
+//
+//
+//    private final Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case MESSAGE_REFRESH:
+//                    refreshDeviceList();
+//                    break;
+//                default:
+//                    super.handleMessage(msg);
+//                    break;
+//            }
+//        }
+//    };
+
+//    private void refreshDeviceList() {
+//        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//        new AsyncTask<Void, Void, List<UsbSerialPort>>() {
+//            @Override
+//            protected List<UsbSerialPort> doInBackground(Void... params) {
+//                Log.e(TAG, "Refreshing device list ...");
+//                Log.e("mUsbManager is :","  "+mUsbManager);
+//                final List<UsbSerialDriver> drivers =
+//                        UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
+//
+//                final List<UsbSerialPort> result = new ArrayList<UsbSerialPort>();
+//                for (final UsbSerialDriver driver : drivers) {
+//                    final List<UsbSerialPort> ports = driver.getPorts();
+//                    Log.e(TAG, String.format("+ %s: %s port%s",
+//                            driver, Integer.valueOf(ports.size()), ports.size() == 1 ? "" : "s"));
+//                    result.addAll(ports);
+//                }
+//                return result;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<UsbSerialPort> result) {
+//                mEntries.clear();
+//                mEntries.addAll(result);
+//                usbHandler.sendEmptyMessage(2);
+//                Log.e(TAG, "Done refreshing, " + mEntries.size() + " entries found.");
+//            }
+//        }.execute((Void) null);
+//    }
+
+//    private Handler usbHandler =new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if(msg.what ==2) {
+//                useUsbtoserial();
+//            }
+//        }
+//    };
+
+//    private void useUsbtoserial()
+//    {
+//        final UsbSerialPort port = mEntries.get(0);  //A72上只有一个 usb转串口，用position =0即可
+//        final UsbSerialDriver driver = port.getDriver();
+//        final UsbDevice device = driver.getDevice();
+//        final String usbid = String.format("Vendor %s  ，Product %s",
+//                HexDump.toHexString((short) device.getVendorId()),
+//                HexDump.toHexString((short) device.getProductId()));
+//        Message msg =LeftFragment.showidHandler.obtainMessage(22,usbid);
+//        msg.sendToTarget();
+//        FirstActivity.sPort = port;
+//        if(sPort !=null) {
+//            controlusb();  //使用usb功能
+//        }
+//    }
+
+//    protected void controlusb() {
+//        Log.e(TAG, "Resumed, port=" + sPort);
+//        if (sPort == null) {
+//            Toast.makeText(FirstActivity.this,"No serial device.",Toast.LENGTH_SHORT).show();
+//        } else {
+//            openUsbDevice();
+//            if (connection == null) {
+//                mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);
+//                Toast.makeText(FirstActivity.this,"Opening device failed",Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            try {
+//                sPort.open(connection);
+//                sPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+//            } catch (IOException e) {
+//                Toast.makeText(FirstActivity.this,"Error opening device: ",Toast.LENGTH_SHORT).show();
+//                try {
+//                    sPort.close();
+//                } catch (IOException e2) {
+//                }
+//                sPort = null;
+//                return;
+//            }
+//            Toast.makeText(FirstActivity.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
+//        }
+//        onDeviceStateChange();
+//        Transparent.dismiss();//关闭加载对话框
+//    }
 
     // 二维码、车牌处理
     public	Handler qrHandler = new Handler() {

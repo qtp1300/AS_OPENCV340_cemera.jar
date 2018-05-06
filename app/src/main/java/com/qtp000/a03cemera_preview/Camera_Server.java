@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.bkrcl.control_car_video.camerautil.SearchCameraUtil;
 
@@ -76,6 +77,9 @@ public class Camera_Server extends Service{
             if(msg.what == 10){
                 Intent intent = new Intent(MainActivity.A_S);
                 intent.putExtra("IP",IP+":81");
+
+                intent.putExtra("pureip",IP);//官方新增
+
                 sendBroadcast(intent);
                 Camera_Server.this.stopSelf();
             }
