@@ -1,214 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qtp000.a03cemera_preview.MainActivity">
+    android:background="@color/green">
 
     <Button
-        android:id="@+id/btn1"
-        android:layout_width="124dp"
-        android:layout_height="76dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="376dp"
-        android:text="@string/btn1_string"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
-
-    <ImageView
-        android:id="@+id/cemera_preview"
-        android:layout_width="0dp"
-        android:layout_height="338dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="3dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher" />
-
-    <ImageButton
-        android:id="@+id/btn_up"
-        android:layout_width="117dp"
-        android:layout_height="117dp"
-        android:layout_marginStart="240dp"
-        android:layout_marginTop="108dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
-        app:srcCompat="@drawable/up" />
-
-    <ImageButton
-        android:id="@+id/btn_down"
-        android:layout_width="117dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="64dp"
-        app:layout_constraintStart_toEndOf="@+id/btn_left"
-        app:layout_constraintTop_toBottomOf="@+id/btn_up"
-        app:srcCompat="@drawable/down" />
-
-    <ImageButton
-        android:id="@+id/btn_left"
-        android:layout_width="117dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="196dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_up"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
-        app:srcCompat="@drawable/left" />
-
-    <ImageButton
-        android:id="@+id/btn_right"
-        android:layout_width="117dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="196dp"
-        app:layout_constraintStart_toEndOf="@+id/btn_up"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview"
-        app:srcCompat="@drawable/right" />
+        android:id="@+id/btn_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="进入程序" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="428dp"
-        android:layout_height="69dp"
-        android:layout_marginBottom="1dp"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/lingxing"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
-        android:text="菱"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
-
-    <Button
-        android:id="@+id/btn_function"
-        android:layout_width="87dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="功能页面"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/car_1" />
-
-    <Button
-        android:id="@+id/btn_moni1"
-        android:layout_width="135dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="28dp"
-        android:text="模拟一"
-        app:layout_constraintStart_toEndOf="@+id/sanjiaoxing"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
-
-    <Button
-        android:id="@+id/car_1"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="128dp"
-        android:text="1车牌"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
-
-    <Button
-        android:id="@+id/btn_moni2"
-        android:layout_width="135dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="360dp"
-        android:text="模拟二"
-        app:layout_constraintStart_toEndOf="@+id/car_1"
-        app:layout_constraintTop_toTopOf="@+id/car_1" />
-
-    <Button
-        android:id="@+id/old_112"
-        android:layout_width="135dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="316dp"
-        android:text="原112"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
-
-    <Button
-        android:id="@+id/btn_stop"
-        android:layout_width="135dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="265dp"
-        android:text="停止线程"
-        app:layout_constraintStart_toEndOf="@+id/old_112"
-        app:layout_constraintTop_toTopOf="@+id/old_112" />
-
-    <Button
-        android:id="@+id/yuanxing"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="24dp"
-        android:text="圆默认"
-        app:layout_constraintStart_toEndOf="@+id/juxing"
-        app:layout_constraintTop_toTopOf="@+id/juxing" />
-
-    <Button
-        android:id="@+id/juxing"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="24dp"
-        android:text="1矩"
-        app:layout_constraintStart_toEndOf="@+id/lingxing"
-        app:layout_constraintTop_toTopOf="@+id/lingxing" />
-
-    <Button
-        android:id="@+id/sanjiaoxing"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="24dp"
-        android:text="2三角"
-        app:layout_constraintStart_toEndOf="@+id/yuanxing"
-        app:layout_constraintTop_toTopOf="@+id/yuanxing" />
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="50sp"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"
+        android:text="串口子程序实例"
+        android:layout_weight="3"/>
 
     <TextView
-        android:id="@+id/isrunning"
-        android:layout_width="wrap_content"
-        android:layout_height="63dp"
-        android:layout_marginStart="8dp"
-        android:text="运行状态"
-        app:layout_constraintStart_toEndOf="@+id/sanjiaoxing"
-        app:layout_constraintTop_toTopOf="@+id/sanjiaoxing" />
+        android:id="@+id/rvdata"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:text="空"
+        android:layout_weight="2"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/speed"
+            android:textSize="20dp"
+            />
+        <EditText
+            android:id="@+id/speed_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:text="@string/sp_data"
+            android:inputType="number"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/coded_disc"
+            android:textSize="20dp"
+            />
+        <EditText
+            android:id="@+id/coded_disc_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_horizontal"
+            android:text="@string/cd_data"
+            android:inputType="number"
+            />
 
-    <Button
-        android:id="@+id/car_2"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:text="2车牌"
-        app:layout_constraintStart_toEndOf="@+id/car_1"
-        app:layout_constraintTop_toTopOf="@+id/car_1" />
+    </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
-        android:layout_height="26dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_weight="6"
+        >
+        <ImageButton
+            android:id="@+id/up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/upbutton_img" />
+        <ImageButton
+            android:id="@+id/stop_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/up_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/stopbutton_img" />
 
-    <Button
-        android:id="@+id/car_test"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:text="测车牌"
-        app:layout_constraintStart_toEndOf="@+id/car_2"
-        app:layout_constraintTop_toTopOf="@+id/car_2" />
+        <ImageButton
+            android:id="@+id/below_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/stop_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/belowbutton_img" />
 
-</android.support.constraint.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/stop_button"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/up_button"
+            android:background="@drawable/rightbutton_img" />
+
+        <ImageButton
+            android:id="@+id/left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/below_button"
+            android:layout_marginRight="40dp"
+            android:layout_toLeftOf="@+id/up_button"
+            android:background="@drawable/leftbutton_img" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -96,9 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
+        setContentView(R.layout.old_activity_main);
 
 
         // Example of a call to a native method
@@ -121,78 +118,73 @@ public class MainActivity extends AppCompatActivity {
         fmod = new Function_method(socket_connect,state_camera,MainActivity.this);
 
         FunctionActivity.set_handle(this.qrHandler);
-//        fmod.set_handle(this.qrHandler);/*qrhandler phhandler  rehandler*/
-//        qrHandler.sendEmptyMessage(31);
-
-
-
 
     }
 
 
-    class btntouchListener implements View.OnTouchListener{
-
-
-
-        /**
-         * Called when a touch event is dispatched to a view. This allows listeners to
-         * get a chance to respond before the target view.
-         *
-         * @param v     The view the touch event has been dispatched to.
-         * @param event The MotionEvent object containing full information about
-         *              the event.
-         * @return True if the listener has consumed the event, false otherwise.
-         */
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN){
-                switch (v.getId()){
-                    case R.id.btn_up:
-                        btn_up.setImageResource(R.drawable.up2);
-                        break;
-                    case R.id.btn_down:
-                        btn_down.setImageResource(R.drawable.down2);
-                        break;
-                    case R.id.btn_left:
-                        btn_left.setImageResource(R.drawable.left2);
-                        break;
-                    case R.id.btn_right:
-                        btn_right.setImageResource(R.drawable.right2);
-                        break;
-                }
-                //获取到的差值相同
-//                if (v.getId() == R.id.btn_up){
-//                    Log.e("EventTime",String.valueOf(event.getEventTime()));
-//                    Log.e("DownTime",String.valueOf(event.getDownTime()));
-//                    Log.e("差",String.valueOf(event.getEventTime() - event.getDownTime()));
-//                }
-
-            }
-            if (event.getAction() == MotionEvent.ACTION_UP){
-                switch (v.getId()){
-                    case R.id.btn_up:
-                        btn_up.setImageResource(R.drawable.up);
-                        socket_connect.go(40,70);
-                        break;
-                    case R.id.btn_down:
-                        btn_down.setImageResource(R.drawable.down);
-                        socket_connect.back(40,70);
-                        break;
-                    case R.id.btn_left:
-                        btn_left.setImageResource(R.drawable.left);
-                        break;
-                    case R.id.btn_right:
-                        btn_right.setImageResource(R.drawable.right);
-                        break;
-//                    case R.id.btn_moni1:
-//                        to_run_moni1();
+//    class btntouchListener implements View.OnTouchListener{
+//
+//
+//
+//        /**
+//         * Called when a touch event is dispatched to a view. This allows listeners to
+//         * get a chance to respond before the target view.
+//         *
+//         * @param v     The view the touch event has been dispatched to.
+//         * @param event The MotionEvent object containing full information about
+//         *              the event.
+//         * @return True if the listener has consumed the event, false otherwise.
+//         */
+//        @Override
+//        public boolean onTouch(View v, MotionEvent event) {
+//            if (event.getAction() == MotionEvent.ACTION_DOWN){
+//                switch (v.getId()){
+//                    case R.id.btn_up:
+//                        btn_up.setImageResource(R.drawable.up2);
 //                        break;
-                }
-            }
-            return false;
-        }
-
-    }
+//                    case R.id.btn_down:
+//                        btn_down.setImageResource(R.drawable.down2);
+//                        break;
+//                    case R.id.btn_left:
+//                        btn_left.setImageResource(R.drawable.left2);
+//                        break;
+//                    case R.id.btn_right:
+//                        btn_right.setImageResource(R.drawable.right2);
+//                        break;
+//                }
+//                //获取到的差值相同
+////                if (v.getId() == R.id.btn_up){
+////                    Log.e("EventTime",String.valueOf(event.getEventTime()));
+////                    Log.e("DownTime",String.valueOf(event.getDownTime()));
+////                    Log.e("差",String.valueOf(event.getEventTime() - event.getDownTime()));
+////                }
+//
+//            }
+//            if (event.getAction() == MotionEvent.ACTION_UP){
+//                switch (v.getId()){
+//                    case R.id.btn_up:
+//                        btn_up.setImageResource(R.drawable.up);
+//                        socket_connect.go(40,70);
+//                        break;
+//                    case R.id.btn_down:
+//                        btn_down.setImageResource(R.drawable.down);
+//                        socket_connect.back(40,70);
+//                        break;
+//                    case R.id.btn_left:
+//                        btn_left.setImageResource(R.drawable.left);
+//                        break;
+//                    case R.id.btn_right:
+//                        btn_right.setImageResource(R.drawable.right);
+//                        break;
+////                    case R.id.btn_moni1:
+////                        to_run_moni1();
+////                        break;
+//                }
+//            }
+//            return false;
+//        }
+//
+//    }
 
     class btnclickListener implements View.OnClickListener{
         @Override
@@ -377,12 +369,12 @@ public class MainActivity extends AppCompatActivity {
             {
 //                Log.e("显示图片：","已经进行到此步骤");
                 imageView.setImageBitmap(bitmap);
-//                if(bitmap == null || bitmap.equals("")){
-//                    Log.e("图片：","为空");
-//                }
-//                else {
-//                    Log.e("图片：","不空");
-//                }
+                if(bitmap == null || bitmap.equals("")){
+                    Log.e("图片：","为空");
+                }
+                else {
+                    Log.e("图片：","不空");
+                }
             }
         }
     };
@@ -517,114 +509,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    private static final int MESSAGE_REFRESH= 101;
-//    private static final long REFRESH_TIMEOUT_MILLIS = 5000;
-//    private UsbManager mUsbManager;
-//    private List<UsbSerialPort> mEntries = new ArrayList<UsbSerialPort>();
-//    private final String TAG = FirstActivity.class.getSimpleName();
-    private void serial_Init(){
-//        mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS); //启动usb的识别和获取
-//        Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
-    }
-//
-//
-//    private final Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case MESSAGE_REFRESH:
-//                    refreshDeviceList();
-//                    break;
-//                default:
-//                    super.handleMessage(msg);
-//                    break;
-//            }
-//        }
-//    };
-
-//    private void refreshDeviceList() {
-//        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-//        new AsyncTask<Void, Void, List<UsbSerialPort>>() {
-//            @Override
-//            protected List<UsbSerialPort> doInBackground(Void... params) {
-//                Log.e(TAG, "Refreshing device list ...");
-//                Log.e("mUsbManager is :","  "+mUsbManager);
-//                final List<UsbSerialDriver> drivers =
-//                        UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
-//
-//                final List<UsbSerialPort> result = new ArrayList<UsbSerialPort>();
-//                for (final UsbSerialDriver driver : drivers) {
-//                    final List<UsbSerialPort> ports = driver.getPorts();
-//                    Log.e(TAG, String.format("+ %s: %s port%s",
-//                            driver, Integer.valueOf(ports.size()), ports.size() == 1 ? "" : "s"));
-//                    result.addAll(ports);
-//                }
-//                return result;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<UsbSerialPort> result) {
-//                mEntries.clear();
-//                mEntries.addAll(result);
-//                usbHandler.sendEmptyMessage(2);
-//                Log.e(TAG, "Done refreshing, " + mEntries.size() + " entries found.");
-//            }
-//        }.execute((Void) null);
-//    }
-
-//    private Handler usbHandler =new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if(msg.what ==2) {
-//                useUsbtoserial();
-//            }
-//        }
-//    };
-
-//    private void useUsbtoserial()
-//    {
-//        final UsbSerialPort port = mEntries.get(0);  //A72上只有一个 usb转串口，用position =0即可
-//        final UsbSerialDriver driver = port.getDriver();
-//        final UsbDevice device = driver.getDevice();
-//        final String usbid = String.format("Vendor %s  ，Product %s",
-//                HexDump.toHexString((short) device.getVendorId()),
-//                HexDump.toHexString((short) device.getProductId()));
-//        Message msg =LeftFragment.showidHandler.obtainMessage(22,usbid);
-//        msg.sendToTarget();
-//        FirstActivity.sPort = port;
-//        if(sPort !=null) {
-//            controlusb();  //使用usb功能
-//        }
-//    }
-
-//    protected void controlusb() {
-//        Log.e(TAG, "Resumed, port=" + sPort);
-//        if (sPort == null) {
-//            Toast.makeText(FirstActivity.this,"No serial device.",Toast.LENGTH_SHORT).show();
-//        } else {
-//            openUsbDevice();
-//            if (connection == null) {
-//                mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);
-//                Toast.makeText(FirstActivity.this,"Opening device failed",Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            try {
-//                sPort.open(connection);
-//                sPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-//            } catch (IOException e) {
-//                Toast.makeText(FirstActivity.this,"Error opening device: ",Toast.LENGTH_SHORT).show();
-//                try {
-//                    sPort.close();
-//                } catch (IOException e2) {
-//                }
-//                sPort = null;
-//                return;
-//            }
-//            Toast.makeText(FirstActivity.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
-//        }
-//        onDeviceStateChange();
-//        Transparent.dismiss();//关闭加载对话框
-//    }
 
     // 二维码、车牌处理
     public	Handler qrHandler = new Handler() {
@@ -907,11 +791,129 @@ public class MainActivity extends AppCompatActivity {
                 qrHandler.sendEmptyMessage(213);
             }
         }).start();
-
-
-
-
     }
+
+
+
+    /////////////////////////////////////////////////////
+    //串口初始化
+
+    //    private static final int MESSAGE_REFRESH= 101;
+//    private static final long REFRESH_TIMEOUT_MILLIS = 5000;
+//    private UsbManager mUsbManager;
+//    private List<UsbSerialPort> mEntries = new ArrayList<UsbSerialPort>();
+//    private final String TAG = FirstActivity.class.getSimpleName();
+    private void serial_Init(){
+//        mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS); //启动usb的识别和获取
+//        Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
+    }
+//
+//
+//    private final Handler mHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case MESSAGE_REFRESH:
+//                    refreshDeviceList();
+//                    break;
+//                default:
+//                    super.handleMessage(msg);
+//                    break;
+//            }
+//        }
+//    };
+
+//    private void refreshDeviceList() {
+//        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+//        new AsyncTask<Void, Void, List<UsbSerialPort>>() {
+//            @Override
+//            protected List<UsbSerialPort> doInBackground(Void... params) {
+//                Log.e(TAG, "Refreshing device list ...");
+//                Log.e("mUsbManager is :","  "+mUsbManager);
+//                final List<UsbSerialDriver> drivers =
+//                        UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
+//
+//                final List<UsbSerialPort> result = new ArrayList<UsbSerialPort>();
+//                for (final UsbSerialDriver driver : drivers) {
+//                    final List<UsbSerialPort> ports = driver.getPorts();
+//                    Log.e(TAG, String.format("+ %s: %s port%s",
+//                            driver, Integer.valueOf(ports.size()), ports.size() == 1 ? "" : "s"));
+//                    result.addAll(ports);
+//                }
+//                return result;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<UsbSerialPort> result) {
+//                mEntries.clear();
+//                mEntries.addAll(result);
+//                usbHandler.sendEmptyMessage(2);
+//                Log.e(TAG, "Done refreshing, " + mEntries.size() + " entries found.");
+//            }
+//        }.execute((Void) null);
+//    }
+
+//    private Handler usbHandler =new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            if(msg.what ==2) {
+//                useUsbtoserial();
+//            }
+//        }
+//    };
+
+//    private void useUsbtoserial()
+//    {
+//        final UsbSerialPort port = mEntries.get(0);  //A72上只有一个 usb转串口，用position =0即可
+//        final UsbSerialDriver driver = port.getDriver();
+//        final UsbDevice device = driver.getDevice();
+//        final String usbid = String.format("Vendor %s  ，Product %s",
+//                HexDump.toHexString((short) device.getVendorId()),
+//                HexDump.toHexString((short) device.getProductId()));
+//        Message msg =LeftFragment.showidHandler.obtainMessage(22,usbid);
+//        msg.sendToTarget();
+//        FirstActivity.sPort = port;
+//        if(sPort !=null) {
+//            controlusb();  //使用usb功能
+//        }
+//    }
+
+//    protected void controlusb() {
+//        Log.e(TAG, "Resumed, port=" + sPort);
+//        if (sPort == null) {
+//            Toast.makeText(FirstActivity.this,"No serial device.",Toast.LENGTH_SHORT).show();
+//        } else {
+//            openUsbDevice();
+//            if (connection == null) {
+//                mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);
+//                Toast.makeText(FirstActivity.this,"Opening device failed",Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//            try {
+//                sPort.open(connection);
+//                sPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+//            } catch (IOException e) {
+//                Toast.makeText(FirstActivity.this,"Error opening device: ",Toast.LENGTH_SHORT).show();
+//                try {
+//                    sPort.close();
+//                } catch (IOException e2) {
+//                }
+//                sPort = null;
+//                return;
+//            }
+//            Toast.makeText(FirstActivity.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
+//        }
+//        onDeviceStateChange();
+//        Transparent.dismiss();//关闭加载对话框
+//    }
+
+
+
+
+
+
+
+
 
 
     /**

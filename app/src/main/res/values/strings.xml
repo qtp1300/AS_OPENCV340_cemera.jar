@@ -9,4 +9,11 @@
     <string name="Picture_Name">Picture_Name</string>
     <string name="voicetext">播报的文本:</string>
 
+    <string name="sp_data">80</string>
+    <string name="cd_data">20</string>
+    <string name="angle_data">450</string>
+    <string name="speed">速度:</string>
+    <string name="coded_disc">码盘:</string>
+    <string name="angle_disc">角度:</string>
+
 </resources>

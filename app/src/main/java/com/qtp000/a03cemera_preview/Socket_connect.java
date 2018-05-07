@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.qtp000.a03cemera_preview.Serial.Serial;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -105,6 +107,11 @@ public class Socket_connect {
         byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
 
             if (ValuesApplication.isserial == true){
+                try {
+                    Serial.sPort.write(sbyte, 5000);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
             else {
