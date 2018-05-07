@@ -269,7 +269,7 @@ private:
     /**
      * Chooses the initial centers in a way inspired by Gonzales (by Pierre-Emmanuel Viel):
      * select the first point of the list as a candidate, then parse the points list. If another
-     * point is further than current candidate from the other centers, test if it is a good center
+     * point is further than current candidate from the other centers, Function_Active if it is a good center
      * of a local aggregation. If it is, replace current candidate by this point. And so on...
      *
      * Used with KMeansIndex that computes centers coordinates by averaging positions of clusters points,
@@ -311,7 +311,7 @@ private:
             DistanceType furthest = 0;
             for (index = 0; index < n; index++) {
 
-                // We will test only the potential of the points further than current candidate
+                // We will Function_Active only the potential of the points further than current candidate
                 if( closestDistSq[index] > kSpeedUpFactor * (float)furthest ) {
 
                     // Compute the new potential

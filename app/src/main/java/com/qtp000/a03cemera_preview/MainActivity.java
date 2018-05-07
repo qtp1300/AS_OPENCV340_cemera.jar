@@ -110,8 +110,9 @@ public class MainActivity extends AppCompatActivity {
         search();
         Camer_Init();
 
+/*        //已在First_Init_Values中执行
         //wifi_Init();                    //用wifi时启用这个
-        ethernet_Init();                //用有线时启用这个
+        ethernet_Init();                //用有线时启用这个*/
 
         //serial_Init();
 
@@ -201,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 //            toast.show();
             switch (id){
                 case R.id.btn1:
-                    Intent intent2test = new Intent(MainActivity.this , test.class);
+                    Intent intent2test = new Intent(MainActivity.this , Function_Active.class);
                     startActivity(intent2test);
                     break;
                 case R.id.btn_up:
@@ -365,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent arg1)
         {
             IPCamera = arg1.getStringExtra("IP");
-            Values12.purecameraip = arg1.getStringExtra("pureip");
+            First_Init_Values.purecameraip = arg1.getStringExtra("pureip");
             phThread.start();
         }
     };
@@ -507,15 +508,17 @@ public class MainActivity extends AppCompatActivity {
         dhcpInfo = wifiManager.getDhcpInfo();
         IPCar = Formatter.formatIpAddress(dhcpInfo.gateway);
     }
-    private void ethernet_Init(){
+
+    //已在First_Init_Values中执行
+/*    private void ethernet_Init(){
         Intent ipintent = new Intent();
         //ComponentName的参数1:目标app的包名,参数2:目标app的Service完整类名
         ipintent.setComponent(new ComponentName("com.android.settings", "com.android.settings.ethernet.CameraInitService"));
         //设置要传送的数据
-        ipintent.putExtra("purecameraip", Values12.purecameraip);
+        ipintent.putExtra("purecameraip", First_Init_Values.purecameraip);
         startService(ipintent);   //摄像头设为静态192.168.16.20时，可以不用发送
 
-    }
+    }*/
 
 //    private static final int MESSAGE_REFRESH= 101;
 //    private static final long REFRESH_TIMEOUT_MILLIS = 5000;

@@ -1813,7 +1813,7 @@ template<int n> inline _Tpnvec v_rshr_##pack_suffix(const _Tpvec& a, const _Tpve
 //! @{
 //! @brief Pack values from two vectors to one with rounding shift
 //!
-//! Values12 from the input vectors will be shifted right by _n_ bits with rounding, converted to narrower
+//! First_Init_Values from the input vectors will be shifted right by _n_ bits with rounding, converted to narrower
 //! type and returned in the result vector. Variant with _u_ suffix converts to unsigned type.
 //!
 //! - pack: for 16-, 32- and 64-bit integer input types
@@ -1843,7 +1843,7 @@ inline void v_##pack_suffix##_store(_Tpn* ptr, const _Tpvec& a) \
 //! @{
 //! @brief Store values from the input vector into memory with pack
 //!
-//! Values12 will be stored into memory with conversion to narrower type.
+//! First_Init_Values will be stored into memory with conversion to narrower type.
 //! Variant with _u_ suffix converts to corresponding unsigned type.
 //!
 //! - pack: for 16-, 32- and 64-bit integer input types
@@ -1873,7 +1873,7 @@ template<int n> inline void v_rshr_##pack_suffix##_store(_Tpn* ptr, const _Tpvec
 //! @{
 //! @brief Store values from the input vector into memory with pack
 //!
-//! Values12 will be shifted _n_ bits right with rounding, converted to narrower type and stored into
+//! First_Init_Values will be shifted _n_ bits right with rounding, converted to narrower type and stored into
 //! memory. Variant with _u_ suffix converts to unsigned type.
 //!
 //! - pack: for 16-, 32- and 64-bit integer input types

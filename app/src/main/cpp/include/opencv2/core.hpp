@@ -2327,7 +2327,7 @@ See http://en.wikipedia.org/wiki/Principal_component_analysis
 
 The sample below is the function that takes two matrices. The first
 function stores a set of vectors (a row per vector) that is used to
-calculate PCA. The second function stores another "test" set of vectors
+calculate PCA. The second function stores another "Function_Active" set of vectors
 (a row per vector). First, these vectors are compressed with PCA, then
 reconstructed back, and then the reconstruction error norm is computed
 and printed for each vector. :
@@ -2347,7 +2347,7 @@ PCA compressPCA(const Mat& pcaset, int maxComponents,
                                 // the matrix columns)
             maxComponents // specify, how many principal components to retain
             );
-    // if there is no test data, just return the computed basis, ready-to-use
+    // if there is no Function_Active data, just return the computed basis, ready-to-use
     if( !testset.data )
         return pca;
     CV_Assert( testset.cols == pcaset.cols );

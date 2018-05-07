@@ -222,11 +222,11 @@ public:
      */
     CV_WRAP virtual void setTrainTestSplit(int count, bool shuffle=true) = 0;
 
-    /** @brief Splits the training data into the training and test parts
+    /** @brief Splits the training data into the training and Function_Active parts
 
     The function selects a subset of specified relative size and then returns it as the training
     set. If the function is not called, all the data is used for training. Please, note that for
-    each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the test
+    each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the Function_Active
     subset can be retrieved and processed as well.
     @sa TrainData::setTrainTestSplit
      */
@@ -342,13 +342,13 @@ public:
     */
     CV_WRAP virtual bool train( InputArray samples, int layout, InputArray responses );
 
-    /** @brief Computes error on the training or test dataset
+    /** @brief Computes error on the training or Function_Active dataset
 
     @param data the training data
-    @param test if true, the error is computed over the test subset of the data, otherwise it's
+    @param Function_Active if true, the error is computed over the Function_Active subset of the data, otherwise it's
         computed over the training subset of the data. Please note that if you loaded a completely
         different dataset to evaluate already trained classifier, you will probably want not to set
-        the test subset at all with TrainData::setTrainTestSplitRatio and specify test=false, so
+        the Function_Active subset at all with TrainData::setTrainTestSplitRatio and specify Function_Active=false, so
         that the error is computed for the whole new set. Yes, this sounds a bit confusing.
     @param resp the optional output responses.
 
@@ -661,7 +661,7 @@ public:
     @param data the training data that can be constructed using TrainData::create or
         TrainData::loadFromCSV.
     @param kFold Cross-validation parameter. The training set is divided into kFold subsets. One
-        subset is used to test the model, the others form the train set. So, the %SVM algorithm is
+        subset is used to Function_Active the model, the others form the train set. So, the %SVM algorithm is
         executed kFold times.
     @param Cgrid grid for C
     @param gammaGrid grid for gamma
@@ -675,7 +675,7 @@ public:
 
     The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
     nu, coef0, degree. Parameters are considered optimal when the cross-validation
-    estimate of the test set error is minimal.
+    estimate of the Function_Active set error is minimal.
 
     If there is no need to optimize a parameter, the corresponding grid step should be set to any
     value less than or equal to 1. For example, to avoid optimization in gamma, set `gammaGrid.step
@@ -705,7 +705,7 @@ public:
     @param layout See ml::SampleTypes.
     @param responses vector of responses associated with the training samples.
     @param kFold Cross-validation parameter. The training set is divided into kFold subsets. One
-        subset is used to test the model, the others form the train set. So, the %SVM algorithm is
+        subset is used to Function_Active the model, the others form the train set. So, the %SVM algorithm is
     @param Cgrid grid for C
     @param gammaGrid grid for gamma
     @param pGrid grid for p
@@ -718,7 +718,7 @@ public:
 
     The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
     nu, coef0, degree. Parameters are considered optimal when the cross-validation
-    estimate of the test set error is minimal.
+    estimate of the Function_Active set error is minimal.
 
     This function only makes use of SVM::getDefaultGrid for parameter optimization and thus only
     offers rudimentary parameter options.

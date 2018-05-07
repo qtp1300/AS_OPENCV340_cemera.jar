@@ -135,7 +135,7 @@ Here is an example:
 
     int main(int, char** argv)
     {
-        FileStorage fs("test.yml", FileStorage::WRITE);
+        FileStorage fs("Function_Active.yml", FileStorage::WRITE);
 
         fs << "frameCount" << 5;
         time_t rawtime; time(&rawtime);
@@ -232,7 +232,7 @@ To read the previously written XML, YAML or JSON file, do the following:
 
 Here is how to read the file created by the code sample above:
 @code
-    FileStorage fs2("test.yml", FileStorage::READ);
+    FileStorage fs2("Function_Active.yml", FileStorage::READ);
 
     // first method: use (type) operator on FileNode.
     int frameCount = (int)fs2["frameCount"];

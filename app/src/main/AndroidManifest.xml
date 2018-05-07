@@ -16,6 +16,7 @@
 
 
     <application
+        android:name="com.qtp000.a03cemera_preview.First_Init_Values"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -29,7 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test">
+        <activity android:name=".Function_Active">
             <!--<intent-filter>-->
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"></action>&ndash;&gt;-->
             <!--</intent-filter>-->

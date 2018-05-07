@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.bkrcl.control_car_video.camerautil.CameraCommandUtil;
 
+import org.opencv.imgproc.Imgproc;
+
 /**
  * Created by 祁天培 on 2018/2/6.
  */
@@ -18,7 +20,7 @@ import com.bkrcl.control_car_video.camerautil.CameraCommandUtil;
 * 调试摄像头
 * */
 
-public class test extends Activity{
+public class Function_Active extends Activity{
 
     public static ImageView img_preview;
     private Button btn_back;
