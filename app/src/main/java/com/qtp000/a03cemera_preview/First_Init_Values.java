@@ -26,7 +26,7 @@ public class First_Init_Values extends Application {
 
     private static First_Init_Values app;
     public static ExecutorService executorServicetor = Executors.newCachedThreadPool();
-    public static Mode isserial = Mode.SOCKET;
+    public static Mode isserial = Mode.USB_SERIAL;
     public static First_Init_Values getApp() {
         return app;
     }

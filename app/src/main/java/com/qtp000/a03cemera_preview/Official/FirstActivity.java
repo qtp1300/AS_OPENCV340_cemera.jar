@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.bkrc.camera.XcApplication;
+//import com.bkrc.camera.XcApplication;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -30,6 +30,8 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationItem;
 import com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView;
 import com.luseen.luseenbottomnavigation.BottomNavigation.OnBottomNavigationItemClickListener;
+import com.qtp000.a03cemera_preview.First_Init_Values;
+import com.qtp000.a03cemera_preview.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,13 +39,13 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import car.bkrc.right.fragment.LeftFragment;
-import car.bkrc.right.fragment.RightFragment1;
-import car.bkrc.right.fragment.RightInfraredFragment;
-import car.bkrc.right.fragment.RightOtherFragment;
-import car.bkrc.right.fragment.RightZigbeeFragment;
-import car2017_demo.connect_transport;
-import ui.bkrc.car.TitleToolbar;
+//import car.bkrc.right.fragment.LeftFragment;
+//import car.bkrc.right.fragment.RightFragment1;
+//import car.bkrc.right.fragment.RightInfraredFragment;
+//import car.bkrc.right.fragment.RightOtherFragment;
+//import car.bkrc.right.fragment.RightZigbeeFragment;
+//import car2017_demo.connect_transport;
+//import ui.bkrc.car.TitleToolbar;
 
 public class FirstActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -67,192 +69,192 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_first1);
-        but_handler =button_handler;  //用于leftfragment中隐藏的按钮和标题栏中的menu同步
+//        getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        setContentView(R.layout.activity_first1);
+//        but_handler =button_handler;  //用于leftfragment中隐藏的按钮和标题栏中的menu同步
 
-        if(XcApplication.isserial == XcApplication.Mode.USB_SERIAL) {  //竞赛平台和a72通过usb转串口通信
+        if(First_Init_Values.isserial == First_Init_Values.Mode.USB_SERIAL) {  //竞赛平台和a72通过usb转串口通信
             mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS); //启动usb的识别和获取
-                Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
+//                Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
         }
 
-        mToolbar = (TitleToolbar) findViewById(R.id.toolbar);//使用标题栏
-        setSupportActionBar(mToolbar);
+//        mToolbar = (TitleToolbar) findViewById(R.id.toolbar);//使用标题栏
+//        setSupportActionBar(mToolbar);
+//
+//        viewPager = (ViewPager) findViewById(R.id.viewpager);//使用viewPager实现页面滑动效果
+//        viewPager .setOffscreenPageLimit(3);
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);//使用viewPager实现页面滑动效果
-        viewPager .setOffscreenPageLimit(3);
+//        //接下来与底部导航栏有关
+//        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+//
+//        int[] image = {R.drawable.ic_mic_black_24dp, R.drawable.ic_favorite_black_24dp,
+//                R.drawable.ic_book_black_24dp, R.drawable.github_circle};
+//        int[] color = {ContextCompat.getColor(this, R.color.firstColor), ContextCompat.getColor(this, R.color.secondColor),
+//                ContextCompat.getColor(this, R.color.thirdColor), ContextCompat.getColor(this, R.color.fourthColor)};
+//        if (bottomNavigationView != null) {
+//            bottomNavigationView.isWithText(false);
+//            // bottomNavigationView.activateTabletMode();
+//            bottomNavigationView.isColoredBackground(true);
+//            bottomNavigationView.setTextActiveSize(getResources().getDimension(R.dimen.text_active));
+//            bottomNavigationView.setTextInactiveSize(getResources().getDimension(R.dimen.text_inactive));
+//            bottomNavigationView.setItemActiveColorWithoutColoredBackground(ContextCompat.getColor(this, R.color.firstColor));
+//        }
 
-        //接下来与底部导航栏有关
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);
+//        BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
+//                ("主页", color[0], image[0]);
+//        BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
+//                ("zigbee", color[1], image[1]);
+//        BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
+//                ("红外", color[2], image[2]);
+//        BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
+//                ("其他", color[3], image[3]);
+//
+//        bottomNavigationView.addTab(bottomNavigationItem);
+//        bottomNavigationView.addTab(bottomNavigationItem1);
+//        bottomNavigationView.addTab(bottomNavigationItem2);
+//        bottomNavigationView.addTab(bottomNavigationItem3);
 
-        int[] image = {R.drawable.ic_mic_black_24dp, R.drawable.ic_favorite_black_24dp,
-                R.drawable.ic_book_black_24dp, R.drawable.github_circle};
-        int[] color = {ContextCompat.getColor(this, R.color.firstColor), ContextCompat.getColor(this, R.color.secondColor),
-                ContextCompat.getColor(this, R.color.thirdColor), ContextCompat.getColor(this, R.color.fourthColor)};
-        if (bottomNavigationView != null) {
-            bottomNavigationView.isWithText(false);
-            // bottomNavigationView.activateTabletMode();
-            bottomNavigationView.isColoredBackground(true);
-            bottomNavigationView.setTextActiveSize(getResources().getDimension(R.dimen.text_active));
-            bottomNavigationView.setTextInactiveSize(getResources().getDimension(R.dimen.text_inactive));
-            bottomNavigationView.setItemActiveColorWithoutColoredBackground(ContextCompat.getColor(this, R.color.firstColor));
-        }
-
-        BottomNavigationItem bottomNavigationItem = new BottomNavigationItem
-                ("主页", color[0], image[0]);
-        BottomNavigationItem bottomNavigationItem1 = new BottomNavigationItem
-                ("zigbee", color[1], image[1]);
-        BottomNavigationItem bottomNavigationItem2 = new BottomNavigationItem
-                ("红外", color[2], image[2]);
-        BottomNavigationItem bottomNavigationItem3 = new BottomNavigationItem
-                ("其他", color[3], image[3]);
-
-        bottomNavigationView.addTab(bottomNavigationItem);
-        bottomNavigationView.addTab(bottomNavigationItem1);
-        bottomNavigationView.addTab(bottomNavigationItem2);
-        bottomNavigationView.addTab(bottomNavigationItem3);
-
-        bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
-            @Override
-            public void onNavigationItemClick(int index) {
-                switch (index) {
-                    case 0:
-                        viewPager.setCurrentItem(0);
-                        break;
-                    case 1:
-                        viewPager.setCurrentItem(1);
-                        break;
-                    case 2:
-                        viewPager.setCurrentItem(2);
-                        break;
-                    case 3:
-                        viewPager.setCurrentItem(3);
-                        break;
-                }
-            }
-        });
-      Connect_Transport = new connect_transport();        //实例化连接类
-       setupViewPager(viewPager);  //加载fragment
+//        bottomNavigationView.setOnBottomNavigationItemClickListener(new OnBottomNavigationItemClickListener() {
+//            @Override
+//            public void onNavigationItemClick(int index) {
+//                switch (index) {
+//                    case 0:
+//                        viewPager.setCurrentItem(0);
+//                        break;
+//                    case 1:
+//                        viewPager.setCurrentItem(1);
+//                        break;
+//                    case 2:
+//                        viewPager.setCurrentItem(2);
+//                        break;
+//                    case 3:
+//                        viewPager.setCurrentItem(3);
+//                        break;
+//                }
+//            }
+//        });
+//      Connect_Transport = new connect_transport();        //实例化连接类
+//       setupViewPager(viewPager);  //加载fragment
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-       ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(RightFragment1.getInstance());
-        adapter.addFragment(RightZigbeeFragment.getInstance());
-        adapter.addFragment(RightInfraredFragment.getInstance());
-        adapter.addFragment(RightOtherFragment.getInstance());
-        viewPager.setAdapter(adapter);
-    }
+//    private void setupViewPager(ViewPager viewPager) {
+//       ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.addFragment(RightFragment1.getInstance());
+//        adapter.addFragment(RightZigbeeFragment.getInstance());
+//        adapter.addFragment(RightInfraredFragment.getInstance());
+//        adapter.addFragment(RightOtherFragment.getInstance());
+//        viewPager.setAdapter(adapter);
+//    }
 
 
-    private  Menu toolmenu ;
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {   //activity创建时创建菜单Menu
-        getMenuInflater().inflate(R.menu.tool_rightitem, menu);
-        toolmenu =menu;
-        return true;
-    }
+//    private  Menu toolmenu ;
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {   //activity创建时创建菜单Menu
+//        getMenuInflater().inflate(R.menu.tool_rightitem, menu);
+//        toolmenu =menu;
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {  //菜单项监听
-        int id = item.getItemId();
-        Toast.makeText(FirstActivity.this,item.getTitle(),Toast.LENGTH_SHORT).show();
-        switch (id)
-        {
-            case R.id.car_status:
-                if(item.getTitle().equals("主车状态"))
-                {
-                    chief_status_flag =true;
-                    item.setTitle(getResources().getText(R.string.follow_status));
-                    Connect_Transport.vice(2);
-                    LeftFragment.btchange_handler.obtainMessage(21).sendToTarget();
-                }
-                else if(item.getTitle().equals("从车状态"))
-                {
-                    chief_status_flag =false;
-                    item.setTitle(getResources().getText(R.string.main_status));
-                    Connect_Transport.vice(1);
-                    LeftFragment.btchange_handler.obtainMessage(22).sendToTarget();
-                }
-                break;
-            case R.id.car_control:
-                if(item.getTitle().equals("主车控制"))
-                {
-                    chief_control_flag =true;
-                    item.setTitle(getResources().getText(R.string.follow_control));
-                    Connect_Transport.TYPE = 0xAA;
-                    LeftFragment.btchange_handler.obtainMessage(23).sendToTarget();
-                }
-                else if(item.getTitle().equals("从车控制"))
-                {
-                    chief_control_flag =false;
-                    item.setTitle(getResources().getText(R.string.main_control));
-                    Connect_Transport.TYPE =  0x02;
-                    LeftFragment.btchange_handler.obtainMessage(24).sendToTarget();
-                }
-                break;
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {  //菜单项监听
+//        int id = item.getItemId();
+//        Toast.makeText(FirstActivity.this,item.getTitle(),Toast.LENGTH_SHORT).show();
+//        switch (id)
+//        {
+//            case R.id.car_status:
+//                if(item.getTitle().equals("主车状态"))
+//                {
+//                    chief_status_flag =true;
+//                    item.setTitle(getResources().getText(R.string.follow_status));
+//                    Connect_Transport.vice(2);
+//                    LeftFragment.btchange_handler.obtainMessage(21).sendToTarget();
+//                }
+//                else if(item.getTitle().equals("从车状态"))
+//                {
+//                    chief_status_flag =false;
+//                    item.setTitle(getResources().getText(R.string.main_status));
+//                    Connect_Transport.vice(1);
+//                    LeftFragment.btchange_handler.obtainMessage(22).sendToTarget();
+//                }
+//                break;
+//            case R.id.car_control:
+//                if(item.getTitle().equals("主车控制"))
+//                {
+//                    chief_control_flag =true;
+//                    item.setTitle(getResources().getText(R.string.follow_control));
+//                    Connect_Transport.TYPE = 0xAA;
+//                    LeftFragment.btchange_handler.obtainMessage(23).sendToTarget();
+//                }
+//                else if(item.getTitle().equals("从车控制"))
+//                {
+//                    chief_control_flag =false;
+//                    item.setTitle(getResources().getText(R.string.main_control));
+//                    Connect_Transport.TYPE =  0x02;
+//                    LeftFragment.btchange_handler.obtainMessage(24).sendToTarget();
+//                }
+//                break;
+//
+//            case R.id.angle_control:
+//                if(item.getTitle().equals("码盘控制"))
+//                {
+//                    coded_control_flag =true;
+//                    item.setTitle(getResources().getText(R.string.angle_control));
+//                    LeftFragment.btchange_handler.obtainMessage(25).sendToTarget();
+//                }
+//                else if(item.getTitle().equals("角度控制"))
+//                {
+//                    coded_control_flag =false;
+//                    item.setTitle(getResources().getText(R.string.coded_control));
+//                    LeftFragment.btchange_handler.obtainMessage(26).sendToTarget();
+//                }
+//                break;
+//            case R.id.clear_coded_disc:
+//                Connect_Transport.clear();
+//                break;
+//            case R.id.full_automatic:
+//                Toast.makeText(FirstActivity.this, "全自动", Toast.LENGTH_SHORT).show();
+//                break;
+//            case android.R.id.home:
+//                finish();
+//                break;
+//            default:
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-            case R.id.angle_control:
-                if(item.getTitle().equals("码盘控制"))
-                {
-                    coded_control_flag =true;
-                    item.setTitle(getResources().getText(R.string.angle_control));
-                    LeftFragment.btchange_handler.obtainMessage(25).sendToTarget();
-                }
-                else if(item.getTitle().equals("角度控制"))
-                {
-                    coded_control_flag =false;
-                    item.setTitle(getResources().getText(R.string.coded_control));
-                    LeftFragment.btchange_handler.obtainMessage(26).sendToTarget();
-                }
-                break;
-            case R.id.clear_coded_disc:
-                Connect_Transport.clear();
-                break;
-            case R.id.full_automatic:
-                Toast.makeText(FirstActivity.this, "全自动", Toast.LENGTH_SHORT).show();
-                break;
-            case android.R.id.home:
-                finish();
-                break;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-     private Handler button_handler =new Handler()  //实现menu和leftfragment中的三个按钮同步
-    {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what)
-            {
-                case 11:
-                    toolmenu.getItem(1).setTitle(getResources().getText(R.string.follow_status));
-                    break;
-                case 22:
-                    toolmenu.getItem(1).setTitle(getResources().getText(R.string.main_status));
-                    break;
-                case 33:
-                    toolmenu.getItem(2).setTitle(getResources().getText(R.string.follow_control));
-                    break;
-                case 44:
-                    toolmenu.getItem(2).setTitle(getResources().getText(R.string.main_control));
-                    break;
-                case 55:
-                    toolmenu.getItem(3).setTitle(getResources().getText(R.string.angle_control));
-                    break;
-                case 66:
-                    toolmenu.getItem(3).setTitle(getResources().getText(R.string.coded_control));
-                    break;
-                default:
-                    break;
-
-            }
-        }
-    };
+//     private Handler button_handler =new Handler()  //实现menu和leftfragment中的三个按钮同步
+//    {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what)
+//            {
+//                case 11:
+//                    toolmenu.getItem(1).setTitle(getResources().getText(R.string.follow_status));
+//                    break;
+//                case 22:
+//                    toolmenu.getItem(1).setTitle(getResources().getText(R.string.main_status));
+//                    break;
+//                case 33:
+//                    toolmenu.getItem(2).setTitle(getResources().getText(R.string.follow_control));
+//                    break;
+//                case 44:
+//                    toolmenu.getItem(2).setTitle(getResources().getText(R.string.main_control));
+//                    break;
+//                case 55:
+//                    toolmenu.getItem(3).setTitle(getResources().getText(R.string.angle_control));
+//                    break;
+//                case 66:
+//                    toolmenu.getItem(3).setTitle(getResources().getText(R.string.coded_control));
+//                    break;
+//                default:
+//                    break;
+//
+//            }
+//        }
+//    };
 
 
 
@@ -311,7 +313,7 @@ public class FirstActivity extends AppCompatActivity {
             Toast.makeText(FirstActivity.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
         }
         onDeviceStateChange();
-        Transparent.dismiss();//关闭加载对话框
+//        Transparent.dismiss();//关闭加载对话框
     }
     // 在打开usb设备前，弹出选择对话框，尝试获取usb权限
     private void openUsbDevice(){
@@ -404,7 +406,7 @@ public class FirstActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(XcApplication.isserial == XcApplication.Mode.USB_SERIAL) {
+        if(First_Init_Values.isserial == First_Init_Values.Mode.USB_SERIAL) {
             unregisterReceiver(mUsbPermissionActionReceiver);
             try {
                 sPort.close();
@@ -413,7 +415,7 @@ public class FirstActivity extends AppCompatActivity {
             }
             sPort = null;
         }
-        else if(XcApplication.isserial == XcApplication.Mode.SOCKET) {
+        else if(First_Init_Values.isserial == First_Init_Values.Mode.SOCKET) {
             Connect_Transport.destory();
         }
     }
@@ -455,8 +457,8 @@ public class FirstActivity extends AppCompatActivity {
         final String usbid = String.format("Vendor %s  ，Product %s",
                 HexDump.toHexString((short) device.getVendorId()),
                 HexDump.toHexString((short) device.getProductId()));
-        Message msg =LeftFragment.showidHandler.obtainMessage(22,usbid);
-        msg.sendToTarget();
+//        Message msg =LeftFragment.showidHandler.obtainMessage(22,usbid);
+//        msg.sendToTarget();
         FirstActivity.sPort = port;
         if(sPort !=null) {
             controlusb();  //使用usb功能

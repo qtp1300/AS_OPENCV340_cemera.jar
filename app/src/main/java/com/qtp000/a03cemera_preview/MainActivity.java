@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String A_S = "com.a_s";
     private CameraCommandUtil cameraCommandUtil;
     public static String IPCamera = "bkrcjk.eicp.net:88";
+    public static String purecameraip =null;
     private Function_method fmod;
     private WifiManager wifiManager;
     // 服务器管理器
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         init_view();
         addlistener();
-        search();
+//        search();
         Camer_Init();
 
 /*        //已在First_Init_Values中执行
@@ -366,6 +367,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent arg1)
         {
             IPCamera = arg1.getStringExtra("IP");
+            purecameraip = arg1.getStringExtra("pureip");
             First_Init_Values.purecameraip = arg1.getStringExtra("pureip");
             phThread.start();
         }
@@ -376,14 +378,14 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 10)
             {
-                Log.e("显示图片：","已经进行到此步骤");
+//                Log.e("显示图片：","已经进行到此步骤");
                 imageView.setImageBitmap(bitmap);
-                if(bitmap == null || bitmap.equals("")){
-                    Log.e("图片：","为空");
-                }
-                else {
-                    Log.e("图片：","不空");
-                }
+//                if(bitmap == null || bitmap.equals("")){
+//                    Log.e("图片：","为空");
+//                }
+//                else {
+//                    Log.e("图片：","不空");
+//                }
             }
         }
     };
