@@ -1788,8 +1788,8 @@ CV_EXPORTS_W double sampsonDistance(InputArray pt1, InputArray pt2, InputArray F
 @param ransacThreshold Maximum reprojection error in the RANSAC algorithm to consider a point as
 an inlier.
 @param confidence Confidence level, between 0 and 1, for the estimated transformation. Anything
-between 0.95 and 0.99 is usually good enough. Values too close to 1 can slow down the estimation
-significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
+between 0.95 and 0.99 is usually good enough. Values12 too close to 1 can slow down the estimation
+significantly. Values12 lower than 0.8-0.9 can result in an incorrectly estimated transformation.
 
 The function estimates an optimal 3D affine transformation between two 3D point sets using the
 RANSAC algorithm.
@@ -1811,8 +1811,8 @@ RANSAC is the default method.
 a point as an inlier. Applies only to RANSAC.
 @param maxIters The maximum number of robust method iterations, 2000 is the maximum it can be.
 @param confidence Confidence level, between 0 and 1, for the estimated transformation. Anything
-between 0.95 and 0.99 is usually good enough. Values too close to 1 can slow down the estimation
-significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
+between 0.95 and 0.99 is usually good enough. Values12 too close to 1 can slow down the estimation
+significantly. Values12 lower than 0.8-0.9 can result in an incorrectly estimated transformation.
 @param refineIters Maximum number of iterations of refining algorithm (Levenberg-Marquardt).
 Passing 0 will disable refining, so the output matrix will be output of robust method.
 
@@ -1851,8 +1851,8 @@ RANSAC is the default method.
 a point as an inlier. Applies only to RANSAC.
 @param maxIters The maximum number of robust method iterations, 2000 is the maximum it can be.
 @param confidence Confidence level, between 0 and 1, for the estimated transformation. Anything
-between 0.95 and 0.99 is usually good enough. Values too close to 1 can slow down the estimation
-significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
+between 0.95 and 0.99 is usually good enough. Values12 too close to 1 can slow down the estimation
+significantly. Values12 lower than 0.8-0.9 can result in an incorrectly estimated transformation.
 @param refineIters Maximum number of iterations of refining algorithm (Levenberg-Marquardt).
 Passing 0 will disable refining, so the output matrix will be output of robust method.
 

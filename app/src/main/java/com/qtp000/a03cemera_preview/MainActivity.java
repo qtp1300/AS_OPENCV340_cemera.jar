@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -35,15 +32,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
-import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.hoho.android.usbserial.util.HexDump;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -375,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent arg1)
         {
             IPCamera = arg1.getStringExtra("IP");
-            Values.purecameraip = arg1.getStringExtra("pureip");
+            Values12.purecameraip = arg1.getStringExtra("pureip");
             phThread.start();
         }
     };
@@ -522,7 +512,7 @@ public class MainActivity extends AppCompatActivity {
         //ComponentName的参数1:目标app的包名,参数2:目标app的Service完整类名
         ipintent.setComponent(new ComponentName("com.android.settings", "com.android.settings.ethernet.CameraInitService"));
         //设置要传送的数据
-        ipintent.putExtra("purecameraip", Values.purecameraip);
+        ipintent.putExtra("purecameraip", Values12.purecameraip);
         startService(ipintent);   //摄像头设为静态192.168.16.20时，可以不用发送
 
     }
@@ -533,6 +523,7 @@ public class MainActivity extends AppCompatActivity {
 //    private List<UsbSerialPort> mEntries = new ArrayList<UsbSerialPort>();
 //    private final String TAG = FirstActivity.class.getSimpleName();
     private void serial_Init(){
+
 //        mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS); //启动usb的识别和获取
 //        Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
     }
