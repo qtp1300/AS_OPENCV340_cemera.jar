@@ -371,7 +371,7 @@ public:
 @param gamma gamma value for gamma correction. See createTonemap
 @param saturation positive saturation enhancement value. 1.0 preserves saturation, values greater
 than 1 increase saturation and values less than 1 decrease it.
-@param bias value for bias function in [0, 1] range. Values from 0.7 to 0.9 usually give best
+@param bias value for bias function in [0, 1] range. ValuesApplication from 0.7 to 0.9 usually give best
 results, default value is 0.85.
  */
 CV_EXPORTS_W Ptr<TonemapDrago> createTonemapDrago(float gamma = 1.0f, float saturation = 1.0f, float bias = 0.85f);
@@ -466,7 +466,7 @@ public:
 
 @param gamma gamma value for gamma correction. See createTonemap
 @param scale contrast scale factor. HVS response is multiplied by this parameter, thus compressing
-dynamic range. Values from 0.6 to 0.9 produce best results.
+dynamic range. ValuesApplication from 0.6 to 0.9 produce best results.
 @param saturation saturation enhancement value. See createTonemapDrago
  */
 CV_EXPORTS_W Ptr<TonemapMantiuk>
@@ -545,7 +545,7 @@ public:
 
 /** @brief Creates AlignMTB object
 
-@param max_bits logarithm to the base 2 of maximal shift in each dimension. Values of 5 and 6 are
+@param max_bits logarithm to the base 2 of maximal shift in each dimension. ValuesApplication of 5 and 6 are
 usually good enough (31 and 63 pixels shift respectively).
 @param exclude_range range for exclusion bitmap that is constructed to suppress noise around the
 median value.

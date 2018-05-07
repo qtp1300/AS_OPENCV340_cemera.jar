@@ -385,7 +385,7 @@ CVAPI(int)  cvSampleLine( const CvArr* image, CvPoint pt1, CvPoint pt2, void* bu
 /** @brief Retrieves the rectangular image region with specified center from the input array.
 
  dst(x,y) <- src(x + center.x - dst_width/2, y + center.y - dst_height/2).
- Values of pixels with fractional coordinates are retrieved using bilinear interpolation
+ ValuesApplication of pixels with fractional coordinates are retrieved using bilinear interpolation
 @see cv::getRectSubPix
 */
 CVAPI(void)  cvGetRectSubPix( const CvArr* src, CvArr* dst, CvPoint2D32f center );

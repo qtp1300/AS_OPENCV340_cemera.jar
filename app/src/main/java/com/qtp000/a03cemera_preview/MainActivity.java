@@ -6,11 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbManager;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -35,15 +32,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
-import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.hoho.android.usbserial.util.HexDump;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -127,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         socket_connect = new Socket_connect(this,qrHandler);
         connect_thread();
+
         fmod = new Function_method(socket_connect,state_camera,MainActivity.this);
 
         FunctionActivity.set_handle(this.qrHandler);
@@ -374,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context arg0, Intent arg1)
         {
             IPCamera = arg1.getStringExtra("IP");
-            Values.purecameraip = arg1.getStringExtra("pureip");
+            ValuesApplication.purecameraip = arg1.getStringExtra("pureip");
             phThread.start();
         }
     };
@@ -384,14 +375,14 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 10)
             {
-                Log.e("显示图片：","已经进行到此步骤");
+//                Log.e("显示图片：","已经进行到此步骤");
                 imageView.setImageBitmap(bitmap);
-                if(bitmap == null || bitmap.equals("")){
-                    Log.e("图片：","为空");
-                }
-                else {
-                    Log.e("图片：","不空");
-                }
+//                if(bitmap == null || bitmap.equals("")){
+//                    Log.e("图片：","为空");
+//                }
+//                else {
+//                    Log.e("图片：","不空");
+//                }
             }
         }
     };
@@ -521,7 +512,7 @@ public class MainActivity extends AppCompatActivity {
         //ComponentName的参数1:目标app的包名,参数2:目标app的Service完整类名
         ipintent.setComponent(new ComponentName("com.android.settings", "com.android.settings.ethernet.CameraInitService"));
         //设置要传送的数据
-        ipintent.putExtra("purecameraip", Values.purecameraip);
+        ipintent.putExtra("purecameraip", ValuesApplication.purecameraip);
         startService(ipintent);   //摄像头设为静态192.168.16.20时，可以不用发送
 
     }

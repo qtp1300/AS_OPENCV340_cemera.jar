@@ -33,7 +33,6 @@ public class Socket_connect {
     public short CHECKSUM = 0x00;
     public short HEAD = 0x55;
     public short TAIL = 0xBB;
-
     private Handler qrhandler;
 //    private Handler mineHandle;
     @SuppressWarnings("unused")
@@ -100,18 +99,25 @@ public class Socket_connect {
 
     //发送数据
     public void send() {
-        try {
-            //计算通信协议校验和
-            CHECKSUM = (byte) ((MAJOR + FIRST + SECOND + THRID) % 256);
-            // 发送数据字节数组，此处根据小车的通信协议来写
-            byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
-            bOutputStream.write(sbyte, 0, sbyte.length);
-            bOutputStream.flush();
+
+        CHECKSUM = (byte) ((MAJOR + FIRST + SECOND + THRID) % 256);//计算通信协议校验和
+        // 发送数据字节数组，此处根据小车的通信协议来写
+        byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
+
+            if (ValuesApplication.isserial == true){
+
+            }
+            else {
+                try {
+                    bOutputStream.write(sbyte, 0, sbyte.length);
+                    bOutputStream.flush();
 //            Log.e("消息发送", "已发送");
-        } catch (IOException e) {
-            Log.e("消息发送失败", "通信协议出错");
-            e.printStackTrace();
-        }
+                } catch (IOException e) {
+                    Log.e("消息发送失败", "通信协议出错");
+                    e.printStackTrace();
+                }
+            }
+
     }
 
     //发送字符数据

@@ -682,7 +682,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      *  subtract @p mean values, scales values by @p scalefactor, swap Blue and Red channels.
      *  @param image input image (with 1-, 3- or 4-channels).
      *  @param size spatial size for output image
-     *  @param mean scalar with mean values which are subtracted from channels. Values are intended
+     *  @param mean scalar with mean values which are subtracted from channels. ValuesApplication are intended
      *  to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
      *  @param scalefactor multiplier for @p image values.
      *  @param swapRB flag which indicates that swap first and last channels
@@ -700,7 +700,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      *  swap Blue and Red channels.
      *  @param images input images (all with 1-, 3- or 4-channels).
      *  @param size spatial size for output image
-     *  @param mean scalar with mean values which are subtracted from channels. Values are intended
+     *  @param mean scalar with mean values which are subtracted from channels. ValuesApplication are intended
      *  to be in (mean-R, mean-G, mean-B) order if @p image has BGR ordering and @p swapRB is true.
      *  @param scalefactor multiplier for @p images values.
      *  @param swapRB flag which indicates that swap first and last channels
