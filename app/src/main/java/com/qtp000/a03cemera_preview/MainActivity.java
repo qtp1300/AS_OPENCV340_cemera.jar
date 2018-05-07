@@ -330,7 +330,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     private  void addlistener(){
         btn1.setOnClickListener(new btnclickListener());
 
