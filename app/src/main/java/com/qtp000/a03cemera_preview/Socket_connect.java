@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.qtp000.a03cemera_preview.Serial.Serial;
+import com.qtp000.a03cemera_preview.Serial.SerialAcyivity;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -108,7 +108,7 @@ public class Socket_connect {
 
             if (ValuesApplication.isserial == true){
                 try {
-                    Serial.sPort.write(sbyte, 5000);
+                    SerialAcyivity.sPort.write(sbyte, 5000);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
