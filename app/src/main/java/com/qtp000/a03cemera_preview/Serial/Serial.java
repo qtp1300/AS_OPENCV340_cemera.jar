@@ -32,6 +32,7 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.qtp000.a03cemera_preview.MainActivity;
 import com.qtp000.a03cemera_preview.R;
 import com.qtp000.a03cemera_preview.Socket_connect;
+import com.qtp000.a03cemera_preview.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,7 +64,8 @@ public class Serial extends AppCompatActivity {
     private UsbManager mUsbManager;
     private List<UsbSerialPort> mEntries = new ArrayList<UsbSerialPort>();
     private final String TAG = MainActivity.class.getSimpleName();
-    private Socket_connect sock_con;
+//    private Socket_connect sock_con;
+    public Socket_connect sock_con;
     public static UsbSerialPort sPort = null;
     private byte[] mByte = new byte[11];
 
@@ -76,7 +78,8 @@ public class Serial extends AppCompatActivity {
         mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);  //开始usb的获取
         sock_con =new Socket_connect();
         control_init();
-//        Transparent.showLoadingMessage(this,"加载中",false);   //显示等待对话框
+        to_mainactivity();
+        Transparent.showLoadingMessage(this,"加载中",false);   //显示等待对话框
 
         Log.i("Serial.class:","加载中");
     }
@@ -95,6 +98,10 @@ public class Serial extends AppCompatActivity {
             {
                 case R.id.btn_main:
                     //Intent to mainactivity
+                    Intent intent2main = new Intent(Serial.this , MainActivity.class);
+                    startActivity(intent2main);
+                    Toast.makeText(Serial.this,"进主页面",Toast.LENGTH_SHORT);
+
 
                     break;
 
@@ -136,14 +143,14 @@ public class Serial extends AppCompatActivity {
                     en_n = getEncoder();
                     sock_con.go(sp_n, en_n);
                     break;
-//                case R.id.left_button:
-//                    en_n = getEncoder();
-//                    sock_con.left(sp_n, en_n);
-//                    break;
-//                case R.id.right_button:
-//                    en_n = getEncoder();
-//                    sock_con.right(sp_n, en_n);
-//                    break;
+                case R.id.left_button:
+                    en_n = getEncoder();
+                    sock_con.left(sp_n, en_n);
+                    break;
+                case R.id.right_button:
+                    en_n = getEncoder();
+                    sock_con.right(sp_n, en_n);
+                    break;
                 case R.id.below_button:
                     en_n = getEncoder();
                     sock_con.back(sp_n, en_n);
@@ -290,36 +297,36 @@ public class Serial extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 mByte = (byte[]) msg.obj;
-//                if (mByte[0] == 0x55) {
-//                    // 光敏状态
-//                    psStatus = mByte[3] & 0xff;
-//                    // 超声波数据
-//                    UltraSonic = mByte[5] & 0xff;
-//                    UltraSonic = UltraSonic << 8;
-//                    UltraSonic += mByte[4] & 0xff;
-//                    // 光照强度
-//                    Light = mByte[7] & 0xff;
-//                    Light = Light << 8;
-//                    Light += mByte[6] & 0xff;
-//                    // 码盘
-//                    CodedDisk = mByte[9] & 0xff;
-//                    CodedDisk = CodedDisk << 8;
-//                    CodedDisk += mByte[8] & 0xff;
-//
-//                    if (mByte[1] == (byte) 0xaa) {
-//                        // 显示数据
-//                        Data_show.setText("主车各状态信息: " + "超声波:" + UltraSonic
-//                                + "mm 光照:" + Light + "lx" + " 码盘:" + CodedDisk
-//                                + " 光敏状态:" + psStatus + " 状态:" + (mByte[2]));
-//                    }
-//                    if(mByte[1] == (byte) 0x02)
-//                    {
-//                        // 显示数据
-//                        Data_show.setText("从车各状态信息: " + "超声波:" + UltraSonic
-//                                + "mm 光照:" + Light + "lx" + " 码盘:" + CodedDisk
-//                                + " 光敏状态:" + psStatus + " 状态:" + (mByte[2]));
-//                    }
-//                }
+                if (mByte[0] == 0x55) {
+                    // 光敏状态
+                    psStatus = mByte[3] & 0xff;
+                    // 超声波数据
+                    UltraSonic = mByte[5] & 0xff;
+                    UltraSonic = UltraSonic << 8;
+                    UltraSonic += mByte[4] & 0xff;
+                    // 光照强度
+                    Light = mByte[7] & 0xff;
+                    Light = Light << 8;
+                    Light += mByte[6] & 0xff;
+                    // 码盘
+                    CodedDisk = mByte[9] & 0xff;
+                    CodedDisk = CodedDisk << 8;
+                    CodedDisk += mByte[8] & 0xff;
+
+                    if (mByte[1] == (byte) 0xaa) {
+                        // 显示数据
+                        Data_show.setText("主车各状态信息: " + "超声波:" + UltraSonic
+                                + "mm 光照:" + Light + "lx" + " 码盘:" + CodedDisk
+                                + " 光敏状态:" + psStatus + " 状态:" + (mByte[2]));
+                    }
+                    if(mByte[1] == (byte) 0x02)
+                    {
+                        // 显示数据
+                        Data_show.setText("从车各状态信息: " + "超声波:" + UltraSonic
+                                + "mm 光照:" + Light + "lx" + " 码盘:" + CodedDisk
+                                + " 光敏状态:" + psStatus + " 状态:" + (mByte[2]));
+                    }
+                }
             }
         }
     };
@@ -392,7 +399,7 @@ public class Serial extends AppCompatActivity {
             Toast.makeText(Serial.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
         }
         onDeviceStateChange();
-//        Transparent.dismiss();//成功设置完usb，关闭等待对话框
+        Transparent.dismiss();//成功设置完usb，关闭等待对话框
     }
 
     private Handler usbHandler =new Handler(){

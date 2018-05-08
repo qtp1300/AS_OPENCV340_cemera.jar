@@ -263,6 +263,25 @@ public class Socket_connect {
         send();
     }
 
+    //左转
+    public void left(int sp_n, int en_n) {
+
+        MAJOR = 0x04;
+        FIRST = (byte) (sp_n & 0xFF);
+        SECOND = (byte) (en_n & 0xff);
+        THRID = (byte) (en_n >> 8);
+        send();
+    }
+
+    // 右转
+    public void right(int sp_n, int en_n) {
+        MAJOR = 0x05;
+        FIRST = (byte) (sp_n & 0xFF);
+        SECOND = (byte) (en_n & 0xff);
+        THRID = (byte) (en_n >> 8);
+        send();
+    }
+
     // 左转
     public void left(int sp_n) {
         MAJOR = 0x04;

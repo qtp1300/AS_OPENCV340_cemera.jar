@@ -107,10 +107,12 @@ public class MainActivity extends AppCompatActivity {
         search();
         Camer_Init();
 
-        //wifi_Init();                    //用wifi时启用这个
-        ethernet_Init();                //用有线时启用这个
-
-        //serial_Init();
+        if (ValuesApplication.isserial == true){
+            ethernet_Init();                //用有线时启用这个
+        }
+        else {
+            wifi_Init();                    //用wifi时启用这个
+        }
 
         socket_connect = new Socket_connect(this,qrHandler);
         connect_thread();
@@ -200,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_up:
                     Toast toast_up = Toast.makeText(getApplicationContext(),"上",Toast.LENGTH_SHORT);
                     toast_up.show();
+                    socket_connect.go(80,2000);
+
+
 
                     break;
                 case R.id.btn_left:
@@ -326,6 +331,10 @@ public class MainActivity extends AppCompatActivity {
         bakbtn4.setOnClickListener(new btnclickListener());
         bakbtn5.setOnClickListener(new btnclickListener());
         btn_old_112.setOnClickListener(new btnclickListener());
+        btn_up.setOnClickListener(new btnclickListener());
+        btn_left.setOnClickListener(new btnclickListener());
+        btn_right.setOnClickListener(new btnclickListener());
+        btn_down.setOnClickListener(new btnclickListener());
         btn_stop.setOnClickListener(new btnclickListener());
 
         btn_car_1.setOnClickListener(new btnclickListener());
@@ -792,129 +801,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
-
-
-
-    /////////////////////////////////////////////////////
-    //串口初始化
-
-    //    private static final int MESSAGE_REFRESH= 101;
-//    private static final long REFRESH_TIMEOUT_MILLIS = 5000;
-//    private UsbManager mUsbManager;
-//    private List<UsbSerialPort> mEntries = new ArrayList<UsbSerialPort>();
-//    private final String TAG = FirstActivity.class.getSimpleName();
-    private void serial_Init(){
-//        mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS); //启动usb的识别和获取
-//        Transparent.showLoadingMessage(this,"加载中",false);//启动旋转效果的对话框，实现usb的识别和获取
-    }
-//
-//
-//    private final Handler mHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case MESSAGE_REFRESH:
-//                    refreshDeviceList();
-//                    break;
-//                default:
-//                    super.handleMessage(msg);
-//                    break;
-//            }
-//        }
-//    };
-
-//    private void refreshDeviceList() {
-//        mUsbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
-//        new AsyncTask<Void, Void, List<UsbSerialPort>>() {
-//            @Override
-//            protected List<UsbSerialPort> doInBackground(Void... params) {
-//                Log.e(TAG, "Refreshing device list ...");
-//                Log.e("mUsbManager is :","  "+mUsbManager);
-//                final List<UsbSerialDriver> drivers =
-//                        UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
-//
-//                final List<UsbSerialPort> result = new ArrayList<UsbSerialPort>();
-//                for (final UsbSerialDriver driver : drivers) {
-//                    final List<UsbSerialPort> ports = driver.getPorts();
-//                    Log.e(TAG, String.format("+ %s: %s port%s",
-//                            driver, Integer.valueOf(ports.size()), ports.size() == 1 ? "" : "s"));
-//                    result.addAll(ports);
-//                }
-//                return result;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<UsbSerialPort> result) {
-//                mEntries.clear();
-//                mEntries.addAll(result);
-//                usbHandler.sendEmptyMessage(2);
-//                Log.e(TAG, "Done refreshing, " + mEntries.size() + " entries found.");
-//            }
-//        }.execute((Void) null);
-//    }
-
-//    private Handler usbHandler =new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if(msg.what ==2) {
-//                useUsbtoserial();
-//            }
-//        }
-//    };
-
-//    private void useUsbtoserial()
-//    {
-//        final UsbSerialPort port = mEntries.get(0);  //A72上只有一个 usb转串口，用position =0即可
-//        final UsbSerialDriver driver = port.getDriver();
-//        final UsbDevice device = driver.getDevice();
-//        final String usbid = String.format("Vendor %s  ，Product %s",
-//                HexDump.toHexString((short) device.getVendorId()),
-//                HexDump.toHexString((short) device.getProductId()));
-//        Message msg =LeftFragment.showidHandler.obtainMessage(22,usbid);
-//        msg.sendToTarget();
-//        FirstActivity.sPort = port;
-//        if(sPort !=null) {
-//            controlusb();  //使用usb功能
-//        }
-//    }
-
-//    protected void controlusb() {
-//        Log.e(TAG, "Resumed, port=" + sPort);
-//        if (sPort == null) {
-//            Toast.makeText(FirstActivity.this,"No serial device.",Toast.LENGTH_SHORT).show();
-//        } else {
-//            openUsbDevice();
-//            if (connection == null) {
-//                mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);
-//                Toast.makeText(FirstActivity.this,"Opening device failed",Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            try {
-//                sPort.open(connection);
-//                sPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-//            } catch (IOException e) {
-//                Toast.makeText(FirstActivity.this,"Error opening device: ",Toast.LENGTH_SHORT).show();
-//                try {
-//                    sPort.close();
-//                } catch (IOException e2) {
-//                }
-//                sPort = null;
-//                return;
-//            }
-//            Toast.makeText(FirstActivity.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
-//        }
-//        onDeviceStateChange();
-//        Transparent.dismiss();//关闭加载对话框
-//    }
-
-
-
-
-
-
-
-
-
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
