@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
 
-//import static com.qtp000.a03cemera_preview.ValuesApplication.Mode.Serial;
+//import static com.qtp000.a03cemera_preview.ValuesApplication.Mode.SerialAcyivity;
 
 /**
  * Created by 祁天培 on 2018/5/6.
@@ -13,9 +13,9 @@ import android.content.Intent;
 public class ValuesApplication {
     public static String purecameraip =null;
 //    public enum Mode{
-//        Serial,Socket
+//        SerialAcyivity,Socket
 //    }
-//    public static Mode SerialOrSocket = Serial;
+//    public static Mode SerialOrSocket = SerialAcyivity;
     public static boolean isserial = true;
 
 /*    @Override

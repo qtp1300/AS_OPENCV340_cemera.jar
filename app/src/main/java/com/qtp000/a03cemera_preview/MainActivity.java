@@ -202,7 +202,32 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_up:
                     Toast toast_up = Toast.makeText(getApplicationContext(),"上",Toast.LENGTH_SHORT);
                     toast_up.show();
-                    socket_connect.go(80,2000);
+
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+                            socket_connect.go(80,2000);
+//                        }
+//                    }).start();
+
+//                    new Runnable(){
+//                        /**
+//                         * When an object implementing interface <code>Runnable</code> is used
+//                         * to create a thread, starting the thread causes the object's
+//                         * <code>run</code> method to be called in that separately executing
+//                         * thread.
+//                         * <p>
+//                         * The general contract of the method <code>run</code> is that it may
+//                         * take any action whatsoever.
+//                         *
+//                         * @see Thread#run()
+//                         */
+//                        @Override
+//                        public void run() {
+//                            socket_connect.go(80,2000);
+//                        }
+//                    }.run();
+
 
 
 

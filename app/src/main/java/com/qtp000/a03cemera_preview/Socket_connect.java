@@ -1,7 +1,6 @@
 package com.qtp000.a03cemera_preview;
 
 
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
@@ -36,7 +35,7 @@ public class Socket_connect {
     public short HEAD = 0x55;
     public short TAIL = 0xBB;
     private Handler qrhandler;
-//    private Handler mineHandle;
+    //    private Handler mineHandle;
     @SuppressWarnings("unused")
     private Context context;
     private Algorithm algorithm;
@@ -101,29 +100,33 @@ public class Socket_connect {
 
     //发送数据
     public void send() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CHECKSUM = (byte) ((MAJOR + FIRST + SECOND + THRID) % 256);//计算通信协议校验和
+                // 发送数据字节数组，此处根据小车的通信协议来写
+                byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
 
-        CHECKSUM = (byte) ((MAJOR + FIRST + SECOND + THRID) % 256);//计算通信协议校验和
-        // 发送数据字节数组，此处根据小车的通信协议来写
-        byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
+                if (ValuesApplication.isserial == true) {
+                    try {
+                        SerialAcyivity.sPort.write(sbyte, 5000);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-            if (ValuesApplication.isserial == true){
-                try {
-                    SerialAcyivity.sPort.write(sbyte, 5000);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-            else {
-                try {
-                    bOutputStream.write(sbyte, 0, sbyte.length);
-                    bOutputStream.flush();
+                } else {
+                    try {
+                        bOutputStream.write(sbyte, 0, sbyte.length);
+                        bOutputStream.flush();
 //            Log.e("消息发送", "已发送");
-                } catch (IOException e) {
-                    Log.e("消息发送失败", "通信协议出错");
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        Log.e("消息发送失败", "通信协议出错");
+                        e.printStackTrace();
+                    }
                 }
             }
+        }).start();
+
 
     }
 
@@ -1102,15 +1105,15 @@ public class Socket_connect {
         //0x41 0x38 0x38 0x36 0x46 0x37
         //infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
 
-        if (MainActivity.run_time == 1){
+        if (MainActivity.run_time == 1) {
             //0x46 0x35 0x37 0x33 0x59 0x38    第一轮
             infrared((byte) 0x46, (byte) 0x35, (byte) 0x37, (byte) 0x33, (byte) 0x59, (byte) 0x38);    //发送车牌识别结果
         }
-        if (MainActivity.run_time == 2){
+        if (MainActivity.run_time == 2) {
             //0x4A 0x33 0x38 0x36 0x44 0x34     第二轮
             infrared((byte) 0x4A, (byte) 0x33, (byte) 0x38, (byte) 0x36, (byte) 0x44, (byte) 0x34);    //发送车牌识别结果
         }
-        if (MainActivity.run_time == 3){
+        if (MainActivity.run_time == 3) {
             //0x41 0x38 0x38 0x36 0x46 0x37     测试
             infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
         }
@@ -1279,11 +1282,11 @@ public class Socket_connect {
                 break;
             case 10:
 //                MainActivity.state_camera = 37;
-                Log.e("等待:","WIFI");
+                Log.e("等待:", "WIFI");
                 //二维码   接受F5    发B4   摄像头向左
                 while (rbyte[2] != (byte) (0xF5)) ; //F5代表到达二维码处，需要摄像头左转
                 qrhandler.sendEmptyMessage(203);
-                Log.e("WiFi收到",new String(rbyte));
+                Log.e("WiFi收到", new String(rbyte));
                 //识别
                 MainActivity.state_camera = 35;      //二号预设位，左方
                 qrhandler.sendEmptyMessage(204);

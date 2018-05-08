@@ -1,8 +1,6 @@
 package com.qtp000.a03cemera_preview.Serial;
 
-import android.app.Activity;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +30,6 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.qtp000.a03cemera_preview.MainActivity;
 import com.qtp000.a03cemera_preview.R;
 import com.qtp000.a03cemera_preview.Socket_connect;
-import com.qtp000.a03cemera_preview.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +41,7 @@ import java.util.concurrent.Executors;
  * Created by 祁天培 on 2018/5/7.
  */
 
-public class Serial extends AppCompatActivity {
+public class SerialAcyivity extends AppCompatActivity {
 
     // 接受传感器
     long psStatus = 0;// 状态
@@ -81,7 +78,7 @@ public class Serial extends AppCompatActivity {
         to_mainactivity();
         Transparent.showLoadingMessage(this,"加载中",false);   //显示等待对话框
 
-        Log.i("Serial.class:","加载中");
+        Log.i("SerialAcyivity.class:","加载中");
     }
 
     private void to_mainactivity(){
@@ -98,9 +95,9 @@ public class Serial extends AppCompatActivity {
             {
                 case R.id.btn_main:
                     //Intent to mainactivity
-                    Intent intent2main = new Intent(Serial.this , MainActivity.class);
+                    Intent intent2main = new Intent(SerialAcyivity.this , MainActivity.class);
                     startActivity(intent2main);
-                    Toast.makeText(Serial.this,"进主页面",Toast.LENGTH_SHORT);
+                    Toast.makeText(SerialAcyivity.this,"进主页面",Toast.LENGTH_SHORT);
 
 
                     break;
@@ -221,7 +218,7 @@ public class Serial extends AppCompatActivity {
         final String usbid = String.format("Vendor %s  ，Product %s",
                 HexDump.toHexString((short) device.getVendorId()),
                 HexDump.toHexString((short) device.getProductId()));
-        Serial.sPort = port;
+        SerialAcyivity.sPort = port;
         if(sPort !=null) {
             controlusb(); //使用usb功能   ////--------------------------------------------------
         }
@@ -248,7 +245,7 @@ public class Serial extends AppCompatActivity {
     };
 
     private void afterGetUsbPermission(UsbDevice usbDevice){
-        Toast.makeText(Serial.this, String.valueOf("Found USB device: VID=" + usbDevice.getVendorId() + " PID=" + usbDevice.getProductId()), Toast.LENGTH_LONG).show();
+        Toast.makeText(SerialAcyivity.this, String.valueOf("Found USB device: VID=" + usbDevice.getVendorId() + " PID=" + usbDevice.getProductId()), Toast.LENGTH_LONG).show();
         doYourOpenUsbDevice(usbDevice);
     }
 
@@ -347,12 +344,12 @@ public class Serial extends AppCompatActivity {
 
                 @Override
                 public void onNewData(final byte[] data) {   //读usb数据，通过usb接收小车回传的数据
-                    Serial.this.runOnUiThread(new Runnable() {
+                    SerialAcyivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Message msg =recvhandler.obtainMessage(1,data);
                             msg.sendToTarget();
-                            Serial.this.updateReceivedData(data);
+                            SerialAcyivity.this.updateReceivedData(data);
                         }
                     });
                 }
@@ -376,19 +373,19 @@ public class Serial extends AppCompatActivity {
     //打开usb设备，对usb参数进行设置。比如波特率、数据位、停止位、校验位
     protected void controlusb() {
         if (sPort == null) {
-            Toast.makeText(Serial.this,"No serial device.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(SerialAcyivity.this,"No serial device.",Toast.LENGTH_SHORT).show();
         } else {
             openUsbDevice();  //打开usb设备
             if (connection == null) {
                 mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);//如果打开不成功，重新获取
-                Toast.makeText(Serial.this,"Opening device failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SerialAcyivity.this,"Opening device failed",Toast.LENGTH_SHORT).show();
                 return;
             }
             try {
                 sPort.open(connection);
                 sPort.setParameters(115200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             } catch (IOException e) {
-                Toast.makeText(Serial.this,"Error opening device: ",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SerialAcyivity.this,"Error opening device: ",Toast.LENGTH_SHORT).show();
                 try {
                     sPort.close();
                 } catch (IOException e2) {
@@ -396,7 +393,7 @@ public class Serial extends AppCompatActivity {
                 sPort = null;
                 return;
             }
-            Toast.makeText(Serial.this,"Serial device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(SerialAcyivity.this,"SerialAcyivity device: " + sPort.getClass().getSimpleName(),Toast.LENGTH_SHORT).show();
         }
         onDeviceStateChange();
         Transparent.dismiss();//成功设置完usb，关闭等待对话框

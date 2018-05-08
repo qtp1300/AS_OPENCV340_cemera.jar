@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Serial.Serial"
+        <activity android:name=".Init_page.Init_page_activity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +37,8 @@
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"></action>&ndash;&gt;-->
             <!--</intent-filter>-->
         </activity>
+        <activity android:name=".Serial.SerialAcyivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".Function_method"></activity>
         <activity android:name=".FunctionActivity"></activity>
@@ -44,3 +46,13 @@
     </application>
 
 </manifest>
+
+
+<!--<activity android:namSerialAcyivityrSerialAcyivityrial"-->
+<!--android:windowSoftInputMode="stateAlwaysHidden|adjustPan">-->
+<!--<intent-filter>-->
+    <!--<action android:name="android.intent.action.MAIN" />-->
+
+    <!--<category android:name="android.intent.category.LAUNCHER" />-->
+<!--</intent-filter>-->
+<!--</activity>-->
