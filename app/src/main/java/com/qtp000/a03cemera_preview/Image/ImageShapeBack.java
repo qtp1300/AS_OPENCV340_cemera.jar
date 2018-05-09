@@ -1,9 +1,5 @@
-package com.qtp000.a03cemera_preview;
+package com.qtp000.a03cemera_preview.Image;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,12 +23,13 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 import org.opencv.utils.Converters;
 
-import android.R.bool;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.Environment;
 import android.util.Log;
+
+import com.qtp000.a03cemera_preview.EmitContur;
+import com.qtp000.a03cemera_preview.Image.ColorBlobDetector;
+
 public class ImageShapeBack {
 	public class ImageInfo{
 		public int pointCoint;
@@ -57,7 +54,7 @@ public class ImageShapeBack {
 	private Bitmap bitmap = null;
 	private int backColor = Color.BLACK;
 	private List<EmitContur> emitConturList =  new ArrayList<EmitContur>();
-    private ColorBlobDetector    mDetector;
+    private ColorBlobDetector mDetector;
     private List<ImageInfo>  imageInfoList = new ArrayList<ImageInfo>();
     
 	public List<ImageInfo> getImageInfoList() {

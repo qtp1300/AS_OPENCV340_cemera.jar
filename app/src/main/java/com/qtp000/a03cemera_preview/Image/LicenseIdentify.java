@@ -1,4 +1,4 @@
-package com.qtp000.a03cemera_preview;
+package com.qtp000.a03cemera_preview.Image;
 
 import java.io.File;
 import java.io.FileNotFoundException;

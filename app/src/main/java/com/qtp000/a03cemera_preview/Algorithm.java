@@ -10,11 +10,6 @@ import java.util.Arrays;
 
 public class Algorithm {
 
-    /*摩斯电码算法变量*/
-//    static String str_input1 = "*/(.-)*=(--..)%(-.-.)%/(-..)@#(.)#(.)#*";
-//    static String str_input2 = "*/(.-*=-...%@-.-.*/#!-..)@#!&.)#(..-.%*#*";
-//    static String str_input3 = "*/-....%(.-*=-...%@-.-.*/#!-..)@#!&.)#(..-.%*#*|0x1";
-//    static String str_input = ".**%*(*=....#/#!*!.-..)@.-.*/#...--(@$&.)#.-..%*#*|0x3";
     static private int[] temp = new int[100];		//点杠
     static private int temp_num = 0;		//temp的数据位置
     static private char[][] char_a = new char[7][5];
@@ -30,17 +25,6 @@ public class Algorithm {
 
     static int[] finall = new int[6];
     static int num_mosi = 0;
-//    static String vau_RFID = "";
-    /*摩斯电码算法变量*/
-
-//	public static void main(String[] args)
-//	{
-//		CRC_Code("(<AaBbCcDd>/<g(x)=x16+x15+x2+1>)",CRC_order_data);
-//
-//		Affine("A/5,2;B\\C[D.y(EF]Gf,3,7",Affine_order_data);
-//
-//		RSA_Code("(<3,4,5,7,8,9,19>/<1,2,3,4,5,6>)",RSA_order_data);
-//	}
 
 
     /****************************************************************************************************
@@ -378,12 +362,6 @@ public class Algorithm {
             order_buffer[4] = (byte) finall[4];
             order_buffer[5] = (byte) finall[5];
 
-            //        for (int i : finall) {
-            //            System.out.print("0x" + Integer.toHexString(i) + "  ");
-            //        }
-            //        System.out.println("\r\n调光台" + (char) num);
-
-
             Log.e("光照是", Integer.toBinaryString(num_mosi));
             order_buffer2[0] = (byte) (char) num_mosi;
 
@@ -393,7 +371,6 @@ public class Algorithm {
             Log.e("光照",Integer.toString(order_buffer2[0]));
             Log.e("RFID",Integer.toString(order_buffer2[1]));
 
-            //        System.out.println("RFID: 0x"+str_out[1]);
         }
 
     }

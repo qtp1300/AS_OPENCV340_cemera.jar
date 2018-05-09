@@ -22,6 +22,14 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.qtp000.a03cemera_preview.Image.ImageBack;
+import com.qtp000.a03cemera_preview.Image.ImageBackCheck;
+import com.qtp000.a03cemera_preview.Image.ImageShapeBack;
+import com.qtp000.a03cemera_preview.Image.ImgPretreatment;
+import com.qtp000.a03cemera_preview.Image.LicenseIdentify;
+import com.qtp000.a03cemera_preview.Image.RgbLuminanceSource;
+import com.qtp000.a03cemera_preview.Image.TrafficImage;
+import com.qtp000.a03cemera_preview.used_package.FileService;
 
 import org.opencv.core.Mat;
 
@@ -621,7 +629,7 @@ public class Function_method extends Activity
             public void run()
             {
                 Result result = null;
-                RgbLuminanceSource rSource = new RgbLuminanceSource(MainActivity.bitmap);
+                RgbLuminanceSource rSource = new RgbLuminanceSource(MainActivity_two.bitmap);
                 try
                 {
                     BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(rSource));
@@ -632,7 +640,7 @@ public class Function_method extends Activity
                     Log.e("二维码的内容", result.toString());
                     result_qr = result.toString();
                     System.out.println("开始保存二维码图片");
-                    new FileService().savePhoto(MainActivity.bitmap ,R.string.QrCode_Name + ".png");
+                    new FileService().savePhoto(MainActivity_two.bitmap ,R.string.QrCode_Name + ".png");
                     System.out.println("识别完毕");
                     timer.cancel();
                     return;
@@ -875,7 +883,7 @@ public class Function_method extends Activity
     {
         ImageBack imageBack = null;
         Bitmap bitma = null;
-        licbitmap  = Bitmap.createBitmap(MainActivity.bitmap);
+        licbitmap  = Bitmap.createBitmap(MainActivity_two.bitmap);
         imageBack = new ImageBack(licbitmap);
         //imageBack.ImageBackRun();
         if(currectMat == null)
@@ -922,8 +930,8 @@ public class Function_method extends Activity
     //	private int picflag = 0;
     public void checkTraffic()
     {
-        trabitmap = MainActivity.bitmap;
-        new FileService().savePhoto(MainActivity.bitmap ,R.string.Traffic_Name + ".png");
+        trabitmap = MainActivity_two.bitmap;
+        new FileService().savePhoto(MainActivity_two.bitmap ,R.string.Traffic_Name + ".png");
         if(trabitmap == null)
             return;
         List<Integer> trafficList = null;
@@ -996,7 +1004,7 @@ public class Function_method extends Activity
     ///********************************************************************************************************
 ///////////////////////////////////图形图像识别
     public static Bitmap shapebitmap = null;
-    private Bitmap shapebit = MainActivity.bitmap;
+    private Bitmap shapebit = MainActivity_two.bitmap;
     public static String shaperesult = "";
     //颜色
     public String[] color = new String[4];
@@ -1007,7 +1015,7 @@ public class Function_method extends Activity
     public void checkShecp()
     {
         shaperesult = "";
-        shapebitmap = MainActivity.bitmap;
+        shapebitmap = MainActivity_two.bitmap;
         new FileService().savePhoto(shapebitmap ,R.string.Picture_Name + ".png");
         if(shapebitmap == null)
             return;
@@ -1103,12 +1111,12 @@ public class Function_method extends Activity
     ///********************************************************************************************************
 ///////////////////////////////////图形图像识别
     public static Bitmap backbitmap = null;
-    private Bitmap backbit = MainActivity.bitmap;
+    private Bitmap backbit = MainActivity_two.bitmap;
 
     public int checkBack()//检测背景颜色
     {
         shaperesult = "";
-        backbitmap = MainActivity.bitmap;
+        backbitmap = MainActivity_two.bitmap;
         new FileService().savePhoto(backbitmap ,R.string.Picture_Name + ".png");
         if(backbitmap == null)
             return -1;

@@ -1,4 +1,4 @@
-package com.qtp000.a03cemera_preview;
+package com.qtp000.a03cemera_preview.Image;
 
 import java.util.ArrayList;
 import java.util.Iterator;

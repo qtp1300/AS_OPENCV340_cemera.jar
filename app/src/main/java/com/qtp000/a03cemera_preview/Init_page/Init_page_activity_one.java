@@ -4,21 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.qtp000.a03cemera_preview.MainActivity;
+import com.qtp000.a03cemera_preview.MainActivity_two;
 import com.qtp000.a03cemera_preview.R;
-import com.qtp000.a03cemera_preview.Serial.SerialAcyivity;
+import com.qtp000.a03cemera_preview.Serial.SerialAcyivity_two;
 import com.qtp000.a03cemera_preview.ValuesApplication;
 
 /**
  * Created by 祁天培 on 2018/5/8.
  */
 
-public class Init_page_activity extends AppCompatActivity {
+public class Init_page_activity_one extends AppCompatActivity {
     private Button wire_btn,wireless_btn;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,17 +43,17 @@ public class Init_page_activity extends AppCompatActivity {
             switch (v.getId()){
                 case R.id.btn_wire:
                     ValuesApplication.isserial = true;
-                    Toast.makeText(Init_page_activity.this,"有线",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Init_page_activity_one.this,"有线",Toast.LENGTH_SHORT).show();
 //                    Intent toSerial = new Intent();
-//                    toSerial.setClass(Init_page_activity.this, SerialAcyivity.class);
-                    Intent toSerial = new Intent(Init_page_activity.this,SerialAcyivity.class);
+//                    toSerial.setClass(Init_page_activity_one.this, SerialAcyivity_two.class);
+                    Intent toSerial = new Intent(Init_page_activity_one.this,SerialAcyivity_two.class);
                     startActivity(toSerial);
                     break;
                 case R.id.btn_wireless:
                     ValuesApplication.isserial = false;
-                    Toast.makeText(Init_page_activity.this,"无线",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Init_page_activity_one.this,"无线",Toast.LENGTH_SHORT).show();
                     Intent toMainactivity = new Intent();
-                    toMainactivity.setClass(Init_page_activity.this, MainActivity.class);
+                    toMainactivity.setClass(Init_page_activity_one.this, MainActivity_two.class);
                     startActivity(toMainactivity);
                     break;
             }

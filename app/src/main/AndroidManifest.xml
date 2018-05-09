@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Init_page.Init_page_activity"
+        <activity android:name=".Init_page.Init_page_activity_one"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,12 +37,12 @@
                 <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"></action>&ndash;&gt;-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".Serial.SerialAcyivity"
+        <activity android:name=".Serial.SerialAcyivity_two"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity_two"></activity>
         <activity android:name=".Function_method"></activity>
         <activity android:name=".FunctionActivity"></activity>
-        <service android:name=".Camera_Server"></service>
+        <service android:name=".used_package.Camera_Server"></service>
     </application>
 
 </manifest>

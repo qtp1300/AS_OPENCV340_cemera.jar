@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.qtp000.a03cemera_preview.MainActivity">
+    tools:context="com.qtp000.a03cemera_preview.MainActivity_two">
 
     <Button
         android:id="@+id/btn1"

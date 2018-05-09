@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.qtp000.a03cemera_preview.Serial.SerialAcyivity;
+import com.qtp000.a03cemera_preview.Serial.SerialAcyivity_two;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,17 +26,15 @@ public class Socket_connect {
     private Socket socket;
     public byte[] rbyte = new byte[40];
     private Handler reHandler;
-    public short TYPE = 0xAA;
-    public short MAJOR = 0x00;
-    public short FIRST = 0x00;
-    public short SECOND = 0x00;
-    public short THRID = 0x00;
-    public short CHECKSUM = 0x00;
-    public short HEAD = 0x55;
-    public short TAIL = 0xBB;
+    private short TYPE = 0xAA;
+    private short MAJOR = 0x00;
+    private short FIRST = 0x00;
+    private short SECOND = 0x00;
+    private short THRID = 0x00;
+    private short CHECKSUM = 0x00;
+    private short HEAD = 0x55;
+    private short TAIL = 0xBB;
     private Handler qrhandler;
-    //    private Handler mineHandle;
-    @SuppressWarnings("unused")
     private Context context;
     private Algorithm algorithm;
 
@@ -46,7 +44,6 @@ public class Socket_connect {
     public Socket_connect(Context context, Handler handler) {
         this.context = context;
         this.qrhandler = handler;
-//        this.mineHandle =
         algorithm = new Algorithm();
     }
 
@@ -99,7 +96,7 @@ public class Socket_connect {
     });
 
     //发送数据
-    public void send() {
+    private void send() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -109,7 +106,7 @@ public class Socket_connect {
 
                 if (ValuesApplication.isserial == true) {
                     try {
-                        SerialAcyivity.sPort.write(sbyte, 5000);
+                        SerialAcyivity_two.sPort.write(sbyte, 5000);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -131,7 +128,7 @@ public class Socket_connect {
     }
 
     //发送字符数据
-    public void senddata() {
+    private void senddata() {
         try {
             //计算通信协议校验和
             //CHECKSUM = (byte) ((MAJOR+FIRST+SECOND+THRID) % 256);
@@ -199,19 +196,8 @@ public class Socket_connect {
         return textbyte;
     }
 
-    //	public void send_voice(byte [] textbyte)
-//	{
-//		try {
-//			// 发送数据字节数组
-//			if (socket != null && !socket.isClosed()) {
-//				bOutputStream.write(textbyte, 0, textbyte.length);
-//				bOutputStream.flush();
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-    public void send_voice(final byte[] textbyte) {
+
+    private void send_voice(final byte[] textbyte) {
         new Thread(new Runnable() {
             public void run() {
                 try {
@@ -227,26 +213,6 @@ public class Socket_connect {
         }).start();
     }
 
-    //左转45or右转45
-    public void halfturn(int i) {
-//		MAJOR = 0x09;
-        if (i == 1)//左
-        {
-            MAJOR = 0x08;
-            FIRST = 0x00;
-            SECOND = 0x00;
-            THRID = 0x00;
-            send();
-        } else if (i == 2)//右
-        {
-            MAJOR = 0x09;
-            FIRST = 0x00;
-            SECOND = 0x00;
-            THRID = 0x00;
-            send();
-        }
-//		TYPE = (byte) 0xAA;
-    }
 
     // 前进
     public void go(int sp_n, int en_n) {
@@ -368,7 +334,7 @@ public class Socket_connect {
     }
 
     // 红外
-    public void infrared(byte one, byte two, byte thrid, byte four, byte five, byte six) {
+    private void infrared(byte one, byte two, byte thrid, byte four, byte five, byte six) {
         MAJOR = 0x10;
         FIRST = one;
         SECOND = two;
@@ -400,7 +366,7 @@ public class Socket_connect {
     }
 
     // 指示灯
-    public void light(int left, int right) {
+    private void light(int left, int right) {
         if (left == 1 && right == 1) {
             MAJOR = 0x20;
             FIRST = 0x01;
@@ -429,7 +395,7 @@ public class Socket_connect {
     }
 
     // 蜂鸣器
-    public void buzzer(int i) {
+    private void buzzer(int i) {
         if (i == 1)
             FIRST = 0x01;
         else if (i == 0)
@@ -441,7 +407,7 @@ public class Socket_connect {
         send();
     }
 
-    public void picture(int i) {// 图片上翻和下翻
+    private void picture(int i) {// 图片上翻和下翻
         if (i == 1)
             MAJOR = 0x50;
         else
@@ -452,7 +418,7 @@ public class Socket_connect {
         send();
     }
 
-    public void gear(int i) {// 光照档位加
+    private void gear(int i) {// 光照档位加
         if (i == 1)
             MAJOR = 0x61;
         else if (i == 2)
@@ -474,7 +440,7 @@ public class Socket_connect {
     }
 
     //立体显示
-    public void infrared_stereo(short[] data) {
+    private void infrared_stereo(short[] data) {
         MAJOR = 0x10;
         FIRST = 0xff;
         SECOND = data[0];
@@ -495,7 +461,7 @@ public class Socket_connect {
         yanchi(500);
     }
 
-    public void gate(int i) {// 闸门
+    private void gate(int i) {// 闸门
         byte type = (byte) TYPE;
         if (i == 1) {
             TYPE = 0x03;
@@ -516,7 +482,7 @@ public class Socket_connect {
     }
 
     //LCD显示标志物进入计时模式
-    public void digital_close() {//数码管关闭
+    private void digital_close() {//数码管关闭
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x03;
@@ -527,7 +493,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    public void digital_open() {//数码管打开
+    private void digital_open() {//数码管打开
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x03;
@@ -538,7 +504,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    public void digital_clear() {//数码管清零
+    private void digital_clear() {//数码管清零
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x03;
@@ -549,7 +515,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    public void digital_dic(int dis) {//LCD显示标志物第二排显示距离
+    private void digital_dic(int dis) {//LCD显示标志物第二排显示距离
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x04;
@@ -578,7 +544,7 @@ public class Socket_connect {
 //		send();
 //		TYPE = type;
 //	}
-    public void digital(int i, int one, int two, int three) {// 数码管
+    private void digital(int i, int one, int two, int three) {// 数码管
         byte type = (byte) TYPE;
         TYPE = 0x04;
         if (i == 1) {//数据写入第一排数码管
@@ -604,7 +570,7 @@ public class Socket_connect {
         send();
     }
 
-    public void TFT_LCD(int MAIN, int KIND, int COMMAD, int DEPUTY) {
+    private void TFT_LCD(int MAIN, int KIND, int COMMAD, int DEPUTY) {
         byte type = (byte) TYPE;
         TYPE = (short) 0x0B;
         MAJOR = (short) MAIN;
@@ -615,7 +581,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    public void magnetic_suspension(int MAIN, int KIND, int COMMAD, int DEPUTY) {
+    private void magnetic_suspension(int MAIN, int KIND, int COMMAD, int DEPUTY) {
         byte type = (byte) TYPE;
         TYPE = (short) 0x0A;
         MAJOR = (short) MAIN;
@@ -627,7 +593,7 @@ public class Socket_connect {
     }
 
     // 沉睡
-    public void yanchi(int time) {
+    private void yanchi(int time) {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
@@ -781,7 +747,7 @@ public class Socket_connect {
     //	D------4
     //	E------5
     //	F------6
-    public void Start_motion(int Start_dot, int fulfil_dot) {
+    private void Start_motion(int Start_dot, int fulfil_dot) {
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xB1;
 //        FIRST = (short) 0x00;
@@ -795,7 +761,7 @@ public class Socket_connect {
     }
 
     //颜色形状、车牌、光源目标档位
-    public void send_Car_text_Fruit() {
+    private void send_Car_text_Fruit() {
 
         yanchi(3000);
         TYPE = (short) 0xAA;
@@ -853,7 +819,7 @@ public class Socket_connect {
         while (rbyte[2] != (byte) (0xC2)) ;      //等待到达二维码标志物
     }
 
-    public void send_Caution_Text() {
+    private void send_Caution_Text() {
         infrared((byte) order_data[0], (byte) order_data[1],            //发送红外报警
                 (byte) order_data[2], (byte) order_data[3], (byte) order_data[4],
                 (byte) order_data[5]);
@@ -877,7 +843,7 @@ public class Socket_connect {
         yanchi(1000);
     }
 
-    public void algorithm_Data_MyhandlerMsg(int num, String initial_value) {
+    private void algorithm_Data_MyhandlerMsg(int num, String initial_value) {
         if (num == 1)        //RSA密码解密
         {
             algorithm.RSA_Code(initial_value, order_data);
@@ -914,7 +880,7 @@ public class Socket_connect {
                 break;
 
             case 11:
-//                MainActivity.state_camera = 8;        //调用摄像头1
+//                MainActivity_two.state_camera = 8;        //调用摄像头1
 //                yanchi(3000);
                 mark = 10;
                 break;
@@ -925,7 +891,7 @@ public class Socket_connect {
                 mark = 15;
                 break;
             case 15:
-                MainActivity.state_camera = 9;        //调用摄像头1
+                MainActivity_two.state_camera = 9;        //调用摄像头1
 //                yanchi(6000);
                 mark = 20;
                 break;
@@ -934,17 +900,17 @@ public class Socket_connect {
                 mark = -25;
                 break;
             case 25:
-//                algorithm_Data_MyhandlerMsg(3, MainActivity.result_qr);
+//                algorithm_Data_MyhandlerMsg(3, MainActivity_two.result_qr);
 //                mark = 30;
                 break;
             case 30:
-//                MainActivity.state_camera = 10;        //调用摄像头2
+//                MainActivity_two.state_camera = 10;        //调用摄像头2
                 mark = 40;
                 break;
             case 40:
 //                send_Caution_Text();                //发送红外报警数据
 //                mark = 400;
-//                MainActivity.model_112 = -1;
+//                MainActivity_two.model_112 = -1;
                 break;
             default:
                 break;
@@ -966,7 +932,7 @@ public class Socket_connect {
 
             case 11:
                 if (num_221 != 2) {
-                    MainActivity.state_camera = 8;        //调用摄像头1
+                    MainActivity_two.state_camera = 8;        //调用摄像头1
                     yanchi(4000);
                 }
                 mark = 10;
@@ -978,7 +944,7 @@ public class Socket_connect {
                 mark = 15;
                 break;
             case 15:
-                MainActivity.state_camera = 9;        //调用摄像头1
+                MainActivity_two.state_camera = 9;        //调用摄像头1
                 yanchi(6000);
                 mark = 20;
                 break;
@@ -987,17 +953,17 @@ public class Socket_connect {
                 mark = -25;
                 break;
             case 25:
-                algorithm_Data_MyhandlerMsg(3, MainActivity.result_qr);
+                algorithm_Data_MyhandlerMsg(3, MainActivity_two.result_qr);
                 mark = 30;
                 break;
             case 30:
-                MainActivity.state_camera = 10;        //调用摄像头2
+                MainActivity_two.state_camera = 10;        //调用摄像头2
                 mark = 40;
                 break;
             case 40:
                 send_Caution_Text();                //发送红外报警数据
                 mark = 400;
-                MainActivity.model_221 = -1;
+                MainActivity_two.model_221 = -1;
                 break;
             default:
                 break;
@@ -1005,7 +971,7 @@ public class Socket_connect {
     }
 
     //颜色形状、车牌、光源目标档位
-    public void send_Car_text_Fruit_221() {
+    private void send_Car_text_Fruit_221() {
 
         yanchi(3000);
         TYPE = (short) 0xAA;
@@ -1062,10 +1028,10 @@ public class Socket_connect {
     }
 
 
-    public void send_TFT_value() {
+    private void send_TFT_value() {
 
         short same;
-        same = MainActivity.set_shape;
+        same = MainActivity_two.set_shape;
         MAJOR = 0x10;
         FIRST = same;                // 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
         SECOND = same;
@@ -1086,7 +1052,7 @@ public class Socket_connect {
         yanchi(1000);
     }
 
-    public void send_LCD_value() {
+    private void send_LCD_value() {
         //AI57N9
 //        infrared((byte) 0x41, (byte) 0x49, (byte) 0x35, (byte) 0x37, (byte) 0x4E, (byte) 0x39);
         //B830R5  (7-1)
@@ -1105,15 +1071,15 @@ public class Socket_connect {
         //0x41 0x38 0x38 0x36 0x46 0x37
         //infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
 
-        if (MainActivity.run_time == 1) {
+        if (MainActivity_two.run_time == 1) {
             //0x46 0x35 0x37 0x33 0x59 0x38    第一轮
             infrared((byte) 0x46, (byte) 0x35, (byte) 0x37, (byte) 0x33, (byte) 0x59, (byte) 0x38);    //发送车牌识别结果
         }
-        if (MainActivity.run_time == 2) {
+        if (MainActivity_two.run_time == 2) {
             //0x4A 0x33 0x38 0x36 0x44 0x34     第二轮
             infrared((byte) 0x4A, (byte) 0x33, (byte) 0x38, (byte) 0x36, (byte) 0x44, (byte) 0x34);    //发送车牌识别结果
         }
-        if (MainActivity.run_time == 3) {
+        if (MainActivity_two.run_time == 3) {
             //0x41 0x38 0x38 0x36 0x46 0x37     测试
             infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
         }
@@ -1131,34 +1097,34 @@ public class Socket_connect {
         yanchi(2000);
     }
 
-    public void send_QR_value() {
+    private void send_QR_value() {
         send_Caution_Text();
     }
 
 
     public void moni1() {
 
-        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
+        MainActivity_two.state_camera = 39;     //调用摄像头4位置，正前方。
 //        Start_motion(2, 5);      //  1:B1    2:A2     3:A4
 //        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
 //        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
 //        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
-//        MainActivity.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
+//        MainActivity_two.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
         yanchi(1000);
-//        MainActivity.state_camera = 506;
+//        MainActivity_two.state_camera = 506;
 //        yanchi(500);
-//        MainActivity.state_camera = 506;
+//        MainActivity_two.state_camera = 506;
 //        yanchi(500);
-        Log.e("即将识别二维码", MainActivity.result_qr);
+        Log.e("即将识别二维码", MainActivity_two.result_qr);
         qrhandler.sendEmptyMessage(10);        //识别二维码
         yanchi(2000);
         if (mark == 25) {
-            Log.e("二维码是", MainActivity.result_qr);
+            Log.e("二维码是", MainActivity_two.result_qr);
         }
 
-//        algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+//        algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
 //        send_Caution_Text();                //发送二维码解码信息
-//        MainActivity.state_camera = 39;     //调用摄像头4位置，正前方。
+//        MainActivity_two.state_camera = 39;     //调用摄像头4位置，正前方。
 
 
     }
@@ -1166,7 +1132,7 @@ public class Socket_connect {
     public void moni1_2() {
         switch (mark) {
             case 5:
-                MainActivity.state_camera = 33;        //调用摄像头1
+                MainActivity_two.state_camera = 33;        //调用摄像头1
                 Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
 
 //                if (num == 2)
@@ -1176,7 +1142,7 @@ public class Socket_connect {
                 break;
 
             case 11:
-                MainActivity.state_camera = 33;        //调用摄像头1
+                MainActivity_two.state_camera = 33;        //调用摄像头1
                 yanchi(3000);
                 mark = 10;
                 break;
@@ -1187,7 +1153,7 @@ public class Socket_connect {
                 mark = 15;
                 break;
             case 15:
-                MainActivity.state_camera = 39;        //调用摄像头4
+                MainActivity_two.state_camera = 39;        //调用摄像头4
                 yanchi(1000);
                 mark = 20;
                 break;
@@ -1196,18 +1162,18 @@ public class Socket_connect {
                 mark = -25;
                 break;
             case 25:
-                algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
                 mark = 30;
                 break;
             case 30:
-                MainActivity.state_camera = 10;        //调用摄像头2
+                MainActivity_two.state_camera = 10;        //调用摄像头2
                 mark = 40;
                 break;
             case 40:
                 send_Caution_Text();                //发送红外报警数据
                 yanchi(2000);
 //                mark = 400;
-                MainActivity.moni1 = false;
+                MainActivity_two.moni1 = false;
                 break;
             default:
                 break;
@@ -1217,13 +1183,13 @@ public class Socket_connect {
     public void moni1_3() {
         switch (mark) {
             case 5:
-                MainActivity.state_camera = 33;      //一号预设位，正前方
+                MainActivity_two.state_camera = 33;      //一号预设位，正前方
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 mark = 10;
                 break;
 
             case 10:
-                MainActivity.state_camera = 33;
+                MainActivity_two.state_camera = 33;
                 //TFT识别形状
                 while (rbyte[2] != (byte) (0xF4)) ; //F4代表到达TFT，需要识别形状
                 yanchi(2000);
@@ -1235,7 +1201,7 @@ public class Socket_connect {
             case 15:
                 //LCD车牌识别
                 while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
-                MainActivity.state_camera = 39;
+                MainActivity_two.state_camera = 39;
                 yanchi(2000);
                 //车牌识别
                 send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
@@ -1246,24 +1212,24 @@ public class Socket_connect {
                 //二维码识别
                 while (rbyte[2] != (byte) (0xE2)) ; //F2代表到达LCD，需要摄像头继续右转
                 //识别
-                MainActivity.state_camera = 39;
+                MainActivity_two.state_camera = 39;
                 qrhandler.sendEmptyMessage(10);
                 mark = -25;
                 break;
 
             case 25:
-                algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
                 mark = 30;
                 break;
 
             case 30:
-                MainActivity.state_camera = 33;        //调用摄像头2
+                MainActivity_two.state_camera = 33;        //调用摄像头2
                 mark = 40;
                 break;
 
             case 40:
                 send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
-                MainActivity.moni1 = false;
+                MainActivity_two.moni1 = false;
                 break;
             default:
                 break;
@@ -1274,21 +1240,21 @@ public class Socket_connect {
     public void moni1_4() {
         switch (mark) {
             case 5:
-                MainActivity.state_camera = 33;      //一号预设位，正前方
+                MainActivity_two.state_camera = 33;      //一号预设位，正前方
                 qrhandler.sendEmptyMessage(201);
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 qrhandler.sendEmptyMessage(202);
                 mark = 10;
                 break;
             case 10:
-//                MainActivity.state_camera = 37;
+//                MainActivity_two.state_camera = 37;
                 Log.e("等待:", "WIFI");
                 //二维码   接受F5    发B4   摄像头向左
                 while (rbyte[2] != (byte) (0xF5)) ; //F5代表到达二维码处，需要摄像头左转
                 qrhandler.sendEmptyMessage(203);
                 Log.e("WiFi收到", new String(rbyte));
                 //识别
-                MainActivity.state_camera = 35;      //二号预设位，左方
+                MainActivity_two.state_camera = 35;      //二号预设位，左方
                 qrhandler.sendEmptyMessage(204);
                 yanchi(200);
                 qrhandler.sendEmptyMessage(10);
@@ -1296,7 +1262,7 @@ public class Socket_connect {
                 break;
 
             case 15:
-                algorithm_Data_MyhandlerMsg(4, MainActivity.result_qr);
+                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
                 qrhandler.sendEmptyMessage(205);
                 mark = 20;
                 break;
@@ -1311,7 +1277,7 @@ public class Socket_connect {
                 //TFT      接收F4    发B2
                 while (rbyte[2] != (byte) (0xF4)) ;
                 qrhandler.sendEmptyMessage(207);
-                MainActivity.state_camera = 37;      //三号预设位，右前方
+                MainActivity_two.state_camera = 37;      //三号预设位，右前方
                 yanchi(2000);
                 //识别形状
                 send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
@@ -1324,7 +1290,7 @@ public class Socket_connect {
                 //LCD      接收F2    发B3
                 while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
                 qrhandler.sendEmptyMessage(209);
-                MainActivity.state_camera = 39;     //四号预设位，右方
+                MainActivity_two.state_camera = 39;     //四号预设位，右方
                 qrhandler.sendEmptyMessage(210);
                 yanchi(2000);
                 //车牌识别
@@ -1335,13 +1301,13 @@ public class Socket_connect {
 
 
             case 35:
-                MainActivity.state_camera = 33;        //调用摄像头1
+                MainActivity_two.state_camera = 33;        //调用摄像头1
                 qrhandler.sendEmptyMessage(212);
                 mark = 40;
                 break;
 
             case 40:
-                MainActivity.moni1 = false;
+                MainActivity_two.moni1 = false;
                 break;
             default:
                 break;

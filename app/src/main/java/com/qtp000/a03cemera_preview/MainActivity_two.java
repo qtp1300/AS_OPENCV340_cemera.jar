@@ -8,10 +8,10 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +31,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.qtp000.a03cemera_preview.Image.RgbLuminanceSource;
+import com.qtp000.a03cemera_preview.used_package.Camera_Server;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,13 +42,13 @@ import java.util.TimerTask;
 import static com.qtp000.a03cemera_preview.FunctionActivity.result;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity_two extends AppCompatActivity {
 
     Button btn1;
-    Button btn_function, btn_moni1,bakbtn4,bakbtn5, btn_old_112, btn_stop;
-    Button btn_cemera_init,btn_cemera_32,btn_cemera_33,btn_cemera_34,btn_cemera_35,btn_cemera_36,btn_cemera_37,btn_cemera_38,btn_cemera_39;
-    Button btn_lingxing,btn_juxing,btn_yuanxing,btn_sanjiao;
-    Button btn_car_1,btn_car_2,btn_car_test;
+    Button btn_function, btn_moni1, bakbtn4, bakbtn5, btn_old_112, btn_stop;
+    Button btn_cemera_init, btn_cemera_32, btn_cemera_33, btn_cemera_34, btn_cemera_35, btn_cemera_36, btn_cemera_37, btn_cemera_38, btn_cemera_39;
+    Button btn_lingxing, btn_juxing, btn_yuanxing, btn_sanjiao;
+    Button btn_car_1, btn_car_2, btn_car_test;
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
 
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton btn_down;
     ImageButton btn_left;
     ImageButton btn_right;
-    TextView textView,textView_isrunning;
+    TextView textView, textView_isrunning;
     public static int state_camera;
     public static final String A_S = "com.a_s";
     private CameraCommandUtil cameraCommandUtil;
@@ -88,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
     private byte[] mByte = new byte[11];
 
 
-
-
     // Used to load the 'native-lib' library on application startup.
     static {
         System.loadLibrary("opencv_java3");
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.old_activity_main);
 
 
-
         // Example of a call to a native method
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
@@ -114,17 +113,16 @@ public class MainActivity extends AppCompatActivity {
         Camer_Init();
 
 
-        if (ValuesApplication.isserial == true){
+        if (ValuesApplication.isserial == true) {
             ethernet_Init();                //用有线时启用这个
-        }
-        else {
+        } else {
             wifi_Init();                    //用wifi时启用这个
         }
 
-        socket_connect = new Socket_connect(this,qrHandler);
+        socket_connect = new Socket_connect(this, qrHandler);
         connect_thread();
 
-        fmod = new Function_method(socket_connect,state_camera,MainActivity.this);
+        fmod = new Function_method(socket_connect, state_camera, MainActivity_two.this);
 
         FunctionActivity.set_handle(this.qrHandler);
 
@@ -195,87 +193,59 @@ public class MainActivity extends AppCompatActivity {
 //
 //    }
 
-    class btnclickListener implements View.OnClickListener{
+    class btnclickListener implements View.OnClickListener {
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             int id = v.getId();
 //            Toast toast = Toast.makeText(getApplicationContext(),"点击了",Toast.LENGTH_SHORT);
 //            toast.show();
-            switch (id){
+            switch (id) {
                 case R.id.btn1:
-                    Intent intent2test = new Intent(MainActivity.this , test.class);
+                    Intent intent2test = new Intent(MainActivity_two.this, test.class);
                     startActivity(intent2test);
                     break;
                 case R.id.btn_up:
-                    Toast toast_up = Toast.makeText(getApplicationContext(),"上",Toast.LENGTH_SHORT);
+                    Toast toast_up = Toast.makeText(getApplicationContext(), "上", Toast.LENGTH_SHORT);
                     toast_up.show();
-
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-                            socket_connect.go(80,2000);
-//                        }
-//                    }).start();
-
-//                    new Runnable(){
-//                        /**
-//                         * When an object implementing interface <code>Runnable</code> is used
-//                         * to create a thread, starting the thread causes the object's
-//                         * <code>run</code> method to be called in that separately executing
-//                         * thread.
-//                         * <p>
-//                         * The general contract of the method <code>run</code> is that it may
-//                         * take any action whatsoever.
-//                         *
-//                         * @see Thread#run()
-//                         */
-//                        @Override
-//                        public void run() {
-//                            socket_connect.go(80,2000);
-//                        }
-//                    }.run();
-
-
-
-
+                    socket_connect.go(80, 2000);
                     break;
                 case R.id.btn_left:
-                    Toast toast_left = Toast.makeText(getApplicationContext(),"左",Toast.LENGTH_SHORT);
+                    Toast toast_left = Toast.makeText(getApplicationContext(), "左", Toast.LENGTH_SHORT);
                     toast_left.show();
                     break;
                 case R.id.btn_right:
-                    Toast toast_right = Toast.makeText(getApplicationContext(),"右",Toast.LENGTH_SHORT);
+                    Toast toast_right = Toast.makeText(getApplicationContext(), "右", Toast.LENGTH_SHORT);
                     toast_right.show();
                     break;
                 case R.id.btn_down:
-                    Toast toast_down = Toast.makeText(getApplicationContext(),"下",Toast.LENGTH_SHORT);
+                    Toast toast_down = Toast.makeText(getApplicationContext(), "下", Toast.LENGTH_SHORT);
                     toast_down.show();
                     break;
                 case R.id.lingxing:
-                    Toast.makeText(getApplication(),"菱形 0x04",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "菱形 0x04", Toast.LENGTH_SHORT).show();
                     set_shape = 0x04;
 //                    Log.e("按键","Button1");
                     break;
                 case R.id.juxing:
-                    Toast.makeText(getApplication(),"矩形 0x01",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "矩形 0x01", Toast.LENGTH_SHORT).show();
                     set_shape = 0x01;
                     break;
                 case R.id.yuanxing:
-                    Toast.makeText(getApplication(),"圆形 0x02",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "圆形 0x02", Toast.LENGTH_SHORT).show();
                     set_shape = 0x02;
                     break;
                 case R.id.sanjiaoxing:
-                    Toast.makeText(getApplication(),"三角形 0x03",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "三角形 0x03", Toast.LENGTH_SHORT).show();
                     set_shape = 0x03;
                     break;
                 case R.id.btn_function:
-                    Toast.makeText(getApplication(),"跳转至功能页",Toast.LENGTH_SHORT).show();
-                    Intent intent2FunctionActivity = new Intent(MainActivity.this,FunctionActivity.class);
+                    Toast.makeText(getApplication(), "跳转至功能页", Toast.LENGTH_SHORT).show();
+                    Intent intent2FunctionActivity = new Intent(MainActivity_two.this, FunctionActivity.class);
                     startActivity(intent2FunctionActivity);
 
                     break;
                 case R.id.btn_moni1:
-                    Toast.makeText(getApplication(),"模拟1",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "模拟1", Toast.LENGTH_SHORT).show();
                     to_run_moni1();
                     textView_isrunning.setText("运行中");
 //                    btn_moni1.setSelected(true);
@@ -284,40 +254,35 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
 //                    break;
                 case R.id.btn_moni2:
-                    Toast.makeText(getApplication(),"Button5",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "Button5", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.old_112:
-                    Toast.makeText(getApplication(),"原112",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "原112", Toast.LENGTH_SHORT).show();
                     state_camera = 10;
                     model_112 = 10;
                     full_Thread_model_112();
                     break;
                 case R.id.btn_stop:
-                    Toast.makeText(getApplication(),"停止",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "停止", Toast.LENGTH_SHORT).show();
                     moni1 = false;
                     break;
                 case R.id.car_1:
                     run_time = 1;
-                    Toast.makeText(getApplication(),"一轮",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "一轮", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.car_2:
                     run_time = 2;
-                    Toast.makeText(getApplication(),"二轮",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "二轮", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.car_test:
                     run_time = 3;
-                    Toast.makeText(getApplication(),"测试",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplication(), "测试", Toast.LENGTH_SHORT).show();
                     break;
-
-
             }
-
-
-
         }
     }
 
-    private void init_view(){
+    private void init_view() {
         btn1 = findViewById(R.id.btn1);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(100);
@@ -348,9 +313,9 @@ public class MainActivity extends AppCompatActivity {
         btn_car_test = findViewById(R.id.car_test);
 
 
-
     }
-    private  void addlistener(){
+
+    private void addlistener() {
         btn1.setOnClickListener(new btnclickListener());
 
         btn_lingxing.setOnClickListener(new btnclickListener());
@@ -388,15 +353,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void search(){
+    private void search() {
         Intent intent = new Intent();
-        intent.setClass(MainActivity.this,Camera_Server.class);
+        intent.setClass(MainActivity_two.this, Camera_Server.class);
         startService(intent);
     }
-    private BroadcastReceiver myBroadcastReceiver = new BroadcastReceiver()
-    {
-        public void onReceive(Context arg0, Intent arg1)
-        {
+
+    private BroadcastReceiver myBroadcastReceiver = new BroadcastReceiver() {
+        public void onReceive(Context arg0, Intent arg1) {
             IPCamera = arg1.getStringExtra("IP");
             ValuesApplication.purecameraip = arg1.getStringExtra("pureip");
             phThread.start();
@@ -406,115 +370,72 @@ public class MainActivity extends AppCompatActivity {
     // 显示图片
     public Handler phHandler = new Handler() {
         public void handleMessage(Message msg) {
-            if (msg.what == 10)
-            {
+            if (msg.what == 10) {
 //                Log.e("显示图片：","已经进行到此步骤");
                 imageView.setImageBitmap(bitmap);
-                if(bitmap == null || bitmap.equals("")){
-                    Log.e("图片：","为空");
-                }
-                else {
-                    Log.e("图片：","不空");
+                if (bitmap == null || bitmap.equals("")) {
+                    Log.e("图片：", "为空");
+                } else {
+                    Log.e("图片：", "不空");
                 }
             }
         }
     };
-//    public Handler mineHandle = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            if(msg.what == 1){
-////                msg.arg1 =
-//            }
-//        }
-//    }
+
 
     // 图片
     public static Bitmap bitmap;
+
     // 得到当前摄像头的图片信息
-    public void getBitmap()
-    {
+    public void getBitmap() {
         bitmap = cameraCommandUtil.httpForImage(IPCamera);
         phHandler.sendEmptyMessage(10);
     }
 
-    private Thread phThread = new Thread(new Runnable()
-    {
-        public void run()
-        {
-            while (true)
-            {
+    private Thread phThread = new Thread(new Runnable() {
+        public void run() {
+            while (true) {
                 getBitmap();        //获取并显示摄像头图像
                 switch (state_camera) {
-//                    case 1:
-//                        cameraCommandUtil.postHttp(IPCamera, 0, 1);
-//                        break;
-//                    case 2:
-//                        cameraCommandUtil.postHttp(IPCamera, 2, 1);
-//                        break;
-//                    case 3:
-//                        cameraCommandUtil.postHttp(IPCamera, 4, 1);
-//                        break;
-//                    case 4:
-//                        cameraCommandUtil.postHttp(IPCamera, 6, 1);
-//                        break;
-//                    // /预设位1到3
-//                    case 5:
-//                        cameraCommandUtil.postHttp(IPCamera, 30, 0);
-//                        break;
-//                    case 6:
-//                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
-//                        break;
-//                    case 7:
-//                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
-//                        break;
-//                    case 8:
-//                        cameraCommandUtil.postHttp(IPCamera, 31, 0);
-//                        break;
-//                    case 9:
-//                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
-//                        break;
-//                    case 10:
-//                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
-//                        break;
-                    /*自己加的*/
+
                     case 25:
-                        cameraCommandUtil.postHttp(IPCamera,25,0);
+                        cameraCommandUtil.postHttp(IPCamera, 25, 0);
                         break;
                     case 32:
-                        cameraCommandUtil.postHttp(IPCamera,32,0);
+                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
                         break;
                     case 33:
-                        cameraCommandUtil.postHttp(IPCamera,33,0);
+                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
                         break;
                     case 34:
-                        cameraCommandUtil.postHttp(IPCamera,34,0);
+                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
                         break;
                     case 35:
-                        cameraCommandUtil.postHttp(IPCamera,35,0);
+                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
                         break;
                     case 36:
-                        cameraCommandUtil.postHttp(IPCamera,36,0);
+                        cameraCommandUtil.postHttp(IPCamera, 36, 0);
                         break;
                     case 37:
-                        cameraCommandUtil.postHttp(IPCamera,37,0);
+                        cameraCommandUtil.postHttp(IPCamera, 37, 0);
                         break;
                     case 38:
-                        cameraCommandUtil.postHttp(IPCamera,38,0);
+                        cameraCommandUtil.postHttp(IPCamera, 38, 0);
                         break;
                     case 39:
-                        cameraCommandUtil.postHttp(IPCamera,39,0);
+                        cameraCommandUtil.postHttp(IPCamera, 39, 0);
                         break;
                     case 500:            //抬头
-                        cameraCommandUtil.postHttp(IPCamera,0,cemera_step);
+                        cameraCommandUtil.postHttp(IPCamera, 0, cemera_step);
                         break;
                     case 502:           //低头
-                        cameraCommandUtil.postHttp(IPCamera,2,cemera_step);
+                        cameraCommandUtil.postHttp(IPCamera, 2, cemera_step);
                         break;
                     case 504:           //向左
-                        cameraCommandUtil.postHttp(IPCamera,4,cemera_step);
+                        cameraCommandUtil.postHttp(IPCamera, 4, cemera_step);
                         break;
                     case 506:           //向右
-                        cameraCommandUtil.postHttp(IPCamera,6,cemera_step);
+                        cameraCommandUtil.postHttp(IPCamera, 6, cemera_step);
                         break;
                     /*自己加的*/
                     default:
@@ -524,8 +445,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     });
-    private void Camer_Init()
-    {
+
+    private void Camer_Init() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(A_S);
         registerReceiver(myBroadcastReceiver, intentFilter);
@@ -533,14 +454,14 @@ public class MainActivity extends AppCompatActivity {
         cameraCommandUtil = new CameraCommandUtil();
     }
 
-    private void wifi_Init()
-    {
+    private void wifi_Init() {
         // 得到服务器的IP地址
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         dhcpInfo = wifiManager.getDhcpInfo();
         IPCar = Formatter.formatIpAddress(dhcpInfo.gateway);
     }
-    private void ethernet_Init(){
+
+    private void ethernet_Init() {
         Intent ipintent = new Intent();
         //ComponentName的参数1:目标app的包名,参数2:目标app的Service完整类名
         ipintent.setComponent(new ComponentName("com.android.settings", "com.android.settings.ethernet.CameraInitService"));
@@ -550,41 +471,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//
-//    public Handler SerialHandler = new Handler(){
-//        /**
-//         * Subclasses must implement this to receive messages.
-//         *
-//         * @param msg
-//         */
-//        @Override
-//        public void handleMessage(Message msg) {
-////            super.handleMessage(msg);
-//            if(msg.what == 10){
-//
-//            }
-//        }
-//    };
 
     // 二维码、车牌处理
-    public	Handler qrHandler = new Handler() {
+    public Handler qrHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 10:
-                    if(bitmap != null)
-                    {
+                    if (bitmap != null) {
                         timer = new Timer();
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
                                 QR_time = QR_time++;
-                                if (QR_time < 5 ){
+                                if (QR_time < 5) {
                                     Result result = null;
                                     RgbLuminanceSource rSource = new RgbLuminanceSource(bitmap);
                                     try {
                                         BinaryBitmap binaryBitmap = new BinaryBitmap(
                                                 new HybridBinarizer(rSource));
-                                         Map<DecodeHintType, String> hint = new HashMap<DecodeHintType, String>();
+                                        Map<DecodeHintType, String> hint = new HashMap<DecodeHintType, String>();
                                         hint.put(DecodeHintType.CHARACTER_SET, "utf-8");
                                         QRCodeReader reader = new QRCodeReader();
                                         result = reader.decode(binaryBitmap, hint);
@@ -593,19 +498,6 @@ public class MainActivity extends AppCompatActivity {
                                             timer.cancel();
                                             qrHandler.sendEmptyMessage(20);
                                         }
-    //							else {
-    //								MainActivity.Timer_flag++;
-    //								if(MainActivity.Timer_flag >= 10)
-    //								{
-    //									result_qr = "^-^";
-    //									Toast.makeText(MainActivity.this, result_qr, Toast.LENGTH_SHORT).show();
-    //
-    //									MainActivity.Timer_flag = 0;
-    //									timer.cancel();
-    //									qrHandler.sendEmptyMessage(20);
-    //								}
-    //							}
-                                        //System.out.println("正在识别");
                                     } catch (NotFoundException e) {
                                         e.printStackTrace();
                                     } catch (ChecksumException e) {
@@ -614,8 +506,8 @@ public class MainActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
                                 }
-                                if (QR_time ==5 ){
-                                    if(socket_connect.mark <0 ){
+                                if (QR_time == 5) {
+                                    if (socket_connect.mark < 0) {
                                         socket_connect.mark = -socket_connect.mark;
                                     }
                                     timer.cancel();
@@ -629,25 +521,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
                 case 20:
-                    Toast.makeText(MainActivity.this, result_qr, Toast.LENGTH_SHORT).show();
-                    if(socket_connect.mark <0 ){
+                    Toast.makeText(MainActivity_two.this, result_qr, Toast.LENGTH_SHORT).show();
+                    if (socket_connect.mark < 0) {
                         socket_connect.mark = -socket_connect.mark;
                     }
                     //mark = -mark;
                     break;
                 case 31:
-                    textView.setText("结果:"+ "0x"+new Algorithm().BToH((char)((socket_connect.order_data[0])&0xFF))+"; "+
-                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[1])&0xFF))+"; "+
-                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[2])&0xFF))+"; "+
-                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[3])&0xFF))+"; "+
-                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[4])&0xFF))+"; "+
-                            "0x"+new Algorithm().BToH((char)((socket_connect.order_data[5])&0xFF))+"; "+
-                            "光照："+new Algorithm().BToH((char)((socket_connect.order_data_2[0])&0xFF))+"; "+
-                            "RFID：0x"+new Algorithm().BToH((char)((socket_connect.order_data_2[1])&0xFF)));
+                    textView.setText("结果:" + "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[0]) & 0xFF)) + "; " +
+                            "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[1]) & 0xFF)) + "; " +
+                            "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[2]) & 0xFF)) + "; " +
+                            "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[3]) & 0xFF)) + "; " +
+                            "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[4]) & 0xFF)) + "; " +
+                            "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[5]) & 0xFF)) + "; " +
+                            "光照：" + new Algorithm().BToH((char) ((socket_connect.order_data_2[0]) & 0xFF)) + "; " +
+                            "RFID：0x" + new Algorithm().BToH((char) ((socket_connect.order_data_2[1]) & 0xFF)));
                     break;
                 /*自己加的*/
                 case 100:
-                    textView.setText("识别结果"+ result);
+                    textView.setText("识别结果" + result);
                     break;
                 case 101:               //
                     textView_isrunning.setText("运行结束");
@@ -655,9 +547,9 @@ public class MainActivity extends AppCompatActivity {
 //                    if (msg.arg1 == 30){
 //
 //                    }
-                 case 201:
-                     progressBar.setProgress(9);
-                     break;
+                case 201:
+                    progressBar.setProgress(9);
+                    break;
                 case 202:
                     progressBar.setProgress(18);
                     break;
@@ -700,87 +592,71 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     break;
             }
-        };
+        }
+
+        ;
     };
 
-    private void connect_thread()
-    {
-        new Thread(new Runnable()
-        {
-            public void run()
-            {
+    private void connect_thread() {
+        new Thread(new Runnable() {
+            public void run() {
                 socket_connect.connect(rehHandler, IPCar);
             }
         }).start();
     }
 
     // 接受显示小车发送的数据
-    private Handler rehHandler = new Handler()
-    {
-        public void handleMessage(Message msg)
-        {
-            if (msg.what == 1)
-            {
+    private Handler rehHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
                 mByte = (byte[]) msg.obj;
-                if (mByte[0] == 0x55)
-                {
+                if (mByte[0] == 0x55) {
                     //数据显示
-                    if (mByte[1] == (byte)0xcc)
-                    {
+                    if (mByte[1] == (byte) 0xcc) {
                         // 显示数据
-                        textView.setText("WIFIIP:"+IPCar+""+"CameraIP"+IPCamera+"\n" +
-                                (char)mByte[2] + (char)mByte[3] + (char)mByte[4] + (char)mByte[5] +
-                                (char)mByte[6] + (char)mByte[7] + (char)mByte[8] + (char)mByte[9]);
+                        textView.setText("WIFIIP:" + IPCar + "" + "CameraIP" + IPCamera + "\n" +
+                                (char) mByte[2] + (char) mByte[3] + (char) mByte[4] + (char) mByte[5] +
+                                (char) mByte[6] + (char) mByte[7] + (char) mByte[8] + (char) mByte[9]);
 
-                        for(int i=2;i<10;i++)
-                            RFID_result += String.valueOf((char)mByte[i]);
+                        for (int i = 2; i < 10; i++)
+                            RFID_result += String.valueOf((char) mByte[i]);
 
                         return;
-                    }
-                    else if (mByte[1] == (byte)0xcd)
-                    {
+                    } else if (mByte[1] == (byte) 0xcd) {
                         // 显示数据
-                        textView.setText("WIFI模块IP:"+IPCar+"\n"  +
-                                (char)mByte[2] + (char)mByte[3] + (char)mByte[4] + (char)mByte[5] +
-                                (char)mByte[6] + (char)mByte[7] + (char)mByte[8] + (char)mByte[9]);
+                        textView.setText("WIFI模块IP:" + IPCar + "\n" +
+                                (char) mByte[2] + (char) mByte[3] + (char) mByte[4] + (char) mByte[5] +
+                                (char) mByte[6] + (char) mByte[7] + (char) mByte[8] + (char) mByte[9]);
 
-                        for(int i=2;i<10;i++)
-                            RFID_result += String.valueOf((char)mByte[i]);
+                        for (int i = 2; i < 10; i++)
+                            RFID_result += String.valueOf((char) mByte[i]);
 
-                        Log.e("RFID" , RFID_result);
+                        Log.e("RFID", RFID_result);
 
                         RFID_status = 1;
                         yanchi(1000);
 
-                    }
-                    else if (mByte[1] == (byte)0xc1)
-                    {
+                    } else if (mByte[1] == (byte) 0xc1) {
                         // 显示数据
-                        textView.setText("WIFI模块IP:"+IPCar+"\n" + "该识别二维码了");
+                        textView.setText("WIFI模块IP:" + IPCar + "\n" + "该识别二维码了");
 
                         QRCODE_status = 1;
                         yanchi(1000);
-                    }
-                    else if (mByte[1] == (byte)0xc2)
-                    {
+                    } else if (mByte[1] == (byte) 0xc2) {
                         // 显示数据
-                        textView.setText("WIFI模块IP:"+IPCar+"\n" + "该识别交通灯了");
+                        textView.setText("WIFI模块IP:" + IPCar + "\n" + "该识别交通灯了");
 
                         TRAFFIC_status = 1;
                         yanchi(1000);
-                    }
-                    else if (mByte[2] == (byte)0x01)
-                    {
+                    } else if (mByte[2] == (byte) 0x01) {
                         // 显示数据
-                        textView.setText("WIFI模块IP:"+IPCar+"\n" + "该识别车牌了");
+                        textView.setText("WIFI模块IP:" + IPCar + "\n" + "该识别车牌了");
 
                         LICENSE_status = 1;
                         yanchi(1000);
-                    }
-                    else if (mByte[2] == (byte)0x02)
-                    {
+                    } else if (mByte[2] == (byte) 0x02) {
                         // 显示数据
-                        textView.setText("WIFI模块IP:"+IPCar+"\n" + "该识别图形了");
+                        textView.setText("WIFI模块IP:" + IPCar + "\n" + "该识别图形了");
 
                         PICTURE_status = 1;
                         yanchi(1000);
@@ -800,7 +676,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void full_Thread_model_112()			//112
+    private void full_Thread_model_112()            //112
     {
         socket_connect.mark = 5;
         new Thread(new Runnable() {
@@ -808,27 +684,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                while(true)
-                {
-                    if(model_112  == 10)
+                while (true) {
+                    if (model_112 == 10)
                         socket_connect.Full_motion_model_112();
                 }
             }
         }).start();
     }
 
-/*    private void to_run_moni1(){
-        Thread thread_moni1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                socket_connect.moni1();
-                Log.e("模拟1线程启动","已启动");
-            }
-        });
-        thread_moni1.start();
-    }*/
-    private void to_run_moni1(){
+    private void to_run_moni1() {
         moni1 = true;
         socket_connect.mark = 5;
         QR_time = 0;
@@ -837,11 +701,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                while(moni1)
-                {
+                while (moni1) {
                     socket_connect.moni1_4();
                 }
-                Log.e("模拟1状态:","应该结束了");
+                Log.e("模拟1状态:", "应该结束了");
                 qrHandler.sendEmptyMessage(101);
 //                textView_isrunning.setText("运行结束");
                 qrHandler.sendEmptyMessage(213);
@@ -856,7 +719,7 @@ public class MainActivity extends AppCompatActivity {
 //    public native String stringFromJNI();
 
     ValuesApplication valuesApplication;
-    private Handler for_serial_handler = new Handler(){
+    private Handler for_serial_handler = new Handler() {
         /**
          * Subclasses must implement this to receive messages.
          *
@@ -866,17 +729,15 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 mByte = (byte[]) msg.obj;
-                Log.i("串口向main发送数据了","成功接收"+mByte.length+"的长度");
+                Log.i("串口向main发送数据了", "成功接收" + mByte.length + "的长度");
 
             }
         }
     };
 
-    private void send_handler2serial(){
+    private void send_handler2serial() {
         valuesApplication = (ValuesApplication) getApplication();
         valuesApplication.set_Mainhandler(for_serial_handler);
     }
-
-
 
 }

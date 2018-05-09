@@ -7,7 +7,7 @@ import android.os.Handler;
 
 //import java.util.logging.Handler;
 
-//import static com.qtp000.a03cemera_preview.ValuesApplication.Mode.SerialAcyivity;
+//import static com.qtp000.a03cemera_preview.ValuesApplication.Mode.SerialAcyivity_two;
 
 /**
  * Created by 祁天培 on 2018/5/6.
@@ -17,9 +17,9 @@ public class ValuesApplication extends Application{
 
     public static String purecameraip =null;
 //    public enum Mode{
-//        SerialAcyivity,Socket
+//        SerialAcyivity_two,Socket
 //    }
-//    public static Mode SerialOrSocket = SerialAcyivity;
+//    public static Mode SerialOrSocket = SerialAcyivity_two;
     public static boolean isserial = true;
 
     public static byte[] Serial_data = new byte[11];

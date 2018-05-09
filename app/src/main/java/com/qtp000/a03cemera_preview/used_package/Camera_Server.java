@@ -1,17 +1,16 @@
-package com.qtp000.a03cemera_preview;
+package com.qtp000.a03cemera_preview.used_package;
 
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.bkrcl.control_car_video.camerautil.SearchCameraUtil;
+import com.qtp000.a03cemera_preview.MainActivity_two;
 
 /**
  * Created by 祁天培 on 2018/2/9.
@@ -75,7 +74,7 @@ public class Camera_Server extends Service{
         @Override
         public void handleMessage(Message msg) {
             if(msg.what == 10){
-                Intent intent = new Intent(MainActivity.A_S);
+                Intent intent = new Intent(MainActivity_two.A_S);
                 intent.putExtra("IP",IP+":81");
 
                 intent.putExtra("pureip",IP);//官方新增

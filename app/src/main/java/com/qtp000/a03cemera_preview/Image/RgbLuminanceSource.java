@@ -1,4 +1,4 @@
-package com.qtp000.a03cemera_preview;
+package com.qtp000.a03cemera_preview.Image;
 
 /**
  * Created by 祁天培 on 2018/2/9.

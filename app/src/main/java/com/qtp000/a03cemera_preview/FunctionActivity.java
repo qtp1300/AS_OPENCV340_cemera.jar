@@ -238,7 +238,7 @@ public class FunctionActivity extends Activity {
                         fmd.TFT_LCD();
                     break;
                 case 3://预设位
-                    MainActivity.state_camera = childPosition+5;
+                    MainActivity_two.state_camera = childPosition+5;
                     break;
                 case 4://任务板
                     if(childPosition == 0)//转向灯

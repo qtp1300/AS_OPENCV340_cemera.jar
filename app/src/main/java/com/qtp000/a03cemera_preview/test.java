@@ -2,14 +2,10 @@ package com.qtp000.a03cemera_preview;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.bkrcl.control_car_video.camerautil.CameraCommandUtil;
 
 /**
  * Created by 祁天培 on 2018/2/6.
@@ -61,92 +57,92 @@ public class test extends Activity{
                 btn_cemera_init.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                MainActivity.state_camera = 25;
+                MainActivity_two.state_camera = 25;
             }
         });
         btn_cemera_32.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 32;
+                MainActivity_two.state_camera = 32;
             }
         });
         btn_cemera_33.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 33;
+                MainActivity_two.state_camera = 33;
             }
         });
         btn_cemera_34.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 34;
+                MainActivity_two.state_camera = 34;
             }
         });
         btn_cemera_35.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 35;
+                MainActivity_two.state_camera = 35;
             }
         });
         btn_cemera_36.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 36;
+                MainActivity_two.state_camera = 36;
             }
         });
         btn_cemera_37.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 37;
+                MainActivity_two.state_camera = 37;
             }
         });
         btn_cemera_38.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 38;
+                MainActivity_two.state_camera = 38;
             }
         });
         btn_cemera_39.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 39;
+                MainActivity_two.state_camera = 39;
             }
         });
         btn_cemera_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 500;
+                MainActivity_two.state_camera = 500;
             }
         });
         btn_cemera_down.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 502;
+                MainActivity_two.state_camera = 502;
             }
         });
         btn_cemera_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 504;
+                MainActivity_two.state_camera = 504;
             }
         });
         btn_cemera_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.state_camera = 506;
+                MainActivity_two.state_camera = 506;
             }
         });
         btn_cemera_fast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.cemera_step = 2;
+                MainActivity_two.cemera_step = 2;
                 Toast.makeText(getApplicationContext(),"摄像头移动快",Toast.LENGTH_SHORT).show();
             }
         });
         btn_cemera_slow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.cemera_step = 1;
+                MainActivity_two.cemera_step = 1;
                 Toast.makeText(getApplicationContext(),"摄像头移动慢",Toast.LENGTH_SHORT).show();
             }
         });
@@ -166,7 +162,7 @@ public class test extends Activity{
 //        @Override
 //        public void handleMessage(Message msg) {
 //            if (msg.what == 10){
-//                img_preview.setImageBitmap(MainActivity.bitmap);
+//                img_preview.setImageBitmap(MainActivity_two.bitmap);
 //            }
 //        }
 //    };
@@ -177,7 +173,7 @@ public class test extends Activity{
                 @Override
                 public void run() {
                     while (true){
-//                        img_preview.setImageBitmap(MainActivity.bitmap);
+//                        img_preview.setImageBitmap(MainActivity_two.bitmap);
                         try {
                             Thread.sleep(200);
                         } catch (InterruptedException e) {
