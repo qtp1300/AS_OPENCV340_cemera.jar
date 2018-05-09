@@ -197,7 +197,7 @@ public class Socket_connect {
     }
 
 
-    private void send_voice(final byte[] textbyte) {
+    public void send_voice(final byte[] textbyte) {
         new Thread(new Runnable() {
             public void run() {
                 try {
@@ -334,7 +334,7 @@ public class Socket_connect {
     }
 
     // 红外
-    private void infrared(byte one, byte two, byte thrid, byte four, byte five, byte six) {
+    public void infrared(byte one, byte two, byte thrid, byte four, byte five, byte six) {
         MAJOR = 0x10;
         FIRST = one;
         SECOND = two;
@@ -366,7 +366,7 @@ public class Socket_connect {
     }
 
     // 指示灯
-    private void light(int left, int right) {
+    public void light(int left, int right) {
         if (left == 1 && right == 1) {
             MAJOR = 0x20;
             FIRST = 0x01;
@@ -395,7 +395,7 @@ public class Socket_connect {
     }
 
     // 蜂鸣器
-    private void buzzer(int i) {
+    public void buzzer(int i) {
         if (i == 1)
             FIRST = 0x01;
         else if (i == 0)
@@ -407,7 +407,7 @@ public class Socket_connect {
         send();
     }
 
-    private void picture(int i) {// 图片上翻和下翻
+    public void picture(int i) {// 图片上翻和下翻
         if (i == 1)
             MAJOR = 0x50;
         else
@@ -418,7 +418,7 @@ public class Socket_connect {
         send();
     }
 
-    private void gear(int i) {// 光照档位加
+    public void gear(int i) {// 光照档位加
         if (i == 1)
             MAJOR = 0x61;
         else if (i == 2)
@@ -440,7 +440,7 @@ public class Socket_connect {
     }
 
     //立体显示
-    private void infrared_stereo(short[] data) {
+    public void infrared_stereo(short[] data) {
         MAJOR = 0x10;
         FIRST = 0xff;
         SECOND = data[0];
@@ -461,7 +461,7 @@ public class Socket_connect {
         yanchi(500);
     }
 
-    private void gate(int i) {// 闸门
+    public void gate(int i) {// 闸门
         byte type = (byte) TYPE;
         if (i == 1) {
             TYPE = 0x03;
@@ -482,7 +482,7 @@ public class Socket_connect {
     }
 
     //LCD显示标志物进入计时模式
-    private void digital_close() {//数码管关闭
+    public void digital_close() {//数码管关闭
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x03;
@@ -493,7 +493,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    private void digital_open() {//数码管打开
+    public void digital_open() {//数码管打开
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x03;
@@ -504,7 +504,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    private void digital_clear() {//数码管清零
+    public void digital_clear() {//数码管清零
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x03;
@@ -515,7 +515,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    private void digital_dic(int dis) {//LCD显示标志物第二排显示距离
+    public void digital_dic(int dis) {//LCD显示标志物第二排显示距离
         byte type = (byte) TYPE;
         TYPE = 0x04;
         MAJOR = 0x04;
@@ -544,7 +544,7 @@ public class Socket_connect {
 //		send();
 //		TYPE = type;
 //	}
-    private void digital(int i, int one, int two, int three) {// 数码管
+    public void digital(int i, int one, int two, int three) {// 数码管
         byte type = (byte) TYPE;
         TYPE = 0x04;
         if (i == 1) {//数据写入第一排数码管
@@ -570,7 +570,7 @@ public class Socket_connect {
         send();
     }
 
-    private void TFT_LCD(int MAIN, int KIND, int COMMAD, int DEPUTY) {
+    public void TFT_LCD(int MAIN, int KIND, int COMMAD, int DEPUTY) {
         byte type = (byte) TYPE;
         TYPE = (short) 0x0B;
         MAJOR = (short) MAIN;
@@ -581,7 +581,7 @@ public class Socket_connect {
         TYPE = type;
     }
 
-    private void magnetic_suspension(int MAIN, int KIND, int COMMAD, int DEPUTY) {
+    public void magnetic_suspension(int MAIN, int KIND, int COMMAD, int DEPUTY) {
         byte type = (byte) TYPE;
         TYPE = (short) 0x0A;
         MAJOR = (short) MAIN;
@@ -593,7 +593,7 @@ public class Socket_connect {
     }
 
     // 沉睡
-    private void yanchi(int time) {
+    public void yanchi(int time) {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
