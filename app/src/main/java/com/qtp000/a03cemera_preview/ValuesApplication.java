@@ -3,6 +3,9 @@ package com.qtp000.a03cemera_preview;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Handler;
+
+//import java.util.logging.Handler;
 
 //import static com.qtp000.a03cemera_preview.ValuesApplication.Mode.SerialAcyivity;
 
@@ -10,13 +13,25 @@ import android.content.Intent;
  * Created by 祁天培 on 2018/5/6.
  */
 
-public class ValuesApplication {
+public class ValuesApplication extends Application{
+
     public static String purecameraip =null;
 //    public enum Mode{
 //        SerialAcyivity,Socket
 //    }
 //    public static Mode SerialOrSocket = SerialAcyivity;
     public static boolean isserial = true;
+
+    public static byte[] Serial_data = new byte[11];
+    public static boolean Serial_data_update = false;
+
+    private Handler Mainhandler = null;
+    public void set_Mainhandler(Handler input_handler){
+        this.Mainhandler = input_handler;
+    }
+    public Handler get_Mainhandler(){
+        return Mainhandler;
+    }
 
 /*    @Override
     public void onCreate() {

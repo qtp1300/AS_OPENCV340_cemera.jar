@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private Socket_connect socket_connect;
     private Timer timer;
     public int mark = 0;
-    private byte[] mByte = new byte[11];
+
     private String RFID_result = "";
     private int RFID_status = 0;
     private int QRCODE_status = 0;
@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
     public static boolean moni1 = false;
     public static int QR_time = 0;
     public static int run_time = 1;
+
+    private byte[] mByte = new byte[11];
+
+
+
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -98,14 +103,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.old_activity_main);
 
 
+
         // Example of a call to a native method
 //        TextView tv = (TextView) findViewById(R.id.sample_text);
 //        tv.setText(stringFromJNI());
-
+        send_handler2serial();
         init_view();
         addlistener();
         search();
         Camer_Init();
+
 
         if (ValuesApplication.isserial == true){
             ethernet_Init();                //用有线时启用这个
@@ -543,6 +550,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+//
+//    public Handler SerialHandler = new Handler(){
+//        /**
+//         * Subclasses must implement this to receive messages.
+//         *
+//         * @param msg
+//         */
+//        @Override
+//        public void handleMessage(Message msg) {
+////            super.handleMessage(msg);
+//            if(msg.what == 10){
+//
+//            }
+//        }
+//    };
 
     // 二维码、车牌处理
     public	Handler qrHandler = new Handler() {
@@ -832,6 +854,28 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
 //    public native String stringFromJNI();
+
+    ValuesApplication valuesApplication;
+    private Handler for_serial_handler = new Handler(){
+        /**
+         * Subclasses must implement this to receive messages.
+         *
+         * @param msg
+         */
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                mByte = (byte[]) msg.obj;
+                Log.i("串口向main发送数据了","成功接收"+mByte.length+"的长度");
+
+            }
+        }
+    };
+
+    private void send_handler2serial(){
+        valuesApplication = (ValuesApplication) getApplication();
+        valuesApplication.set_Mainhandler(for_serial_handler);
+    }
 
 
 

@@ -30,10 +30,12 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.qtp000.a03cemera_preview.MainActivity;
 import com.qtp000.a03cemera_preview.R;
 import com.qtp000.a03cemera_preview.Socket_connect;
+import com.qtp000.a03cemera_preview.ValuesApplication;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -68,6 +70,11 @@ public class SerialAcyivity extends AppCompatActivity {
 
     Button to_main;
 
+    ValuesApplication valuesApplication;
+    Handler mainhandler = null;
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +86,8 @@ public class SerialAcyivity extends AppCompatActivity {
         Transparent.showLoadingMessage(this,"加载中",false);   //显示等待对话框
 
         Log.i("SerialAcyivity.class:","加载中");
+        valuesApplication = (ValuesApplication)getApplication();
+        get_main_handler.start();
     }
 
     private void to_mainactivity(){
@@ -100,11 +109,27 @@ public class SerialAcyivity extends AppCompatActivity {
                     Toast.makeText(SerialAcyivity.this,"进主页面",Toast.LENGTH_SHORT);
 
 
+
                     break;
 
             }
         }
     }
+
+    Thread get_main_handler = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while (valuesApplication.get_Mainhandler() == null){
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            mainhandler = valuesApplication.get_Mainhandler();
+            }
+
+    });
 
     private void control_init()
     {
@@ -349,7 +374,17 @@ public class SerialAcyivity extends AppCompatActivity {
                         public void run() {
                             Message msg =recvhandler.obtainMessage(1,data);
                             msg.sendToTarget();
-                            SerialAcyivity.this.updateReceivedData(data);
+
+                            if (mainhandler != null){
+                                Message msg1 = mainhandler.obtainMessage(1,data);
+                                msg1.sendToTarget();
+                            }
+
+//                            ValuesApplication.Serial_data = data;
+//                            ValuesApplication.Serial_data_update = true;
+
+
+                            SerialAcyivity.this.updateReceivedData(data);       //调试界面显示数据
                         }
                     });
                 }
