@@ -22,7 +22,7 @@ public class Init_page_activity_one extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.init_select_page);
+        setContentView(R.layout.zero_init_select_page);
         init_btn();
     }
     private void init_btn(){

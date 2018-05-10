@@ -119,11 +119,11 @@
         app:layout_constraintTop_toBottomOf="@+id/cemera_preview" />
 
     <Button
-        android:id="@+id/btn_moni2"
+        android:id="@+id/btn_toshape"
         android:layout_width="135dp"
         android:layout_height="65dp"
         android:layout_marginStart="360dp"
-        android:text="模拟二"
+        android:text="图形识别"
         app:layout_constraintStart_toEndOf="@+id/car_1"
         app:layout_constraintTop_toTopOf="@+id/car_1" />
 

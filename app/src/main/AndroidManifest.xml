@@ -42,6 +42,7 @@
         <activity android:name=".MainActivity_two"></activity>
         <activity android:name=".Function_method"></activity>
         <activity android:name=".FunctionActivity"></activity>
+        <activity android:name=".Image.ShapeActivity"></activity>
         <service android:name=".used_package.Camera_Server"></service>
     </application>
 

@@ -32,6 +32,7 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.qtp000.a03cemera_preview.Image.RgbLuminanceSource;
+import com.qtp000.a03cemera_preview.Image.ShapeActivity;
 import com.qtp000.a03cemera_preview.used_package.Camera_Server;
 
 import java.util.HashMap;
@@ -100,7 +101,7 @@ public class MainActivity_two extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.old_activity_main);
+        setContentView(R.layout.two_activity_main);
 
 
         // Example of a call to a native method
@@ -253,8 +254,10 @@ public class MainActivity_two extends AppCompatActivity {
 //                case R.id.car_1:
 //                    Toast.makeText(getApplication(),"Button4",Toast.LENGTH_SHORT).show();
 //                    break;
-                case R.id.btn_moni2:
+                case R.id.btn_toshape:
                     Toast.makeText(getApplication(), "Button5", Toast.LENGTH_SHORT).show();
+                    Intent toshape = new Intent(MainActivity_two.this, ShapeActivity.class);
+                    startActivity(toshape);
                     break;
                 case R.id.old_112:
                     Toast.makeText(getApplication(), "原112", Toast.LENGTH_SHORT).show();
@@ -304,7 +307,7 @@ public class MainActivity_two extends AppCompatActivity {
         btn_function = findViewById(R.id.btn_function);
         btn_moni1 = findViewById(R.id.btn_moni1);
         bakbtn4 = findViewById(R.id.car_1);
-        bakbtn5 = findViewById(R.id.btn_moni2);
+        bakbtn5 = findViewById(R.id.btn_toshape);
         btn_old_112 = findViewById(R.id.old_112);
         btn_stop = findViewById(R.id.btn_stop);
 
@@ -373,6 +376,7 @@ public class MainActivity_two extends AppCompatActivity {
             if (msg.what == 10) {
 //                Log.e("显示图片：","已经进行到此步骤");
                 imageView.setImageBitmap(bitmap);
+                ShapeActivity.input_bitmap = Bitmap.createBitmap(bitmap);
                 if (bitmap == null || bitmap.equals("")) {
                     Log.e("图片：", "为空");
                 } else {

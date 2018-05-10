@@ -17,5 +17,7 @@
     <string name="angle_disc">角度:</string>
     <string name="brn_wire_connect">有线连接</string>
     <string name="brn_wireless_connect">无线连接</string>
+    <string name="input_img">input_img</string>
+    <string name="Processed_img">Processed_img</string>
 
 </resources>

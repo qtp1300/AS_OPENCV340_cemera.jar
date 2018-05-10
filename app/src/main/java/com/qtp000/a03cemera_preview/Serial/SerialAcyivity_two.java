@@ -77,7 +77,7 @@ public class SerialAcyivity_two extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.one_activity_main);
         mHandler.sendEmptyMessageDelayed(MESSAGE_REFRESH, REFRESH_TIMEOUT_MILLIS);  //开始usb的获取
         sock_con =new Socket_connect();
         control_init();
