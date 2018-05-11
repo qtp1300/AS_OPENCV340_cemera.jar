@@ -25,6 +25,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".Init_page.Init_page_activity_one"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,12 +39,19 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".Serial.SerialAcyivity_two"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainActivity_two"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Function_method"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".FunctionActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".Image.ShapeActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
-        <activity android:name=".MainActivity_two"></activity>
-        <activity android:name=".Function_method"></activity>
-        <activity android:name=".FunctionActivity"></activity>
-        <activity android:name=".Image.ShapeActivity"></activity>
-        <service android:name=".used_package.Camera_Server"></service>
+        <service android:name=".used_package.Camera_Server"
+            android:screenOrientation="portrait"></service>
     </application>
 
 </manifest>

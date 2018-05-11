@@ -378,9 +378,9 @@ public class MainActivity_two extends AppCompatActivity {
                 imageView.setImageBitmap(bitmap);
                 ShapeActivity.input_bitmap = Bitmap.createBitmap(bitmap);
                 if (bitmap == null || bitmap.equals("")) {
-                    Log.e("图片：", "为空");
+//                    Log.e("图片：", "为空");
                 } else {
-                    Log.e("图片：", "不空");
+//                    Log.e("图片：", "不空");
                 }
             }
         }

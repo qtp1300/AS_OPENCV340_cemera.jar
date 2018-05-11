@@ -56,7 +56,7 @@ public class ImageBack {
 	public void setBackColor(int backColor) {
 		this.backColor = backColor;
 	}
-	private Mat getCannyMat(Mat src)
+	private Mat getCannyMat(Mat src)        //灰化后检测边缘然后对边缘进行膨胀
 	{
 		double pointD = 1;
 		double point2D =2;
@@ -86,23 +86,26 @@ public class ImageBack {
 		 Imgproc.Canny(grayMat, cannyEdges, 50, 5);
          return cannyEdges;
 	}
-	private MatOfPoint findContoursFromGrayMat(Mat grayMat)
+	private MatOfPoint findContoursFromGrayMat(Mat grayMat)     //
 	{
-		double mMinContourArea = 0.1;
+		double mMinContourArea = 0.1;       //最小轮廓区域
 		Mat hierarchy = new Mat();
-		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();        //ArrayList可以存放Object
 		Imgproc.findContours(grayMat, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+		//学长Imgproc.CHAIN_APPROX_SIMPLE只取了拐点
+		//hierarchy[i][后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓]   的编号，没有相应内容的会被置-1,i与contours的编号对应。
 		double maxAr =320*280*0.95;
 		double maxArea = 0;
 		 double mixArea = 0;
-	        Iterator<MatOfPoint> each = contours.iterator();
-	        while (each.hasNext()) {
+	        Iterator<MatOfPoint> each = contours.iterator();        //1迭代器，依次取出contours内的各个轮廓
+	        while (each.hasNext()) {                                //3遍历轮廓集合，得到最大轮廓面积maxArea
 	            MatOfPoint wrapper = each.next();
-	            double area = Imgproc.contourArea(wrapper);
+	            double area = Imgproc.contourArea(wrapper);         //2轮廓List中点的面积
 	            if (area > maxArea)
 	                maxArea = area;
 	            mixArea = maxArea;
 	        }
+	        /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
 	        List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
 	        each = contours.iterator();
 	        while (each.hasNext()) {
@@ -112,6 +115,9 @@ public class ImageBack {
 	                mContours.add(contour);
 	            }
 	        }
+        /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
+
+
 	        MatOfPoint2f approxCurve = new MatOfPoint2f();
 	        List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
 	        each = mContours.iterator();
@@ -243,7 +249,7 @@ public class ImageBack {
 		    }
 		    return new Rect(new Point(startX+pointD, startY+ pointD),new Point(endX-pointD,endY-pointD));
 	}
-	private Mat findImageTrue(Bitmap bitm)
+	private Mat findImageTrue(Bitmap bitm)      //
 	{ 
 		Mat grayMat = null;
 		Rect imageTureRect = null;
@@ -252,19 +258,19 @@ public class ImageBack {
 		int imageH = bitm.getHeight();
 		 Mat srcImage = new Mat(imageH, imageW, CvType.CV_8UC3);
 		 Mat dstImage = null;
-		 Utils.bitmapToMat(bitm, srcImage);
+		 Utils.bitmapToMat(bitm, srcImage);     //转化为Mat
 		 
 		//�ҳ�������
-		 grayMat = getCannyMat(srcImage);
+		 grayMat = getCannyMat(srcImage);       //grayMat是灰化后边缘检测的结果膨胀处理
 		 //displayMat(grayMat);
 		 //if(true)
 		 //return null;
 		 Mat mat3 = new Mat(grayMat.height(), grayMat.width(), CvType.CV_8UC3);
 		 //���ǽ�grayMat��ֵ��mat3
-		 grayMat.copyTo(mat3);
+		 grayMat.copyTo(mat3);              //将grayMat复制到mat3
 		 if(mat3== null)
 			 return null;
-		 mContourtrue = findContoursFromGrayMat(mat3);
+		 mContourtrue = findContoursFromGrayMat(mat3);      //
 		 if(mContourtrue == null || mContourtrue.toList().size() != 4)
 		 {
 			 displayMat(grayMat);

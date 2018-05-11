@@ -86,4 +86,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_Binarization" />
 
+    <EditText
+        android:id="@+id/canny_th1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_canny" />
+
+    <EditText
+        android:id="@+id/canny_th2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_canny" />
+
+    <Button
+        android:id="@+id/btn_canny_dilate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="canny_dilate"
+        app:layout_constraintStart_toEndOf="@+id/btn_canny"
+        app:layout_constraintTop_toTopOf="@+id/btn_canny" />
+
 </android.support.constraint.ConstraintLayout>
