@@ -123,8 +123,9 @@ public class ImageBack {
 	        each = mContours.iterator();
 	        while (each.hasNext()) {
 	            MatOfPoint contour = each.next();
-	            MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );
+	            MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );       //把轮廓的点转化为数组并以数组建立新的MatOfPoint对象new_mat
 	            Imgproc.approxPolyDP(new_mat, approxCurve, 30, true);
+	            //Imgproc.approxPolyDP(输入的轮廓点的点集，输出的多边形点集，输出精度——和另一个轮廓点的最大距离数，输出的多边形是否闭合)
 	            long total  = approxCurve.total();
 	            if (total == 4 ) {
 	            	 MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());
