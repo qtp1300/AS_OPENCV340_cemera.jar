@@ -355,7 +355,7 @@ public class ShapeActivity extends AppCompatActivity {
         processed_mat = new Mat(processing_mat.height(),processing_mat.width(),CvType.CV_8UC3);
 
         /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
-        Imgproc.drawContours(processed_mat,mContours,-1,new Scalar( 255,0, 0),1);         //自己加的，画不出来；
+        Imgproc.drawContours(processed_mat,mContours,-1,new Scalar( 255,0, 0),1);         //自己加的
 
 
 
