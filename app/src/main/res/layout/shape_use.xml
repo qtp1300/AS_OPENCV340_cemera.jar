@@ -6,6 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/btn_dilate_contours_rectandle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="dilate_contours_rectangle"
+        app:layout_constraintStart_toEndOf="@+id/btn_Binarization"
+        app:layout_constraintTop_toBottomOf="@+id/btn_canny" />
+
+    <Button
+        android:id="@+id/btn_contours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:text="contours"
+        app:layout_constraintStart_toEndOf="@+id/btn_canny_dilate"
+        app:layout_constraintTop_toTopOf="@+id/btn_canny_dilate" />
+
     <ImageView
         android:id="@+id/shape1"
         android:layout_width="0dp"
@@ -23,7 +42,7 @@
         app:srcCompat="@mipmap/ic_launcher" />
 
     <Button
-        android:id="@+id/btn_grey"
+        android:id="@+id/btn_gray"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -44,8 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="二值化"
-        app:layout_constraintStart_toEndOf="@+id/btn_grey"
-        app:layout_constraintTop_toTopOf="@+id/btn_grey" />
+        app:layout_constraintStart_toEndOf="@+id/btn_gray"
+        app:layout_constraintTop_toTopOf="@+id/btn_gray" />
 
     <Button
         android:id="@+id/btn_canny"
@@ -118,5 +137,14 @@
         android:text="canny_dilate"
         app:layout_constraintStart_toEndOf="@+id/btn_canny"
         app:layout_constraintTop_toTopOf="@+id/btn_canny" />
+
+    <Button
+        android:id="@+id/btn_dilate_contours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="dilate_contours"
+        app:layout_constraintStart_toEndOf="@+id/btn_canny_dilate"
+        app:layout_constraintTop_toTopOf="@+id/btn_canny_dilate" />
 
 </android.support.constraint.ConstraintLayout>

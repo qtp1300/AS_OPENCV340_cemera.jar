@@ -126,18 +126,20 @@ public class ImageBack {
 	            MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );       //把轮廓的点转化为数组并以数组建立新的MatOfPoint对象new_mat
 	            Imgproc.approxPolyDP(new_mat, approxCurve, 30, true);
 	            //Imgproc.approxPolyDP(输入的轮廓点的点集，输出的多边形点集，输出精度——和另一个轮廓点的最大距离数，输出的多边形是否闭合)
-	            long total  = approxCurve.total();
+	            long total  = approxCurve.total();      //边的数量？
 	            if (total == 4 ) {
-	            	 MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());
-	            	mContour2.add(contour2);
+	            	 MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());       //把边的点集转化为MatOfPoint
+	            	mContour2.add(contour2);        //把点集的MatOfPoint加入列表mContour2
 	            }
 	        }
-	        Iterator<MatOfPoint> each2 = mContour2.iterator();
+
+
+	        Iterator<MatOfPoint> each2 = mContour2.iterator();      //把轮廓的集进行迭代
 	        MatOfPoint mContour3 = null;
 	        while (each2.hasNext()) {
 	            MatOfPoint wrapper = each2.next();
-	            double area = Imgproc.contourArea(wrapper);
-	            List<Point> pointList = wrapper.toList();
+	            double area = Imgproc.contourArea(wrapper);     //计算轮廓面积
+	            List<Point> pointList = wrapper.toList();       //把轮廓转化为List
 	            double width =  Math.abs(pointList.get(2).x - pointList.get(0).x);
 	            double height =  Math.abs(pointList.get(2).y - pointList.get(0).y);
 	            float b1 = ((float) width/(float) height);
