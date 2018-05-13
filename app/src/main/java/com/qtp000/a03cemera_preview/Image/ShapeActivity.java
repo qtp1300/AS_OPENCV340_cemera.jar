@@ -356,7 +356,7 @@ public class ShapeActivity extends AppCompatActivity {
         processed_mat = new Mat(processing_mat.height(),processing_mat.width(),CvType.CV_8UC3);
 
         /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
-        Imgproc.drawContours(processed_mat,mContours,-1,new Scalar( 255,0, 0),1);         //自己加的
+//        Imgproc.drawContours(processed_mat,mContours,-1,new Scalar( 255,0, 0),1);         //自己加的，画出找到的所有轮廓
 
         MatOfPoint2f approxCurve = new MatOfPoint2f();
         List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
@@ -377,42 +377,39 @@ public class ShapeActivity extends AppCompatActivity {
         }
 
 
-/*        Iterator<MatOfPoint> each2 = mContour2.iterator();      //把轮廓的集进行迭代
+        Iterator<MatOfPoint> each2 = mContour2.iterator();      //把轮廓的集进行迭代，找到宽高比例在1到2之间的矩形，实际显示屏比例为1.7222
         MatOfPoint mContour3 = null;
         while (each2.hasNext()) {
             MatOfPoint wrapper = each2.next();
             double area = Imgproc.contourArea(wrapper);     //计算轮廓面积
             List<Point> pointList = wrapper.toList();       //把轮廓转化为List
+            Log.i("pointList内容",pointList.toString());
             double width =  Math.abs(pointList.get(2).x - pointList.get(0).x);
             double height =  Math.abs(pointList.get(2).y - pointList.get(0).y);
             float b1 = ((float) width/(float) height);
+            Log.i("pointList宽高比例",b1+"");
 
             if( b1 > 1 &&b1 < 2)
             {
                 if (area < mixArea )
                 {
-                    mixArea = area;
+                    mixArea = area;                 //取最小轮廓，很具前面处理，这里一般会是显示屏外轮廓
                     mContour3 = wrapper;
                 }
             }
         }
-        return mContour3;*/
-
-//        MatOfPoint2f approxCurve = new MatOfPoint2f();
-//        List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
-//        each = mContours.iterator();
-//        while (each.hasNext()) {
-//            MatOfPoint contour = each.next();
-//            MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );       //把轮廓的点转化为数组并以数组建立新的MatOfPoint对象new_mat
-//            Imgproc.approxPolyDP(new_mat, approxCurve, 30, true);
-//            //Imgproc.approxPolyDP(输入的轮廓点的点集，输出的多边形点集，输出精度——和另一个轮廓点的最大距离数，输出的多边形是否闭合)
-//            long total  = approxCurve.total();      //边的数量？
-//            if (total == 4 ) {
-//                MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());       //把边的点集转化为MatOfPoint
-//                mContour2.add(contour2);        //把点集的MatOfPoint加入列表mContour2
-//            }
+//        return mContour3;
+//        if (mContour3.empty()){
+//            Log.i("mContour3是否为空","为空");      //这里可能获取不到，要加保护//warning
 //        }
-
+//        else{
+//            Log.i("mContour3是否为空","不空");
+//        }
+        List<MatOfPoint>disp = new ArrayList<MatOfPoint>();
+        disp.add(mContour3);
+        Imgproc.drawContours(processed_mat,disp,-1,new Scalar( 255,0, 0),1);
+        Log.i("mContour3输出",processed_mat.toString());
+//        mContour3.convertTo(processed_mat,CvType.CV_8UC3);
         return processed_mat;
     }
 

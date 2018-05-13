@@ -86,7 +86,9 @@ public class ImageBack {
 		 Imgproc.Canny(grayMat, cannyEdges, 50, 5);
          return cannyEdges;
 	}
-	private MatOfPoint findContoursFromGrayMat(Mat grayMat)     //
+	private MatOfPoint findContoursFromGrayMat(Mat grayMat)
+			/*找到面积大于总像素十分之一的轮廓，找到其中四边形，找到宽高比例在1~2之间的四边形，
+			且选择面积最小的轮廓（根据前几步处理结果，显示屏外轮廓会是最小轮廓）*/
 	{
 		double mMinContourArea = 0.1;       //最小轮廓区域
 		Mat hierarchy = new Mat();
@@ -273,7 +275,7 @@ public class ImageBack {
 		 grayMat.copyTo(mat3);              //将grayMat复制到mat3
 		 if(mat3== null)
 			 return null;
-		 mContourtrue = findContoursFromGrayMat(mat3);      //
+		 mContourtrue = findContoursFromGrayMat(mat3);      //返回了一个Matofpoint类型
 		 if(mContourtrue == null || mContourtrue.toList().size() != 4)
 		 {
 			 displayMat(grayMat);
