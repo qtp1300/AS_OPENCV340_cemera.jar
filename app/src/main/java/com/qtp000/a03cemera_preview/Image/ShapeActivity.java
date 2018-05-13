@@ -17,6 +17,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
@@ -357,6 +358,23 @@ public class ShapeActivity extends AppCompatActivity {
         /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
         Imgproc.drawContours(processed_mat,mContours,-1,new Scalar( 255,0, 0),1);         //自己加的
 
+        MatOfPoint2f approxCurve = new MatOfPoint2f();
+        List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
+        each = mContours.iterator();
+        while (each.hasNext()) {
+            MatOfPoint contour = each.next();
+            MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );       //把轮廓的点转化为数组并以数组建立新的MatOfPoint对象new_mat
+            Imgproc.approxPolyDP(new_mat, approxCurve, 30, true);
+
+            //Imgproc.approxPolyDP(输入的轮廓点的点集，输出的多边形点集，输出精度——和另一个轮廓点的最大距离数，输出的多边形是否闭合)
+            long total  = approxCurve.total();      //边的数量？   确定，边的数量
+//            Log.i("approxCurve",approxCurve.toString());
+//            Log.i("approxCurve.total",total+"");
+            if (total == 4 ) {                                  //找到四边形
+                MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());       //把边的点集转化为MatOfPoint
+                mContour2.add(contour2);        //把点集的MatOfPoint加入列表mContour2，四边形的集合
+            }
+        }
 
 
 /*        Iterator<MatOfPoint> each2 = mContour2.iterator();      //把轮廓的集进行迭代
@@ -379,6 +397,7 @@ public class ShapeActivity extends AppCompatActivity {
             }
         }
         return mContour3;*/
+
 //        MatOfPoint2f approxCurve = new MatOfPoint2f();
 //        List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
 //        each = mContours.iterator();
