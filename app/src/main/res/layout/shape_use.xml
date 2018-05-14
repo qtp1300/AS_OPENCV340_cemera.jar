@@ -147,4 +147,14 @@
         app:layout_constraintStart_toEndOf="@+id/btn_canny_dilate"
         app:layout_constraintTop_toTopOf="@+id/btn_canny_dilate" />
 
+    <Button
+        android:id="@+id/btn_full_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="4dp"
+        android:text="full_screen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_gray" />
+
 </android.support.constraint.ConstraintLayout>

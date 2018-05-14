@@ -196,17 +196,23 @@ public class ImageBack {
 	        }
 		return mContours;
 	}
+
+
+
 	private Rect getImageTrueRect2(MatOfPoint matPoint)
+    /*
+	输入显示屏外轮廓，类似下面的数据
+	pointList内容: [{503.0, 104.0}, {500.0, 246.0}, {241.0, 252.0}, {234.0, 108.0}]*/
 	{
 		double pointD = 1;
 			Point[] poitI = matPoint.toArray();
 			Point[] poitII = matPoint.toArray();
 			 
 
-				double mixNum = poitI[0].x+poitI[0].y;
-				double maxNum = poitI[0].x+poitI[0].y;
-				double mixSub = poitI[0].x-poitI[0].y;
-				double maxSub = poitI[0].x-poitI[0].y;
+				double mixNum = poitI[0].x+poitI[0].y;      //XY相加最小值
+				double maxNum = poitI[0].x+poitI[0].y;      //XY相加最大值
+				double mixSub = poitI[0].x-poitI[0].y;      //XY相减最小值
+				double maxSub = poitI[0].x-poitI[0].y;      //XY相减最大值
 				for(int j = 0;j<poitII.length;j++)
 				{
 					double num = poitII[j].x+poitII[j].y;
@@ -231,20 +237,23 @@ public class ImageBack {
 						poitI[1] = poitII[j];
 						mixSub = sub;
 					}
+					/*
+					* poitI[4] = [XY相加最小值，XY相减最小值，XY相加最大值，XY相减最大值]
+					* */
 				}
-				double startX =  poitI[0].x;
+				double startX =  poitI[0].x;        //左下点
 			    double startY = poitI[0].y;
-			    double endX = poitI[2].x;
+			    double endX = poitI[2].x;       //右上点
 			    double endY = poitI[2].y;
-		    if(poitI[0].x < poitI[1].x)
+		    if(poitI[0].x < poitI[1].x)     //如果有更靠里的点则选择更靠里的点的X值
 		    {
 		    	startX = poitI[1].x;
 		    }
-		    if(poitI[2].x < poitI[3].x)
+		    if(poitI[2].x < poitI[3].x)     //如果有更靠里的点则选择更靠里的点的X值，感觉学长写反了，可能poitI[3].x < poitI[2].x，不然这句话没用
 		    {
 		    	endX = poitI[2].x;
 		    }
-		    if(poitI[1].y < poitI[2].y)
+		    if(poitI[1].y < poitI[2].y)     //
 		    {
 		    	endY = poitI[1].y;
 		    }
@@ -252,7 +261,7 @@ public class ImageBack {
 		    {
 		    	startY = poitI[3].y;
 		    }
-		    return new Rect(new Point(startX+pointD, startY+ pointD),new Point(endX-pointD,endY-pointD));
+		    return new Rect(new Point(startX+pointD, startY+ pointD),new Point(endX-pointD,endY-pointD));       //返回外轮廓最小坐标点构成的坐标值
 	}
 	private Mat findImageTrue(Bitmap bitm)      //
 	{ 
@@ -275,25 +284,25 @@ public class ImageBack {
 		 grayMat.copyTo(mat3);              //将grayMat复制到mat3
 		 if(mat3== null)
 			 return null;
-		 mContourtrue = findContoursFromGrayMat(mat3);      //返回了一个Matofpoint类型
-		 if(mContourtrue == null || mContourtrue.toList().size() != 4)
+		 mContourtrue = findContoursFromGrayMat(mat3);      //返回了一个Matofpoint类型，显示屏轮廓
+		 if(mContourtrue == null || mContourtrue.toList().size() != 4)		//如果外轮廓为空，或外轮廓不是四边形
 		 {
-			 displayMat(grayMat);
+			 displayMat(grayMat);                   //则输出灰化图片
 			 return null;
 		 }
 			
 		 Scalar rgb = new Scalar(255,0,0);
-		 imageTureRect = getImageTrueRect2(mContourtrue);
+		 imageTureRect = getImageTrueRect2(mContourtrue);       //返回外轮廓最小坐标点构成的坐标值
 		 Scalar color = new Scalar( 255,0, 0);
 		 List<MatOfPoint> matList = new ArrayList<MatOfPoint>();
-		 matList.add(mContourtrue);
+//		 matList.add(mContourtrue);                       //新建一个List<MatOfPoint>，把之前返回的显示器外轮廓的MatOfPoint加入List，绘画出来
 //	      Imgproc.drawContours( grayMat, matList, -1, color,1);
 		 //displayMat(grayMat);
 		 //dstImage = srcImage.submat(imageTureRect);
-	      Mat mat4 = new Mat(imageTureRect.height, imageTureRect.width, CvType.CV_8UC3);
-		srcImage.copyTo(mat4);
-		dstImage = new Mat(imageTureRect.height, imageTureRect.width, CvType.CV_8UC3);
-		warpPersMat(mat4,dstImage,mContourtrue);
+	      Mat mat4 = new Mat(imageTureRect.height, imageTureRect.width, CvType.CV_8UC3);     //新建一个与外框相同大小的Mat
+		srcImage.copyTo(mat4);                            //将原图像复制过来
+		dstImage = new Mat(imageTureRect.height, imageTureRect.width, CvType.CV_8UC3);      //新建一个与外框相同大小的Mat
+		warpPersMat(mat4,dstImage,mContourtrue);        //
 		 //displayMat(dstImage);
 		 return dstImage;
 		 //return null;
@@ -346,69 +355,73 @@ public class ImageBack {
 		displayMat(srcMat);
 		return emitList;
 	}
-	 private void warpPersMat(Mat src,Mat dst,MatOfPoint matPoint)
+	 private void warpPersMat(Mat src,Mat dst,MatOfPoint matPoint)//(摄像头原图，空的图，最小屏幕外框点列表)
 		{
-			int resultWidth = src.width();
-			 int resultHeight = src.height();
-			Point[] poitI = matPoint.toArray();
-			Point[] poitII = matPoint.toArray();
-			 
-			
-				double mixNum = poitI[0].x+poitI[0].y;
-				double maxNum = poitI[0].x+poitI[0].y;
-				double mixSub = poitI[0].x-poitI[0].y;
-				double maxSub = poitI[0].x-poitI[0].y;
-				for(int j = 0;j<poitII.length;j++)
-				{
-					double num = poitII[j].x+poitII[j].y;
-					double sub = poitII[j].x-poitII[j].y;
-					if(num >= maxNum)
-					{
-						maxNum = num;
-						poitI[2] = poitII[j];
-					}
-					if(num <= mixNum)
-					{
-						mixNum = num;
-						poitI[0] = poitII[j];
-					}
-					if(sub >= maxSub)
-					{
-						poitI[3] = poitII[j];
-						maxSub = sub;
-					}
-					if(sub <= mixSub)
-					{
-						poitI[1] = poitII[j];
-						mixSub = sub;
-					}
-				}
-			
-			 Point ocvPIn1 = new Point(poitI[0].x, poitI[0].y);
-			 Point ocvPIn2= new Point(poitI[1].x, poitI[1].y);
-			 Point ocvPIn3 = new Point(poitI[2].x, poitI[2].y);
-			 Point ocvPIn4 = new Point(poitI[3].x, poitI[3].y);
-			 List<Point> source = new ArrayList<Point>();
-			 source.add(ocvPIn1);
-			 source.add(ocvPIn2);
-			 source.add(ocvPIn3);
-			 source.add(ocvPIn4);
-			 Mat startM = Converters.vector_Point2f_to_Mat(source);
-			 Point ocvPOut1 = new Point(0, 0);
-			 Point ocvPOut2 = new Point(0, resultHeight);
-			 Point ocvPOut3 = new Point(resultWidth, resultHeight);
-			 Point ocvPOut4 = new Point(resultWidth, 0);
-			 List<Point> dest = new ArrayList<Point>();
-			 dest.add(ocvPOut1);
-			 dest.add(ocvPOut2);
-			 dest.add(ocvPOut3);
-			 dest.add(ocvPOut4);
-			 Mat endM = Converters.vector_Point2f_to_Mat(dest);  
-			Mat perspectiveTransform = Imgproc.getPerspectiveTransform(startM, endM);
-			 Imgproc.warpPerspective(src, 
-					 dst,
-				       perspectiveTransform,
-				       new Size(resultWidth, resultHeight), 
-				       Imgproc.INTER_CUBIC);
-		}
+        int resultWidth = src.width();
+        int resultHeight = src.height();
+        Point[] poitI = matPoint.toArray();
+        Point[] poitII = matPoint.toArray();
+
+        /*真实截取到的轮廓坐标*/
+        double mixNum = poitI[0].x+poitI[0].y;
+        double maxNum = poitI[0].x+poitI[0].y;
+        double mixSub = poitI[0].x-poitI[0].y;
+        double maxSub = poitI[0].x-poitI[0].y;
+        for(int j = 0;j<poitII.length;j++)
+        {
+            double num = poitII[j].x+poitII[j].y;
+            double sub = poitII[j].x-poitII[j].y;
+            if(num >= maxNum)
+            {
+                maxNum = num;
+                poitI[2] = poitII[j];
+            }
+            if(num <= mixNum)
+            {
+                mixNum = num;
+                poitI[0] = poitII[j];
+            }
+            if(sub >= maxSub)
+            {
+                poitI[3] = poitII[j];
+                maxSub = sub;
+            }
+            if(sub <= mixSub)
+            {
+                poitI[1] = poitII[j];
+                mixSub = sub;
+            }
+        }
+
+        Point ocvPIn1 = new Point(poitI[0].x, poitI[0].y);
+        Point ocvPIn2= new Point(poitI[1].x, poitI[1].y);
+        Point ocvPIn3 = new Point(poitI[2].x, poitI[2].y);
+        Point ocvPIn4 = new Point(poitI[3].x, poitI[3].y);
+        List<Point> source = new ArrayList<Point>();
+        source.add(ocvPIn1);
+        source.add(ocvPIn2);
+        source.add(ocvPIn3);
+        source.add(ocvPIn4);
+        Mat startM = Converters.vector_Point2f_to_Mat(source);
+        /*真实截取到的轮廓坐标*/
+
+        /*要显示的图片大小*/
+        Point ocvPOut1 = new Point(0, 0);
+        Point ocvPOut2 = new Point(0, resultHeight);
+        Point ocvPOut3 = new Point(resultWidth, resultHeight);
+        Point ocvPOut4 = new Point(resultWidth, 0);
+        List<Point> dest = new ArrayList<Point>();
+        dest.add(ocvPOut1);
+        dest.add(ocvPOut2);
+        dest.add(ocvPOut3);
+        dest.add(ocvPOut4);
+        Mat endM = Converters.vector_Point2f_to_Mat(dest);
+        Mat perspectiveTransform = Imgproc.getPerspectiveTransform(startM, endM);       //根据输入点和输出点得到透视变换矩阵
+            //注意 此Mat  perspectiveTransform是形变矩阵，不包含实际图像或坐标/像素信息
+        Imgproc.warpPerspective(src,
+                dst,
+                perspectiveTransform,
+                new Size(resultWidth, resultHeight),
+                Imgproc.INTER_CUBIC);
+    }
 }
