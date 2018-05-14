@@ -8,9 +8,9 @@
 
     <Button
         android:id="@+id/btn_dilate_contours_rectandle"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="132dp"
         android:text="dilate_contours_rectangle"
         app:layout_constraintStart_toEndOf="@+id/btn_Binarization"
         app:layout_constraintTop_toBottomOf="@+id/btn_canny" />
@@ -102,12 +102,14 @@
         android:text="获取图片"
         app:layout_constraintBottom_toTopOf="@+id/shape2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Binarization" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_Binarization"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/canny_th1"
-        android:layout_width="wrap_content"
+        android:layout_width="49dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="52dp"
@@ -119,14 +121,14 @@
 
     <EditText
         android:id="@+id/canny_th2"
-        android:layout_width="wrap_content"
+        android:layout_width="61dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="number"
         android:text="100"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/canny_th1"
         app:layout_constraintTop_toBottomOf="@+id/btn_canny" />
 
     <Button
@@ -151,10 +153,18 @@
         android:id="@+id/btn_full_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="88dp"
         android:text="full_screen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_gray" />
+
+    <Button
+        android:id="@+id/btn_get_allshape_contours"
+        android:layout_width="114dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="all_shape_contours"
+        app:layout_constraintStart_toEndOf="@+id/canny_th2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dilate_contours_rectandle" />
 
 </android.support.constraint.ConstraintLayout>
