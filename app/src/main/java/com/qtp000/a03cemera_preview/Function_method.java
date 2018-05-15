@@ -22,7 +22,7 @@ import com.google.zxing.DecodeHintType;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
-import com.qtp000.a03cemera_preview.Image.ImageBack;
+import com.qtp000.a03cemera_preview.Image.unused.ImageBack;
 import com.qtp000.a03cemera_preview.Image.ImageBackCheck;
 import com.qtp000.a03cemera_preview.Image.ImageShapeBack;
 import com.qtp000.a03cemera_preview.Image.ImgPretreatment;

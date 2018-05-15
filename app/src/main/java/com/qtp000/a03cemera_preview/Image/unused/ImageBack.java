@@ -1,4 +1,4 @@
-package com.qtp000.a03cemera_preview.Image;
+package com.qtp000.a03cemera_preview.Image.unused;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,6 +21,8 @@ import android.graphics.Color;
 
 import com.qtp000.a03cemera_preview.EmitContur;
 import com.qtp000.a03cemera_preview.Image.ColorBlobDetector;
+
+//该类的大部分作用是提取到显示屏轮廓并截取出来
 
 public class ImageBack {
 	private Bitmap bitmap = null;
@@ -62,26 +64,26 @@ public class ImageBack {
 		double point2D =2;
 		 Mat grayMat = new Mat();
 		 Mat grayMat2 = new Mat();
-		 Mat sholdMat = new Mat(); 
-		 Mat cannyEdges = new Mat(); 
-		 Mat equalMat = new Mat(); 
+		 Mat sholdMat = new Mat();
+		 Mat cannyEdges = new Mat();
+		 Mat equalMat = new Mat();
 		 List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		 List<Point> pointList = null;
 		 MatOfPoint matPoint = new MatOfPoint(new Point(pointD,pointD),new Point(pointD,src.size().height-pointD),new Point(src.size().width-point2D,src.size().height-point2D),new Point(src.size().width-point2D,point2D));
 		 pointList = matPoint.toList();
 		 contours.add(matPoint);
 		 Imgproc.cvtColor(src, grayMat, Imgproc.COLOR_BGR2GRAY);
-			
+
 //		Imgproc.drawContours( grayMat, contours, -1, new Scalar(255,255,255),2);
 		 Imgproc.Canny(grayMat, cannyEdges, 100, 20);
 		 Imgproc.dilate(cannyEdges, grayMat2, new Mat());
-         
+
          return grayMat2;
 	}
 	private Mat getTrueCannyMat(Mat src)
 	{
 		 Mat grayMat = new Mat();
-		 Mat cannyEdges = new Mat(); 
+		 Mat cannyEdges = new Mat();
 		 Imgproc.cvtColor(src, grayMat, Imgproc.COLOR_BGR2GRAY);
 		 Imgproc.Canny(grayMat, cannyEdges, 50, 5);
          return cannyEdges;
@@ -145,7 +147,7 @@ public class ImageBack {
 	            double width =  Math.abs(pointList.get(2).x - pointList.get(0).x);
 	            double height =  Math.abs(pointList.get(2).y - pointList.get(0).y);
 	            float b1 = ((float) width/(float) height);
-	          
+
 	            if( b1 > 1 &&b1 < 2)
 	            {
 		            if (area < mixArea )
@@ -154,7 +156,7 @@ public class ImageBack {
 		            	mContour3 = wrapper;
 		            }
 	            }
-	        } 
+	        }
 		return mContour3;
 	}
 	private List<MatOfPoint> findEmitFromGrayMat(Mat grayMat)
@@ -177,21 +179,21 @@ public class ImageBack {
 	        {
 	        	MatOfPoint contour = contours.get(i);
 	         double area = Imgproc.contourArea(contour);
-		            if (area > mMinContourArea*maxArea ) 
+		            if (area > mMinContourArea*maxArea )
 		            {
-		            	
-		               
+
+
 		                double[] m1 = hierarchy.get(0, i);
 		                if(m1[2] == -1 && m1[3] != -1)
 		                {
 		                	 MatOfPoint2f approxCurve = new MatOfPoint2f();
-		                 
+
 		                	 MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );
 		 	            	Imgproc.approxPolyDP(new_mat, approxCurve,3, true);
 		 	            	MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());
 		 	            	mContours.add(contour2);
 		                }
-		                
+
 		            }
 	        }
 		return mContours;
@@ -207,7 +209,7 @@ public class ImageBack {
 		double pointD = 1;
 			Point[] poitI = matPoint.toArray();
 			Point[] poitII = matPoint.toArray();
-			 
+
 
 				double mixNum = poitI[0].x+poitI[0].y;      //XY相加最小值
 				double maxNum = poitI[0].x+poitI[0].y;      //XY相加最大值
@@ -264,16 +266,16 @@ public class ImageBack {
 		    return new Rect(new Point(startX+pointD, startY+ pointD),new Point(endX-pointD,endY-pointD));       //返回外轮廓最小坐标点构成的坐标值
 	}
 	private Mat findImageTrue(Bitmap bitm)      //
-	{ 
+	{
 		Mat grayMat = null;
 		Rect imageTureRect = null;
-		MatOfPoint mContourtrue = null; 
+		MatOfPoint mContourtrue = null;
 		int imageW = bitm.getWidth();
 		int imageH = bitm.getHeight();
 		 Mat srcImage = new Mat(imageH, imageW, CvType.CV_8UC3);
 		 Mat dstImage = null;
 		 Utils.bitmapToMat(bitm, srcImage);     //转化为Mat
-		 
+
 		//�ҳ�������
 		 grayMat = getCannyMat(srcImage);       //grayMat是灰化后边缘检测的结果膨胀处理
 		 //displayMat(grayMat);
@@ -290,7 +292,7 @@ public class ImageBack {
 			 displayMat(grayMat);                   //则输出灰化图片
 			 return null;
 		 }
-			
+
 		 Scalar rgb = new Scalar(255,0,0);
 		 imageTureRect = getImageTrueRect2(mContourtrue);       //返回外轮廓最小坐标点构成的坐标值
 		 Scalar color = new Scalar( 255,0, 0);
@@ -323,7 +325,7 @@ public class ImageBack {
 		Mat grayMat3 = new Mat();
 		Mat alpMat = new Mat();
 		Imgproc.blur(srcMat, grayMat2, new Size(3,3));
-		
+
 		grayMat = getTrueCannyMat(grayMat2);
 		Imgproc.blur(grayMat, grayMat2, new Size(3,3));
 		if(grayMat2 == null)
@@ -348,7 +350,7 @@ public class ImageBack {
 			int B = mBlobColorHsv.val[2] > 80?255:0;
 			Scalar rgb = new Scalar(R,G,B);
 //			Imgproc.drawContours( srcMat, mContourss, i, rgb,1);
-			
+
 			EmitContur emitContur = new EmitContur(poitList, Color.argb(0,R, G, B));
 			emitList.add(emitContur);
 		}
