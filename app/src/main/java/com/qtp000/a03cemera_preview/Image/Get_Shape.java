@@ -24,7 +24,7 @@ public class Get_Shape {
 
         pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input);
 
-        processed_mat = Contours(pre_process_mat);
+//        processed_mat = Contours(pre_process_mat);
 
 
         /*处理流程*/

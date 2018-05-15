@@ -73,10 +73,10 @@ public class ImageShapeBack {
     }
 
     public void ImageBackRun() {
-        Mat imageMat = findImageTrue(bitmap);
+        Mat imageMat = findImageTrue(bitmap);       //返回的是剪切过的全屏图像
         if (imageMat == null)
             return;
-        imageInfoList = CheckImage(imageMat);
+        imageInfoList = CheckImage(imageMat);       //传入的是剪切过的全屏图像
         //displayMat(imageMat);
     }
 
@@ -118,7 +118,7 @@ public class ImageShapeBack {
 
     }
 
-    private Mat getTrueCannyMat(Mat src) {
+    private Mat getTrueCannyMat(Mat src) {      //传入的是剪切过的全屏图像
         Scalar scalar = getRectScaleFromeMat(src, new Rect(src.width() / 2, 10, 4, 4));
         // Mat Canny_grayMatE = new Mat();
         int rgbR = (int) scalar.val[0];
@@ -353,7 +353,7 @@ public class ImageShapeBack {
         return new Rect(new Point(startX + pointD, startY + pointD), new Point(endX - pointD, endY - pointD));
     }
 
-    private Mat findImageTrue(Bitmap bitm) {
+    private Mat findImageTrue(Bitmap bitm) {        //返回的是剪切过的全屏图像
         Mat grayMat = null;
         Rect imageTureRect = null;
         MatOfPoint mContourtrue = null;
@@ -380,7 +380,7 @@ public class ImageShapeBack {
             return null;
         }
 //		 Scalar rgb = new Scalar(255,0,0);
-        imageTureRect = getImageTrueRect2(mContourtrue);//看不懂（应该是得到矩形的高度和宽度）
+        imageTureRect = getImageTrueRect2(mContourtrue);//看不懂（应该是得到矩形的高度和宽度）//前面的那个：并不是，是获取到屏幕的轮廓坐标
         if (false) {
             displayMat(findImageTrue_CannyMat);
             return null;
@@ -424,7 +424,7 @@ public class ImageShapeBack {
         Utils.matToBitmap(dstImage, bitmap);
     }
 
-    private List<ImageInfo> CheckImage(Mat srcMat) {
+    private List<ImageInfo> CheckImage(Mat srcMat) {        //传入的是剪切过的全屏图像
         List<ImageInfo> emitList = new ArrayList<ImageInfo>();
 
         Mat grayMat2 = new Mat();
@@ -729,12 +729,12 @@ public class ImageShapeBack {
         Imgproc.drawContours(srcMat, matList, -1, scalar);
     }
 
-    private Scalar getRectScaleFromeMat(Mat src, Rect rect) {
+    private Scalar getRectScaleFromeMat(Mat src, Rect rect) {       //传入的是剪切过的全屏图像,和一个四通道Scalar
         Scalar mBlobColorHsv = new Scalar(255);
 
         Mat touchedRegionRgba;
         try {
-            touchedRegionRgba = src.submat(rect);
+            touchedRegionRgba = src.submat(rect);       //结束的地方
         } catch (CvException e) {
             return null;
         }

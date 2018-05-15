@@ -1,4 +1,3 @@
-/*
 package com.qtp000.a03cemera_preview.Image;
 
 public class Temp_Study {
@@ -22,8 +21,8 @@ public class Temp_Study {
         Bitmap bitma = null;
         //bitmap  = Bitmap.createBitmap(newbitmap);
         //从摄像头那里获得图片
-        shapebit  = Bitmap.createBitmap(shapebitmap);
-        imageShapeBack = new ImageShapeBack(shapebit);
+        shapebit  = Bitmap.createBitmap(shapebitmap);       //获取到图片
+        imageShapeBack = new ImageShapeBack(shapebit);      //构造函数，把图片传进去
         //图片处理
         if(currectMat == null)
             imageShapeBack.ImageBackRun();
@@ -102,4 +101,35 @@ public class Temp_Study {
         }
     }
 }
-*/
+
+
+    ///********************************************************************************************************
+///////////////////////////////////图形图像识别
+    public static Bitmap backbitmap = null;
+    private Bitmap backbit = MainActivity.bitmap;
+
+    public int checkBack()//检测背景颜色
+    {
+        shaperesult = "";
+        backbitmap = MainActivity.bitmap;
+        new FileService().savePhoto(backbitmap ,Result_Name.Picture_Name + ".png");
+        if(backbitmap == null)
+            return -1;
+        ImageBackCheck imageBackCheck = null;
+        Bitmap bitma = null;
+        //bitmap  = Bitmap.createBitmap(newbitmap);
+        //从摄像头那里获得图片
+        backbit  = Bitmap.createBitmap(backbitmap);
+        imageBackCheck = new ImageBackCheck(backbit);
+        //图片处理
+        imageBackCheck.ImageBackRun();
+        //shapebitmap = imageBackCheck.getBitmap();
+        //获取处理后的图片
+        backbit = imageBackCheck.getBitmap();
+        int color = imageBackCheck.getBackColor();
+
+        currectMat = imageBackCheck.getImageMat();
+
+        return 	color;
+    }
+}
