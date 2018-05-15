@@ -84,7 +84,7 @@ public class SerialAcyivity_two extends AppCompatActivity {
         to_mainactivity();
         Transparent.showLoadingMessage(this,"加载中",false);   //显示等待对话框
 
-        Log.i("SerialAcyivity_two.class:","加载中");
+        Log.i("加载中","SerialAcyivity_two.class");
         valuesApplication = (ValuesApplication)getApplication();
         get_main_handler.start();
     }
@@ -374,14 +374,16 @@ public class SerialAcyivity_two extends AppCompatActivity {
                             Message msg =recvhandler.obtainMessage(1,data);
                             msg.sendToTarget();
 
+                            /*自己加的，便于把数据同步到MainActiyity，而且是异步，占用资源低，不需要额外线程一直判断数据是否更改*/
                             if (mainhandler != null){
                                 Message msg1 = mainhandler.obtainMessage(1,data);
                                 msg1.sendToTarget();
                             }
+                            /*自己加的，便于把数据同步到MainActiyity，而且是异步，由系统保证数据实时性，占用资源低，不需要额外线程一直判断数据是否更改*/
+                            sock_con.sbyte = data;
 
 //                            ValuesApplication.Serial_data = data;
-//                            ValuesApplication.Serial_data_update = true;
-
+//                            ValuesApplication.Serial_data_update = true;      //老版本，在更新时设置已更新标记位，在其它地方需要线程来一直判断
 
                             SerialAcyivity_two.this.updateReceivedData(data);       //调试界面显示数据
                         }

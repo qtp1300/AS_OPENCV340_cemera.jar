@@ -22,8 +22,8 @@ public class ValuesApplication extends Application{
 //    public static Mode SerialOrSocket = SerialAcyivity_two;
     public static boolean isserial = true;
 
-    public static byte[] Serial_data = new byte[11];
-    public static boolean Serial_data_update = false;
+//    public static byte[] Serial_data = new byte[11];
+//    public static boolean Serial_data_update = false;
 
     private Handler Mainhandler = null;
     public void set_Mainhandler(Handler input_handler){

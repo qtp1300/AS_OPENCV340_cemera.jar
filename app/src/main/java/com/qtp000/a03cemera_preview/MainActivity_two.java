@@ -185,7 +185,7 @@ public class MainActivity_two extends AppCompatActivity {
 //                        btn_right.setImageResource(R.drawable.right);
 //                        break;
 ////                    case R.id.btn_moni1:
-////                        to_run_moni1();
+////                        to_run_moni1_with_wifi();
 ////                        break;
 //                }
 //            }
@@ -248,7 +248,7 @@ public class MainActivity_two extends AppCompatActivity {
                     break;
                 case R.id.btn_moni1:
                     Toast.makeText(getApplication(), "模拟1", Toast.LENGTH_SHORT).show();
-                    to_run_moni1();
+                    to_run_moni1_with_wifi();
                     textView_isrunning.setText("运行中");
 //                    btn_moni1.setSelected(true);
                     break;
@@ -697,7 +697,7 @@ public class MainActivity_two extends AppCompatActivity {
         }).start();
     }
 
-    private void to_run_moni1() {
+    private void to_run_moni1_with_wifi() {
         moni1 = true;
         socket_connect.mark = 5;
         QR_time = 0;
@@ -717,6 +717,25 @@ public class MainActivity_two extends AppCompatActivity {
         }).start();
     }
 
+    private void to_run_moni1_with_serial() {
+        moni1 = true;
+//        socket_connect.mark = 5;
+        QR_time = 0;
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                while (moni1) {
+                    socket_connect.moni1_4();
+                }
+                Log.e("模拟1状态:", "应该结束了");
+                qrHandler.sendEmptyMessage(101);
+//                textView_isrunning.setText("运行结束");
+                qrHandler.sendEmptyMessage(213);
+            }
+        }).start();
+    }
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.

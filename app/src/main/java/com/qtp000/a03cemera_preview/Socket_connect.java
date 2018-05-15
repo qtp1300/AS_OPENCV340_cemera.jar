@@ -24,7 +24,8 @@ public class Socket_connect {
     private DataInputStream bInputStream;
     private DataOutputStream bOutputStream;
     private Socket socket;
-    public byte[] rbyte = new byte[40];
+    public byte[] rbyte = new byte[40];     //无线接收到的数据
+    public byte[] sbyte = new byte[40];     //串口接收到的数据
     private Handler reHandler;
     private short TYPE = 0xAA;
     private short MAJOR = 0x00;
@@ -143,13 +144,60 @@ public class Socket_connect {
         }
     }
 
-    public void Mine_sent_start(){
-        MAJOR = 0xD1;
-        FIRST = 0x00;
-        SECOND = 0x00;
-        THRID = 0x00;
-        Log.i("自定协议","开始指令发送完毕");
-        send();
+    public void Mine_sent_start() {
+//        MAJOR = 0xD1;
+//        FIRST = 0x00;
+//        SECOND = 0x00;
+//        THRID = 0x00;
+//        send();
+//        Log.i("自定协议", "开始指令发送完毕");
+//        Log.i("此时串口数据", sbyte.toString());
+        Thread tese_recive = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("线程","开始运行");
+                if (ValuesApplication.isserial == true) {
+                    while (true) {
+                        Log.i("此时串口数据", sbyte.toString());
+//                        Log.i("此时串口数据第二位", new String(sbyte));
+                        if (sbyte[1] == (byte) 0xAA) {
+                            Log.i("串口数据", "标志位AA收到");
+//                            byte init = (byte) 0x99;
+//                            if (sbyte[2] != init) {
+//                                init = sbyte[3];
+                                Log.i("此时串口有效数据", String.valueOf(sbyte[2]));
+//                            }
+                        }
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                else {
+                    while (true) {
+                        Log.i("此时WiFi数据", rbyte.length+"");
+//                        Log.i("此时WiFi数据第二位",/* String.valueOf(rbyte[2])*/new String(rbyte));
+                        if (rbyte[1] == (byte) 0xAA) {
+                            Log.i("WiFi数据", "标志位E2收到");
+//                            byte init = (byte) 0x99;
+//                            if (rbyte[3] != init) {
+//                                init = sbyte[3];
+                                Log.i("此时WiFi有效数据", String.valueOf(rbyte[2]));
+//                            }
+                        }
+                        try {
+                            Thread.sleep(200);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        tese_recive.start();
+
     }
 
     public void Res_Tracking() {
@@ -766,7 +814,7 @@ public class Socket_connect {
         THRID = (short) 0x00;
         send();
 //        while (rbyte[2] != (byte) (0xF4)) ;        //等待 小车到达TFT标志物
-/*        while (rbyte[2] != (byte) (0xC1)) ;        //等待 小车到达TFT标志物*/
+        /*        while (rbyte[2] != (byte) (0xC1)) ;        //等待 小车到达TFT标志物*/
     }
 
     //颜色形状、车牌、光源目标档位
