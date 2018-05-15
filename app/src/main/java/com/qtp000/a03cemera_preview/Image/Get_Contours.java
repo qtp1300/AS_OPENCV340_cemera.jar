@@ -39,6 +39,7 @@ public class Get_Contours {
 //        Toast.makeText(getApplication(), "灰化->边缘检测", Toast.LENGTH_SHORT).show();
         Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
         Imgproc.Canny(processing_mat, processed_mat, th1, th2);
+//        Imgproc.Canny(processing_mat, processed_mat, 20, 100);
         return processed_mat;
     }
 
@@ -115,7 +116,7 @@ public class Get_Contours {
         processed_mat = new Mat(processing_mat.height(), processing_mat.width(), CvType.CV_8UC3);
 
         /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
-        Imgproc.drawContours(processed_mat, mContours, -1, new Scalar(255, 0, 0), 1);         //自己加的，画不出来；
+        Imgproc.drawContours(processed_mat, mContours, -1, new Scalar(255, 0, 0), 1);         //自己加的，画不出来；画出来了
 
 
 //        MatOfPoint2f approxCurve = new MatOfPoint2f();
@@ -502,21 +503,5 @@ public class Get_Contours {
         return new Rect(new Point(startX + pointD, startY + pointD), new Point(endX - pointD, endY - pointD));
     }
 
-    public Mat get_all_shape_contours(Mat input){
-        Mat pre_process_mat;
-        Mat processing_mat = new Mat();
-        Mat processed_mat = new Mat();
-//        Toast.makeText(getApplication(), "取出所有图形轮廓", Toast.LENGTH_SHORT).show();
 
-
-        pre_process_mat = Contours_rectandle_get_point_FullScreen(input);
-        processing_mat = canny(pre_process_mat);
-//        processed_mat =
-        processing_mat.copyTo(processed_mat);
-
-        /*处理流程*/
-
-
-        return processed_mat;
-    }
 }

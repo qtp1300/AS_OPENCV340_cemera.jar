@@ -31,6 +31,7 @@ import java.util.List;
 
 public class ShapeActivity extends AppCompatActivity {
     Get_Contours get_contours = new Get_Contours();
+    Get_Shape get_shape = new Get_Shape();
     public static Bitmap input_bitmap, temp_bitmap;
     Button grey_btn, Binarization_btn, canny_btn, geting_btn, canny_dilate_btn,
             contours_btn, dilate_contours_btn, dilate_contours_rectandle_btn,
@@ -148,7 +149,7 @@ public class ShapeActivity extends AppCompatActivity {
                 case R.id.btn_get_allshape_contours:
                     Mat pre_get_allshape_contours = Bitmap2Mat(temp_bitmap);
 
-                    Mat after_get_allshape_contours = get_contours.get_all_shape_contours(pre_get_allshape_contours);
+                    Mat after_get_allshape_contours = get_shape.get_all_shape_contours(pre_get_allshape_contours);
 
                     Bitmap get_allshape_contours_bitmap = Mat2Bitmap(after_get_allshape_contours);
                     shape2.setImageBitmap(get_allshape_contours_bitmap);

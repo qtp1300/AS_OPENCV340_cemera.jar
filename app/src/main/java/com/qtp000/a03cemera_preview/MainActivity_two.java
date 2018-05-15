@@ -212,6 +212,7 @@ public class MainActivity_two extends AppCompatActivity {
                     break;
                 case R.id.btn_left:
                     Toast toast_left = Toast.makeText(getApplicationContext(), "左", Toast.LENGTH_SHORT);
+                    socket_connect.Mine_sent_start();
                     toast_left.show();
                     break;
                 case R.id.btn_right:

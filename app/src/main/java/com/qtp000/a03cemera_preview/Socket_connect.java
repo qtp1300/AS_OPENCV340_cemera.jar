@@ -143,6 +143,15 @@ public class Socket_connect {
         }
     }
 
+    public void Mine_sent_start(){
+        MAJOR = 0xD1;
+        FIRST = 0x00;
+        SECOND = 0x00;
+        THRID = 0x00;
+        Log.i("自定协议","开始指令发送完毕");
+        send();
+    }
+
     public void Res_Tracking() {
         //	TYPE = 0xAA;
         MAJOR = (short) 0xA0;
