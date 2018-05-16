@@ -36,8 +36,8 @@ public class ShapeActivity extends AppCompatActivity {
     Button grey_btn, Binarization_btn, canny_btn, geting_btn, canny_dilate_btn,
             contours_btn, dilate_contours_btn, dilate_contours_rectandle_btn,
             full_screen_btn,
-    all_shape_contours_btn;
-    ImageView shape1, shape2;
+    all_shape_contours_btn,grey_btn2,canny_btn2;
+    ImageView shape1, shape2, shape3;
     public static TextView canny_th1, canny_th2;
 
     @Override
@@ -52,9 +52,12 @@ public class ShapeActivity extends AppCompatActivity {
         canny_th2 = findViewById(R.id.canny_th2);
         shape1 = findViewById(R.id.shape1);
         shape2 = findViewById(R.id.shape2);
+        shape3 = findViewById(R.id.shape3);
         grey_btn = findViewById(R.id.btn_gray);
         Binarization_btn = findViewById(R.id.btn_Binarization);
         canny_btn = findViewById(R.id.btn_canny);
+        canny_btn2 = findViewById(R.id.btn_canny2);
+        grey_btn2 = findViewById(R.id.btn_gray2);
         geting_btn = findViewById(R.id.btn_getimg);
         canny_dilate_btn = findViewById(R.id.btn_canny_dilate);
         contours_btn = findViewById(R.id.btn_contours);
@@ -72,6 +75,9 @@ public class ShapeActivity extends AppCompatActivity {
         dilate_contours_rectandle_btn.setOnClickListener(new btnListener());
         full_screen_btn.setOnClickListener(new btnListener());
         all_shape_contours_btn.setOnClickListener(new btnListener());
+
+        canny_btn2.setOnClickListener(new btnListener());
+        grey_btn2.setOnClickListener(new btnListener());
 
     }
 
@@ -145,6 +151,7 @@ public class ShapeActivity extends AppCompatActivity {
 
                     Bitmap full_screen_bitmap = Mat2Bitmap(after_full_screen);
                     shape2.setImageBitmap(full_screen_bitmap);
+                    shape3.setImageBitmap(full_screen_bitmap);
                     break;
                 case R.id.btn_get_allshape_contours:
                     Mat pre_get_allshape_contours = Bitmap2Mat(temp_bitmap);
@@ -153,6 +160,28 @@ public class ShapeActivity extends AppCompatActivity {
 
                     Bitmap get_allshape_contours_bitmap = Mat2Bitmap(after_get_allshape_contours);
                     shape2.setImageBitmap(get_allshape_contours_bitmap);
+                    break;
+                case R.id.btn_canny2:
+                    shape3.setDrawingCacheEnabled(true);
+                    Bitmap getted_shape3 = Bitmap.createBitmap(shape3.getDrawingCache());
+                    shape3.setDrawingCacheEnabled(false);
+                    Mat pre_canny2 = Bitmap2Mat(getted_shape3);
+
+                    Mat after_canny2 = get_shape.canny_dilate(pre_canny2);
+
+                    Bitmap return_bitmap2 = Mat2Bitmap(after_canny2);
+                    shape2.setImageBitmap(return_bitmap2);
+                    break;
+                case R.id.btn_gray2:
+                    shape3.setDrawingCacheEnabled(true);
+                    Bitmap getted_shape3_2 = Bitmap.createBitmap(shape3.getDrawingCache());
+                    shape3.setDrawingCacheEnabled(false);
+                    Mat pre_gray2 = Bitmap2Mat(getted_shape3_2);
+
+                    Mat after_grey2 = get_contours.gray(pre_gray2);
+
+                    Bitmap grayed_bitmap2 = Mat2Bitmap(after_grey2);
+                    shape2.setImageBitmap(grayed_bitmap2);
                     break;
 
             }

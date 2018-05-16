@@ -118,8 +118,8 @@ public class ImageShapeBack {
 
     }
 
-    private Mat getTrueCannyMat(Mat src) {      //传入的是剪切过的全屏图像
-        Scalar scalar = getRectScaleFromeMat(src, new Rect(src.width() / 2, 10, 4, 4));
+    private Mat  getTrueCannyMat(Mat src) {      //传入的是剪切过的全屏图像
+        Scalar scalar = getRectScaleFromeMat(src, new Rect(src.width() / 2, 10, 4, 4));     //返回的一个Scalar
         // Mat Canny_grayMatE = new Mat();
         int rgbR = (int) scalar.val[0];
         int rgbG = (int) scalar.val[1];
@@ -425,7 +425,7 @@ public class ImageShapeBack {
     }
 
     private List<ImageInfo> CheckImage(Mat srcMat) {        //传入的是剪切过的全屏图像
-        List<ImageInfo> emitList = new ArrayList<ImageInfo>();
+        List<ImageInfo> emitList = new ArrayList<ImageInfo>();      //新建一个列表，元素[pointCoint;int color;int type;
 
         Mat grayMat2 = new Mat();
         //////////////////////////
@@ -732,9 +732,9 @@ public class ImageShapeBack {
     private Scalar getRectScaleFromeMat(Mat src, Rect rect) {       //传入的是剪切过的全屏图像,和一个四通道Scalar
         Scalar mBlobColorHsv = new Scalar(255);
 
-        Mat touchedRegionRgba;
+        Mat touchedRegionRgba;              //触摸区域的RGBa值？
         try {
-            touchedRegionRgba = src.submat(rect);       //结束的地方
+            touchedRegionRgba = src.submat(rect);       //截取指定坐标的图像？？？？
         } catch (CvException e) {
             return null;
         }
@@ -743,7 +743,7 @@ public class ImageShapeBack {
         //Imgproc.cvtColor(touchedRegionRgba, touchedRegionHsv, Imgproc.COLOR_RGB2HSV_FULL);
 
         // Calculate average color of touched region
-        mBlobColorHsv = Core.sumElems(touchedRegionRgba);
+        mBlobColorHsv = Core.sumElems(touchedRegionRgba);       //矩阵共有几个元素
         int pointCount = rect.width * rect.height;
         for (int i = 0; i < mBlobColorHsv.val.length; i++)
             mBlobColorHsv.val[i] /= pointCount;

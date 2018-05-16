@@ -38,8 +38,8 @@ public class Get_Contours {
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测", Toast.LENGTH_SHORT).show();
         Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.Canny(processing_mat, processed_mat, th1, th2);
-//        Imgproc.Canny(processing_mat, processed_mat, 20, 100);
+//        Imgproc.Canny(processing_mat, processed_mat, th1, th2);
+        Imgproc.Canny(processing_mat, processed_mat, 20, 100);
         return processed_mat;
     }
 
@@ -52,7 +52,8 @@ public class Get_Contours {
 
         /*处理流程*/
         Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.Canny(processing_mat, processing_mat, th1, th2);
+//        Imgproc.Canny(processing_mat, processing_mat, th1, th2);
+        Imgproc.Canny(processing_mat, processing_mat, 20, 100);
         Imgproc.dilate(processing_mat, processed_mat, new Mat());
 
         return processed_mat;

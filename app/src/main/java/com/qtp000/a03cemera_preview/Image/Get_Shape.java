@@ -5,6 +5,7 @@ import android.util.Log;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
@@ -22,9 +23,9 @@ public class Get_Shape {
 //        Toast.makeText(getApplication(), "取出所有图形轮廓", Toast.LENGTH_SHORT).show();
 
 
-        pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input);
+        pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input);      //再次运算得到截取后的图形
 
-//        processed_mat = Contours(pre_process_mat);
+        processed_mat = this.Contours(pre_process_mat);     //得到contour边缘
 
 
         /*处理流程*/
@@ -38,13 +39,20 @@ public class Get_Shape {
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->边缘", Toast.LENGTH_SHORT).show();
 
-        processing_mat = get_contours.canny_dilate(input_mat);
+        processing_mat = this.canny_dilate(input_mat);
 
         double mMinContourArea = 0.07;       //最小轮廓区域
         Mat hierarchy = new Mat();
+        Log.i("之前hierarchy.toString", hierarchy.toString());
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();        //ArrayList可以存放Object
 
-        Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
+        Log.i("之后hierarchy.toString", hierarchy.toString());
+        Log.i("原始轮廓个数", contours.size()+"");
+        String sss = hierarchy.dump();
+        Log.i("hierarchy转储", sss);
+        long sha = hierarchy.total();
+
         //学长Imgproc.CHAIN_APPROX_SIMPLE只取了拐点
         //hierarchy[i][后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓]   的编号，没有相应内容的会被置-1,i与contours的编号对应。
         double maxAr = 320 * 280 * 0.95;
@@ -67,6 +75,7 @@ public class Get_Shape {
             MatOfPoint contour = each.next();
             double area = Imgproc.contourArea(contour);
             if (area > mMinContourArea * maxArea && area < maxAr) {
+//                if (contour.isSubmatrix())
                 mContours.add(contour);
             }
         }
@@ -76,12 +85,53 @@ public class Get_Shape {
         /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
         Imgproc.drawContours(processed_mat, /*contours*/mContours, -1, new Scalar(255, 0, 0), 1);         //自己加的，画不出来；画出来了
         Log.i("剪切完的图形共有轮廓", mContours.size() + "个");
+
+
+        Iterator<MatOfPoint> testitertor = mContours.iterator();
+        while(testitertor.hasNext()){
+            MatOfPoint testm = testitertor.next();
+            Log.i("test迭代", testm.toString());
+        }
+//        MatOfPoint test = mContours.get(0);
+//        Log.i("test单独", test.toString());
+////        test.isSubmatrix()
+//        List<Point> test_point = test.toList();
+////        Log.i("test的点", test_point.toString());
+
         if (mContours.size() > 5){
             Log.i("剪切完的图形认为是", "图形");
         }
         else {
             Log.i("剪切完的图形认为是", "车牌");
         }
+        return processed_mat;
+    }
+
+    public Mat canny_dilate(Mat input_mat) {
+        int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
+        int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
+        Mat processing_mat = new Mat();
+        Mat processed_mat = new Mat();
+//        Toast.makeText(getApplication(), "灰化->边缘检测->膨胀", Toast.LENGTH_SHORT).show();
+
+        /*处理流程*/
+        Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.Canny(processing_mat, processing_mat, th1, th2);
+        Imgproc.dilate(processing_mat, processed_mat, new Mat());
+
+        return processed_mat;
+    }
+
+    public Mat canny(Mat input_mat) {
+        int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
+        int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
+//        Log.i("th1","  "+th1);
+        Mat processing_mat = new Mat();
+        Mat processed_mat = new Mat();
+//        Toast.makeText(getApplication(), "灰化->边缘检测", Toast.LENGTH_SHORT).show();
+        Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.Canny(processing_mat, processed_mat, th1, th2);
+//        Imgproc.Canny(processing_mat, processed_mat, 20, 100);
         return processed_mat;
     }
 
