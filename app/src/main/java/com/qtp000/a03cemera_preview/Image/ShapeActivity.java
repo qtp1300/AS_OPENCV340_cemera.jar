@@ -35,7 +35,7 @@ public class ShapeActivity extends AppCompatActivity {
     public static Bitmap input_bitmap, temp_bitmap;
     Button grey_btn, Binarization_btn, canny_btn, geting_btn, canny_dilate_btn,
             contours_btn, dilate_contours_btn, dilate_contours_rectandle_btn,
-            full_screen_btn,
+            full_screen_btn,canny_equalizeHise_btn,
     all_shape_contours_btn,grey_btn2,canny_btn2;
     ImageView shape1, shape2, shape3;
     public static TextView canny_th1, canny_th2;
@@ -65,6 +65,7 @@ public class ShapeActivity extends AppCompatActivity {
         dilate_contours_rectandle_btn = findViewById(R.id.btn_dilate_contours_rectandle);
         full_screen_btn = findViewById(R.id.btn_full_screen);
         all_shape_contours_btn = findViewById(R.id.btn_get_allshape_contours);
+        canny_equalizeHise_btn = findViewById(R.id.btn_canny_equalizeHise);
         grey_btn.setOnClickListener(new btnListener());
         Binarization_btn.setOnClickListener(new btnListener());
         canny_btn.setOnClickListener(new btnListener());
@@ -75,6 +76,7 @@ public class ShapeActivity extends AppCompatActivity {
         dilate_contours_rectandle_btn.setOnClickListener(new btnListener());
         full_screen_btn.setOnClickListener(new btnListener());
         all_shape_contours_btn.setOnClickListener(new btnListener());
+        canny_equalizeHise_btn.setOnClickListener(new btnListener());
 
         canny_btn2.setOnClickListener(new btnListener());
         grey_btn2.setOnClickListener(new btnListener());
@@ -146,6 +148,7 @@ public class ShapeActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_full_screen:
                     Mat pre_full_screen = Bitmap2Mat(temp_bitmap);
+                    Log.i("拿到的图形分辨率",pre_full_screen.size().toString());
 
                     Mat after_full_screen = get_contours.Contours_rectandle_get_point_FullScreen(pre_full_screen);
 
@@ -183,6 +186,18 @@ public class ShapeActivity extends AppCompatActivity {
                     Bitmap grayed_bitmap2 = Mat2Bitmap(after_grey2);
                     shape2.setImageBitmap(grayed_bitmap2);
                     break;
+                case R.id.btn_canny_equalizeHise:
+                    shape3.setDrawingCacheEnabled(true);
+                    Bitmap getted_shape3_3 = Bitmap.createBitmap(shape3.getDrawingCache());
+                    shape3.setDrawingCacheEnabled(false);
+                    Mat pre_canny_equalizeHise = Bitmap2Mat(getted_shape3_3);
+
+                    Mat after_canny_equalizeHise = get_shape.canny_equalizeHist(pre_canny_equalizeHise);
+
+                    Bitmap canny_equalizeHise_bitmap = Mat2Bitmap(after_canny_equalizeHise);
+                    shape2.setImageBitmap(canny_equalizeHise_bitmap);
+                    break;
+
 
             }
         }

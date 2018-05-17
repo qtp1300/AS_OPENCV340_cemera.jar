@@ -42,24 +42,28 @@ public class Get_Shape {
         Mat processing_mat;
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->边缘", Toast.LENGTH_SHORT).show();
-
+//        Imgproc.equalizeHist(processing_mat,processing_mat);
+//        processing_mat = this.canny_equalizeHist(input_mat);
         processing_mat = this.canny_dilate(input_mat);
+
 
         double mMinContourArea = 0.07;       //最小轮廓区域
         Mat hierarchy = new Mat();
 //        Log.i("之前hierarchy.toString", hierarchy.toString());
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();        //ArrayList可以存放Object
 
-        Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE/*Imgproc.CHAIN_APPROX_SIMPLE*/);
+        Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE/*Imgproc.CHAIN_APPROX_SIMPLE*/);
 //        Log.i("之后hierarchy.toString", hierarchy.toString());
-//        Log.i("原始轮廓个数", contours.size()+"");
+        Log.i("原始轮廓个数", contours.size()+"");
 //        String sss = hierarchy.dump();
 //        Log.i("hierarchy转储", sss);
 //        long sha = hierarchy.total();
 
         //学长Imgproc.CHAIN_APPROX_SIMPLE只取了拐点
         //hierarchy[i][后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓]   的编号，没有相应内容的会被置-1,i与contours的编号对应。
-        double maxAr = 320 * 280 * 0.95;
+//        double maxAr = 320 * 280 * 0.95;
+        double maxAr = 640 * 360 * 0.95;
+//        Log.i("截取过的面积",input_mat.size().toString()+"");
         double maxArea = 0;
         double mixArea = 0;
         Iterator<MatOfPoint> each = contours.iterator();        //1迭代器，依次取出contours内的各个轮廓
@@ -78,17 +82,20 @@ public class Get_Shape {
         while (each.hasNext()) {
             MatOfPoint contour = each.next();
             double area = Imgproc.contourArea(contour);
+            Log.i("分别的面积",area+"");
             if (area > mMinContourArea * maxArea && area < maxAr) {
 //                if (contour.isSubmatrix())
                 mContours.add(contour);
             }
         }
-        Log.i("添加完点的列表到mContours", "");
+        Log.i("get_shape添加列表到mContours", mContours.size()+"个");
         processed_mat = new Mat(processing_mat.height(), processing_mat.width(), CvType.CV_8UC3);
 
         /*新建一个List列表，遍历得到大于0.1*最大面积且小于最大面积的集合mContours*/
         Imgproc.drawContours(processed_mat, /*contours*/mContours, -1, new Scalar(255, 0, 0), 1);         //自己加的，画不出来；画出来了
         Log.i("剪切完的图形共有轮廓", mContours.size() + "个");
+
+
 
 
         int yuan = 0;
@@ -185,10 +192,26 @@ public class Get_Shape {
         return processed_mat;
     }
 
+    public Mat canny_equalizeHist(Mat input_mat) {
+        int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
+        int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
+        Mat processing_mat = new Mat();
+//        Mat processing_mat2 = new Mat();
+        Mat processed_mat = new Mat();
+
+        /*处理流程*/
+        Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
+        Imgproc.equalizeHist(processing_mat,processed_mat);                //提升对比度
+        Imgproc.Canny(processing_mat, processing_mat, th1, th2);
+        Imgproc.dilate(processing_mat, processed_mat, new Mat());
+
+        return processed_mat;
+    }
     public Mat canny_dilate(Mat input_mat) {
         int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
         int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
         Mat processing_mat = new Mat();
+//        Mat processing_mat2 = new Mat();
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->膨胀", Toast.LENGTH_SHORT).show();
 
@@ -197,7 +220,7 @@ public class Get_Shape {
         Imgproc.Canny(processing_mat, processing_mat, th1, th2);
         Imgproc.dilate(processing_mat, processed_mat, new Mat());
 
-        return processed_mat;
+        return processing_mat;
     }
 
     public Mat canny(Mat input_mat) {

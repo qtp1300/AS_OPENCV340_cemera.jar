@@ -90,7 +90,8 @@ public class Get_Contours {
         Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         //学长Imgproc.CHAIN_APPROX_SIMPLE只取了拐点
         //hierarchy[i][后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓]   的编号，没有相应内容的会被置-1,i与contours的编号对应。
-        double maxAr = 320 * 280 * 0.95;
+//        double maxAr = 320 * 280 * 0.95;
+        double maxAr = 640 * 360 * 0.95;
         double maxArea = 0;
         double mixArea = 0;
         Iterator<MatOfPoint> each = contours.iterator();        //1迭代器，依次取出contours内的各个轮廓
