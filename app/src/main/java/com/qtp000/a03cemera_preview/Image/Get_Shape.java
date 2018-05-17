@@ -43,8 +43,8 @@ public class Get_Shape {
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->边缘", Toast.LENGTH_SHORT).show();
 //        Imgproc.equalizeHist(processing_mat,processing_mat);
-//        processing_mat = this.canny_equalizeHist(input_mat);
-        processing_mat = this.canny_dilate(input_mat);
+        processing_mat = this.canny_equalizeHist(input_mat);
+//        processing_mat = this.canny_dilate(input_mat);
 
 
         double mMinContourArea = 0.07;       //最小轮廓区域
@@ -135,7 +135,7 @@ public class Get_Shape {
                     Log.i("外接矩形面积", "" + wtrect.size.area());
 
                     Log.i("矩形面积", Imgproc.contourArea(after_approxPolyDP_matofpoint2f) + "");
-                    if (abs(wtrect.size.area() - Imgproc.contourArea(after_approxPolyDP_matofpoint2f)) > 900) {
+                    if (abs(wtrect.size.area() - Imgproc.contourArea(after_approxPolyDP_matofpoint2f)) > 950) {
                         ling += 1;
                     } else {
                         ju += 1;
@@ -211,16 +211,16 @@ public class Get_Shape {
         int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
         int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
         Mat processing_mat = new Mat();
-//        Mat processing_mat2 = new Mat();
+        Mat processed_mat2 = new Mat();
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->膨胀", Toast.LENGTH_SHORT).show();
 
         /*处理流程*/
         Imgproc.cvtColor(input_mat, processing_mat, Imgproc.COLOR_BGR2GRAY);
-        Imgproc.Canny(processing_mat, processing_mat, th1, th2);
-        Imgproc.dilate(processing_mat, processed_mat, new Mat());
+        Imgproc.Canny(processing_mat, processed_mat, th1, th2);
+        Imgproc.dilate(processed_mat, processed_mat2, new Mat());
 
-        return processing_mat;
+        return processed_mat2;
     }
 
     public Mat canny(Mat input_mat) {
