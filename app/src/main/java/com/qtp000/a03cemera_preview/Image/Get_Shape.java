@@ -5,13 +5,17 @@ import android.util.Log;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
+import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static java.lang.Math.abs;
 
 public class Get_Shape {
     Get_Contours get_contours = new Get_Contours();
@@ -43,15 +47,15 @@ public class Get_Shape {
 
         double mMinContourArea = 0.07;       //最小轮廓区域
         Mat hierarchy = new Mat();
-        Log.i("之前hierarchy.toString", hierarchy.toString());
+//        Log.i("之前hierarchy.toString", hierarchy.toString());
         List<MatOfPoint> contours = new ArrayList<MatOfPoint>();        //ArrayList可以存放Object
 
-        Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE);
-        Log.i("之后hierarchy.toString", hierarchy.toString());
-        Log.i("原始轮廓个数", contours.size()+"");
-        String sss = hierarchy.dump();
-        Log.i("hierarchy转储", sss);
-        long sha = hierarchy.total();
+        Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE/*Imgproc.CHAIN_APPROX_SIMPLE*/);
+//        Log.i("之后hierarchy.toString", hierarchy.toString());
+//        Log.i("原始轮廓个数", contours.size()+"");
+//        String sss = hierarchy.dump();
+//        Log.i("hierarchy转储", sss);
+//        long sha = hierarchy.total();
 
         //学长Imgproc.CHAIN_APPROX_SIMPLE只取了拐点
         //hierarchy[i][后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓]   的编号，没有相应内容的会被置-1,i与contours的编号对应。
@@ -87,21 +91,95 @@ public class Get_Shape {
         Log.i("剪切完的图形共有轮廓", mContours.size() + "个");
 
 
-        Iterator<MatOfPoint> testitertor = mContours.iterator();
-        while(testitertor.hasNext()){
-            MatOfPoint testm = testitertor.next();
-            Log.i("test迭代", testm.toString());
+        int yuan = 0;
+        int ju = 0;
+        int sanjiao = 0;
+        int wujiaoxing = 0;
+        int ling = 0;
+        List<MatOfPoint> after_DP_MatOfPoint = new ArrayList<MatOfPoint>();
+        Iterator<MatOfPoint> pre_approxPolyDP = mContours.iterator();
+        while (pre_approxPolyDP.hasNext()) {
+            MatOfPoint pre_approxPolyDP_matofpoint = pre_approxPolyDP.next();
+            MatOfPoint2f pre_approxPolyDP_matofpoint2f = new MatOfPoint2f(pre_approxPolyDP_matofpoint.toArray());
+            MatOfPoint2f after_approxPolyDP_matofpoint2f = new MatOfPoint2f();
+            List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
+            Imgproc.approxPolyDP(pre_approxPolyDP_matofpoint2f, after_approxPolyDP_matofpoint2f, 15, true);
+            Log.i("迭代", "多边形拟合成了" + after_approxPolyDP_matofpoint2f.total() + "边形");
+
+            MatOfPoint after_approxPolyDP_matofpoint = new MatOfPoint(after_approxPolyDP_matofpoint2f.toArray());
+            List<Point> after_approxPolyDP_point = after_approxPolyDP_matofpoint.toList();
+
+            switch ((int) after_approxPolyDP_matofpoint2f.total()) {
+                case 3:
+                    sanjiao += 1;
+                    break;
+                case 10:
+                case 11:
+                case 12:
+                    wujiaoxing += 1;
+                    break;
+                case 8:
+                case 7:
+                case 6:
+                    yuan += 1;
+                    break;
+                case 4:
+                    RotatedRect wtrect = Imgproc.minAreaRect(after_approxPolyDP_matofpoint2f);
+                    Log.i("外接矩形面积", "" + wtrect.size.area());
+
+                    Log.i("矩形面积", Imgproc.contourArea(after_approxPolyDP_matofpoint2f) + "");
+                    if (abs(wtrect.size.area() - Imgproc.contourArea(after_approxPolyDP_matofpoint2f)) > 900) {
+                        ling += 1;
+                    } else {
+                        ju += 1;
+                    }
+
+
+                    break;
+            }
+
+            after_DP_MatOfPoint.add(after_approxPolyDP_matofpoint);
+
+
+//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List" + pre_approxPolyDP_matofpoint2List.toString());
+//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List 长度" + pre_approxPolyDP_matofpoint2List.size());
+
         }
+        Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
+
+        Log.i("图形个数", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
+/*
+        List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
+        MatOfPoint2f approxCurve = new MatOfPoint2f();
+        List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();        //ArrayList可以存放Object
+        Iterator<MatOfPoint> each = contours.iterator();        //1迭代器，依次取出contours内的各个轮廓
+        each = mContours.iterator();
+        while (each.hasNext())
+        {
+            MatOfPoint contour = each.next();
+            MatOfPoint2f new_mat = new MatOfPoint2f(contour.toArray());       //把轮廓的点转化为数组并以数组建立新的MatOfPoint对象new_mat
+            Imgproc.approxPolyDP(new_mat, approxCurve, 30, true);
+
+            //Imgproc.approxPolyDP(输入的轮廓点的点集，输出的多边形点集，输出精度——和另一个轮廓点的最大距离数;输出精度可以认为是输出的线段的长度，输出的多边形是否闭合)
+            long total = approxCurve.total();      //边的数量？   确定，边的数量
+//            Log.i("approxCurve",approxCurve.toString());
+//            Log.i("approxCurve.total",total+"");
+            if (total == 4) {                                  //找到四边形
+                MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());       //把边的点集转化为MatOfPoint
+                mContour2.add(contour2);        //把点集的MatOfPoint加入列表mContour2，四边形的集合
+            }
+        }
+        */
 //        MatOfPoint test = mContours.get(0);
 //        Log.i("test单独", test.toString());
 ////        test.isSubmatrix()
 //        List<Point> test_point = test.toList();
 ////        Log.i("test的点", test_point.toString());
 
-        if (mContours.size() > 5){
+        if (mContours.size() > 5) {
             Log.i("剪切完的图形认为是", "图形");
-        }
-        else {
+        } else {
             Log.i("剪切完的图形认为是", "车牌");
         }
         return processed_mat;
