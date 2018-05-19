@@ -1,8 +1,6 @@
 package com.qtp000.a03cemera_preview;
 
 import android.app.Application;
-import android.content.ComponentName;
-import android.content.Intent;
 import android.os.Handler;
 
 //import java.util.logging.Handler;
@@ -13,10 +11,10 @@ import android.os.Handler;
  * Created by 祁天培 on 2018/5/6.
  */
 
-public class ValuesApplication extends Application{
+public class ValuesApplication extends Application {
 
-    public static String purecameraip =null;
-//    public enum Mode{
+    public static String purecameraip = null;
+    //    public enum Mode{
 //        SerialAcyivity_two,Socket
 //    }
 //    public static Mode SerialOrSocket = SerialAcyivity_two;
@@ -26,12 +24,18 @@ public class ValuesApplication extends Application{
 //    public static boolean Serial_data_update = false;
 
     private Handler Mainhandler = null;
-    public void set_Mainhandler(Handler input_handler){
+
+    public void set_Mainhandler(Handler input_handler) {
         this.Mainhandler = input_handler;
     }
-    public Handler get_Mainhandler(){
+
+    public Handler get_Mainhandler() {
         return Mainhandler;
     }
+
+    public static Traffic_Light_Mode Traffic_Light_Status = Traffic_Light_Mode.YELLOW;
+
+    public enum Traffic_Light_Mode {GREEN, RED, YELLOW}
 
 /*    @Override
     public void onCreate() {

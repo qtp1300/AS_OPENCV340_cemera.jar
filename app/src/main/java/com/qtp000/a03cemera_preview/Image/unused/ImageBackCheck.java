@@ -1,4 +1,4 @@
-package com.qtp000.a03cemera_preview.Image;
+package com.qtp000.a03cemera_preview.Image.unused;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,26 +55,26 @@ public class ImageBackCheck {
 		double point2D =2;
 		 Mat grayMat = new Mat();
 		 Mat grayMat2 = new Mat();
-		 Mat sholdMat = new Mat(); 
-		 Mat cannyEdges = new Mat(); 
-		 Mat equalMat = new Mat(); 
+		 Mat sholdMat = new Mat();
+		 Mat cannyEdges = new Mat();
+		 Mat equalMat = new Mat();
 		 List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
 		 List<Point> pointList = null;
 		 MatOfPoint matPoint = new MatOfPoint(new Point(pointD,pointD),new Point(pointD,src.size().height-pointD),new Point(src.size().width-point2D,src.size().height-point2D),new Point(src.size().width-point2D,point2D));
 		 pointList = matPoint.toList();
 		 contours.add(matPoint);
 		 Imgproc.cvtColor(src, grayMat, Imgproc.COLOR_BGR2GRAY);
-			
+
 //		Imgproc.drawContours( grayMat, contours, -1, new Scalar(255,255,255),2);
 		 Imgproc.Canny(grayMat, cannyEdges, 100, 20);
 		 Imgproc.dilate(cannyEdges, grayMat2, new Mat());
-         
+
          return grayMat2;
 	}
 	private Mat getTrueCannyMat(Mat src)
 	{
 		 Mat grayMat = new Mat();
-		 Mat cannyEdges = new Mat(); 
+		 Mat cannyEdges = new Mat();
 		 Imgproc.cvtColor(src, grayMat, Imgproc.COLOR_BGR2GRAY);
 		 Imgproc.Canny(grayMat, cannyEdges, 50, 5);
          return cannyEdges;
@@ -127,7 +127,7 @@ public class ImageBackCheck {
 	            double width =  Math.abs(pointList.get(2).x - pointList.get(0).x);
 	            double height =  Math.abs(pointList.get(2).y - pointList.get(0).y);
 	            float b1 = ((float) width/(float) height);
-	          
+
 	            if( b1 > 1 &&b1 < 2)
 	            {
 		            if (area < mixArea )
@@ -136,7 +136,7 @@ public class ImageBackCheck {
 		            	mContour3 = wrapper;
 		            }
 	            }
-	        } 
+	        }
 		return mContour3;
 	}
 	private List<MatOfPoint> findEmitFromGrayMat(Mat grayMat)
@@ -159,21 +159,21 @@ public class ImageBackCheck {
 	        {
 	        	MatOfPoint contour = contours.get(i);
 	         double area = Imgproc.contourArea(contour);
-		            if (area > mMinContourArea*maxArea ) 
+		            if (area > mMinContourArea*maxArea )
 		            {
-		            	
-		               
+
+
 		                double[] m1 = hierarchy.get(0, i);
 		                if(m1[2] == -1 && m1[3] != -1)
 		                {
 		                	 MatOfPoint2f approxCurve = new MatOfPoint2f();
-		                 
+
 		                	 MatOfPoint2f new_mat = new MatOfPoint2f( contour.toArray() );
 		 	            	Imgproc.approxPolyDP(new_mat, approxCurve,3, true);
 		 	            	MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());
 		 	            	mContours.add(contour2);
 		                }
-		                
+
 		            }
 	        }
 		return mContours;
@@ -183,7 +183,7 @@ public class ImageBackCheck {
 		double pointD = 1;
 			Point[] poitI = matPoint.toArray();
 			Point[] poitII = matPoint.toArray();
-			 
+
 
 				double mixNum = poitI[0].x+poitI[0].y;
 				double maxNum = poitI[0].x+poitI[0].y;
@@ -237,10 +237,10 @@ public class ImageBackCheck {
 		    return new Rect(new Point(startX+pointD, startY+ pointD),new Point(endX-pointD,endY-pointD));
 	}
 	private Mat findImageTrue(Bitmap bitm)
-	{ 
+	{
 		Mat grayMat = null;
 		Rect imageTureRect = null;
-		MatOfPoint mContourtrue = null; 
+		MatOfPoint mContourtrue = null;
 		int imageW = bitm.getWidth();
 		int imageH = bitm.getHeight();
 		 Mat srcImage = new Mat(imageH, imageW, CvType.CV_8UC3);
@@ -263,7 +263,7 @@ public class ImageBackCheck {
 			 displayMat(grayMat);
 			 return null;
 		 }
-			
+
 		 Scalar rgb = new Scalar(255,0,0);
 		 imageTureRect = getImageTrueRect2(mContourtrue);
 		 Scalar color = new Scalar( 255,0, 0);
@@ -294,7 +294,7 @@ public class ImageBackCheck {
 		Scalar scalar1 = getRectScaleFromeMat(src,new Rect(src.width()/2,src.height()-10,4,4));
 		if(scalar == null)
 			return -1;
-		// Mat Canny_grayMatE = new Mat(); 
+		// Mat Canny_grayMatE = new Mat();
 		int rgbR  = (int) scalar.val[0];
 		int rgbG  = (int) scalar.val[1];
 		int rgbB = (int) scalar.val[2];
@@ -353,7 +353,7 @@ public class ImageBackCheck {
 		Drawcenter(src,new Point(src.width()/2-2,10-2),new Scalar(255,0,0));
 		if(scalar1 == null)
 			return -1;
-		// Mat Canny_grayMatE = new Mat(); 
+		// Mat Canny_grayMatE = new Mat();
 		int rgbR1  = (int) scalar1.val[0];
 		int rgbG1  = (int) scalar1.val[1];
 		int rgbB1 = (int) scalar1.val[2];
@@ -433,7 +433,7 @@ public class ImageBackCheck {
 	private Scalar getRectScaleFromeMat(Mat src,Rect rect)
 	{
 		Scalar mBlobColorHsv = new Scalar(255);
-		
+
 		 Mat touchedRegionRgba;
 		try {
 			touchedRegionRgba = src.submat(rect);
@@ -457,8 +457,8 @@ public class ImageBackCheck {
 			 int resultHeight = src.height();
 			Point[] poitI = matPoint.toArray();
 			Point[] poitII = matPoint.toArray();
-			 
-			
+
+
 				double mixNum = poitI[0].x+poitI[0].y;
 				double maxNum = poitI[0].x+poitI[0].y;
 				double mixSub = poitI[0].x-poitI[0].y;
@@ -488,7 +488,7 @@ public class ImageBackCheck {
 						mixSub = sub;
 					}
 				}
-			
+
 			 Point ocvPIn1 = new Point(poitI[0].x, poitI[0].y);
 			 Point ocvPIn2= new Point(poitI[1].x, poitI[1].y);
 			 Point ocvPIn3 = new Point(poitI[2].x, poitI[2].y);
@@ -508,12 +508,12 @@ public class ImageBackCheck {
 			 dest.add(ocvPOut2);
 			 dest.add(ocvPOut3);
 			 dest.add(ocvPOut4);
-			 Mat endM = Converters.vector_Point2f_to_Mat(dest);  
+			 Mat endM = Converters.vector_Point2f_to_Mat(dest);
 			Mat perspectiveTransform = Imgproc.getPerspectiveTransform(startM, endM);
-			 Imgproc.warpPerspective(src, 
+			 Imgproc.warpPerspective(src,
 					 dst,
 				       perspectiveTransform,
-				       new Size(resultWidth, resultHeight), 
+				       new Size(resultWidth, resultHeight),
 				       Imgproc.INTER_CUBIC);
 		}
 }

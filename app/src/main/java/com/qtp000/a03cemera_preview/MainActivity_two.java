@@ -606,6 +606,7 @@ public class MainActivity_two extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 socket_connect.connect(rehHandler, IPCar);
+
             }
         }).start();
     }
@@ -707,7 +708,7 @@ public class MainActivity_two extends AppCompatActivity {
             public void run() {
                 // TODO Auto-generated method stub
                 while (moni1) {
-                    socket_connect.moni1_4();
+                    socket_connect.moni1_5();
                 }
                 Log.e("模拟1状态:", "应该结束了");
                 qrHandler.sendEmptyMessage(101);
@@ -718,16 +719,17 @@ public class MainActivity_two extends AppCompatActivity {
     }
 
     private void to_run_moni1_with_serial() {
-        moni1 = true;
-//        socket_connect.mark = 5;
+        moni1 = false;
+        socket_connect.mark = 5;
         QR_time = 0;
+        moni1 = true;
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 // TODO Auto-generated method stub
                 while (moni1) {
-                    socket_connect.moni1_4();
+                    socket_connect.moni1_5();
                 }
                 Log.e("模拟1状态:", "应该结束了");
                 qrHandler.sendEmptyMessage(101);

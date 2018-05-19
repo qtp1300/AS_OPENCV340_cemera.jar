@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.qtp000.a03cemera_preview.Image.Traffic_Light;
 import com.qtp000.a03cemera_preview.Serial.SerialAcyivity_two;
 
 import java.io.DataInputStream;
@@ -80,10 +81,12 @@ public class Socket_connect {
     private Thread reThread = new Thread(new Runnable() {
         @Override
         public void run() {
+            Log.i("UDP网络协议","已建立");
             // TODO Auto1-generated method stub
             while (socket != null && !socket.isClosed()) {
                 try {
                     bInputStream.read(rbyte);
+                    Log.i("WiFi信息更新", String.valueOf(rbyte[2]));
                     Message msg = new Message();
                     msg.what = 1;
                     msg.obj = rbyte;
@@ -103,20 +106,20 @@ public class Socket_connect {
             public void run() {
                 CHECKSUM = (byte) ((MAJOR + FIRST + SECOND + THRID) % 256);//计算通信协议校验和
                 // 发送数据字节数组，此处根据小车的通信协议来写
-                byte[] sbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
+                byte[] sendbyte = {(byte) HEAD, (byte) TYPE, (byte) MAJOR, (byte) FIRST, (byte) SECOND, (byte) THRID, (byte) CHECKSUM, (byte) 0xBB};
 
                 if (ValuesApplication.isserial == true) {
                     try {
-                        SerialAcyivity_two.sPort.write(sbyte, 5000);
+                        SerialAcyivity_two.sPort.write(sendbyte, 5000);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 } else {
                     try {
-                        bOutputStream.write(sbyte, 0, sbyte.length);
+                        bOutputStream.write(sendbyte, 0, sendbyte.length);
                         bOutputStream.flush();
-//            Log.e("消息发送", "已发送");
+                        Log.i("WiFi信息更新", "已发送");
                     } catch (IOException e) {
                         Log.e("消息发送失败", "通信协议出错");
                         e.printStackTrace();
@@ -155,7 +158,7 @@ public class Socket_connect {
         Thread tese_recive = new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.i("线程","开始运行");
+                Log.i("线程", "开始运行");
                 if (ValuesApplication.isserial == true) {
                     while (true) {
                         Log.i("此时串口数据", sbyte.toString());
@@ -165,7 +168,7 @@ public class Socket_connect {
 //                            byte init = (byte) 0x99;
 //                            if (sbyte[2] != init) {
 //                                init = sbyte[3];
-                                Log.i("此时串口有效数据", String.valueOf(sbyte[2]));
+                            Log.i("此时串口有效数据", String.valueOf(sbyte[2]));
 //                            }
                         }
                         try {
@@ -174,17 +177,16 @@ public class Socket_connect {
                             e.printStackTrace();
                         }
                     }
-                }
-                else {
+                } else {
                     while (true) {
-                        Log.i("此时WiFi数据", rbyte.length+"");
+                        Log.i("此时WiFi数据", rbyte.length + "");
 //                        Log.i("此时WiFi数据第二位",/* String.valueOf(rbyte[2])*/new String(rbyte));
                         if (rbyte[1] == (byte) 0xAA) {
                             Log.i("WiFi数据", "标志位E2收到");
 //                            byte init = (byte) 0x99;
 //                            if (rbyte[3] != init) {
 //                                init = sbyte[3];
-                                Log.i("此时WiFi有效数据", String.valueOf(rbyte[2]));
+                            Log.i("此时WiFi有效数据", String.valueOf(rbyte[2]));
 //                            }
                         }
                         try {
@@ -806,7 +808,7 @@ public class Socket_connect {
     //	F------6
     private void Start_motion(int Start_dot, int fulfil_dot) {
         TYPE = (short) 0xAA;
-        MAJOR = (short) 0xB1;
+        MAJOR = (short) 0xFF;
 //        FIRST = (short) 0x00;
 //        SECOND = (short) 0x00;
         FIRST = (short) Start_dot;
@@ -815,6 +817,71 @@ public class Socket_connect {
         send();
 //        while (rbyte[2] != (byte) (0xF4)) ;        //等待 小车到达TFT标志物
         /*        while (rbyte[2] != (byte) (0xC1)) ;        //等待 小车到达TFT标志物*/
+    }
+
+    private void mine_send_qr_result() {
+        MAJOR = 0xB5;           //图像内容传输完毕标志
+        FIRST = 0x01;
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(1000);
+    }
+
+    private void mine_send_TraffifcLight_result() {
+        MAJOR = 0xC0;           //交通灯内容
+        if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.GREEN) {
+            FIRST = 0x01;           //01红，02黄，03绿
+        }
+        if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.YELLOW) {
+            FIRST = 0x02;           //01红，02黄，03绿
+        }
+        if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.RED) {
+            FIRST = 0x03;           //01红，02黄，03绿
+        }
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(1000);
+        MAJOR = 0xC5;           //交通灯传输完毕标志
+        FIRST = 0x01;
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(1000);
+    }
+
+    private void mine_send_shape_value() {
+        MAJOR = 0xAA;           //图像内容传输完毕标志
+        FIRST = 0x01;
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(1000);
+    }
+
+    private void mine_send_car_text_value() {
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA0;
+        FIRST = (short) 0x02;
+        SECOND = (short) 0x00;
+        THRID = (short) 0x00;
+        send();
+        yanchi(2000);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA1;
+        FIRST = (short) 0x02;
+        SECOND = (short) 0x00;
+        THRID = (short) 0x00;
+        send();
+        yanchi(2000);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA2;
+        FIRST = (short) 0x02;
+        SECOND = (short) 0x00;
+        THRID = (short) 0x00;
+        send();
+        yanchi(2000);
     }
 
     //颜色形状、车牌、光源目标档位
@@ -1101,7 +1168,7 @@ public class Socket_connect {
         THRID = same;
         send();
         yanchi(1000);
-        MAJOR = 0xB2;           //TFT内容传输完毕标志
+        MAJOR = 0xAA;           //TFT内容传输完毕标志
         FIRST = 0x01;
         SECOND = 0x00;
         THRID = 0x00;
@@ -1158,211 +1225,305 @@ public class Socket_connect {
         send_Caution_Text();
     }
 
-
-    public void moni1() {
-
-        MainActivity_two.state_camera = 39;     //调用摄像头4位置，正前方。
-//        Start_motion(2, 5);      //  1:B1    2:A2     3:A4
-//        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
-//        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
-//        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
-//        MainActivity_two.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
-        yanchi(1000);
-//        MainActivity_two.state_camera = 506;
-//        yanchi(500);
-//        MainActivity_two.state_camera = 506;
-//        yanchi(500);
-        Log.e("即将识别二维码", MainActivity_two.result_qr);
-        qrhandler.sendEmptyMessage(10);        //识别二维码
-        yanchi(2000);
-        if (mark == 25) {
-            Log.e("二维码是", MainActivity_two.result_qr);
-        }
-
-//        algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
-//        send_Caution_Text();                //发送二维码解码信息
+//
+//    public void moni1() {
+//
 //        MainActivity_two.state_camera = 39;     //调用摄像头4位置，正前方。
+////        Start_motion(2, 5);      //  1:B1    2:A2     3:A4
+////        while (rbyte[2] != (byte) (0xC1)) ;     //等待到达TFT位置
+////        send_Car_text_Fruit();                  //识别车牌，图形图像，内部有等待到达二维码位置
+////        while (rbyte[2] != (byte) (0xC2)) ;     //等待到达二维码位置
+////        MainActivity_two.state_camera = 33;        //调用摄像头1位置，右下转二维码位置。
+//        yanchi(1000);
+////        MainActivity_two.state_camera = 506;
+////        yanchi(500);
+////        MainActivity_two.state_camera = 506;
+////        yanchi(500);
+//        Log.e("即将识别二维码", MainActivity_two.result_qr);
+//        qrhandler.sendEmptyMessage(10);        //识别二维码
+//        yanchi(2000);
+//        if (mark == 25) {
+//            Log.e("二维码是", MainActivity_two.result_qr);
+//        }
+//
+////        algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+////        send_Caution_Text();                //发送二维码解码信息
+////        MainActivity_two.state_camera = 39;     //调用摄像头4位置，正前方。
+//
+//
+//    }
 
+//    public void moni1_2() {
+//        switch (mark) {
+//            case 5:
+//                MainActivity_two.state_camera = 33;        //调用摄像头1
+//                Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
+//
+////                if (num == 2)
+//                mark = 10;
+////                else
+////                    mark = 11;
+//                break;
+//
+//            case 11:
+//                MainActivity_two.state_camera = 33;        //调用摄像头1
+//                yanchi(3000);
+//                mark = 10;
+//                break;
+//
+//            case 10:
+//                send_Car_text_Fruit();                //进行传输 形状个数、车牌参数
+//                yanchi(1000);
+//                mark = 15;
+//                break;
+//            case 15:
+//                MainActivity_two.state_camera = 39;        //调用摄像头4
+//                yanchi(1000);
+//                mark = 20;
+//                break;
+//            case 20:
+//                qrhandler.sendEmptyMessage(10);        //识别二维码
+//                mark = -25;
+//                break;
+//            case 25:
+//                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+//                mark = 30;
+//                break;
+//            case 30:
+//                MainActivity_two.state_camera = 10;        //调用摄像头2
+//                mark = 40;
+//                break;
+//            case 40:
+//                send_Caution_Text();                //发送红外报警数据
+//                yanchi(2000);
+////                mark = 400;
+//                MainActivity_two.moni1 = false;
+//                break;
+//            default:
+//                break;
+//        }
+//    }
+//
+//    public void moni1_3() {
+//        switch (mark) {
+//            case 5:
+//                MainActivity_two.state_camera = 33;      //一号预设位，正前方
+//                Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+//                mark = 10;
+//                break;
+//
+//            case 10:
+//                MainActivity_two.state_camera = 33;
+//                //TFT识别形状
+//                while (rbyte[2] != (byte) (0xF4)) ; //F4代表到达TFT，需要识别形状
+//                yanchi(2000);
+//                //识别形状
+//                send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
+//                mark = 15;
+//                break;
+//
+//            case 15:
+//                //LCD车牌识别
+//                while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
+//                MainActivity_two.state_camera = 39;
+//                yanchi(2000);
+//                //车牌识别
+//                send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
+//                mark = 20;
+//                break;
+//
+//            case 20:
+//                //二维码识别
+//                while (rbyte[2] != (byte) (0xE2)) ; //F2代表到达LCD，需要摄像头继续右转
+//                //识别
+//                MainActivity_two.state_camera = 39;
+//                qrhandler.sendEmptyMessage(10);
+//                mark = -25;
+//                break;
+//
+//            case 25:
+//                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+//                mark = 30;
+//                break;
+//
+//            case 30:
+//                MainActivity_two.state_camera = 33;        //调用摄像头2
+//                mark = 40;
+//                break;
+//
+//            case 40:
+//                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
+//                MainActivity_two.moni1 = false;
+//                break;
+//            default:
+//                break;
+//
+//        }
+//    }
 
-    }
+//    public void moni1_4() {
+//        switch (mark) {
+//            case 5:
+//                MainActivity_two.state_camera = 33;      //一号预设位，正前方
+//                qrhandler.sendEmptyMessage(201);
+//                Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+//                qrhandler.sendEmptyMessage(202);
+//                mark = 10;
+//                break;
+//            case 10:
+////                MainActivity_two.state_camera = 37;
+//                Log.e("等待:", "WIFI");
+//                //二维码   接受F5    发B4   摄像头向左
+//                while (rbyte[2] != (byte) (0xF5)) ; //F5代表到达二维码处，需要摄像头左转
+//                qrhandler.sendEmptyMessage(203);
+//                Log.e("WiFi收到", new String(rbyte));
+//                //识别
+//                MainActivity_two.state_camera = 35;      //二号预设位，左方
+//                qrhandler.sendEmptyMessage(204);
+//                yanchi(200);
+//                qrhandler.sendEmptyMessage(10);
+//                mark = -15;
+//                break;
+//
+//            case 15:
+//                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+//                qrhandler.sendEmptyMessage(205);
+//                mark = 20;
+//                break;
+//
+//            case 20:
+//                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
+//                qrhandler.sendEmptyMessage(206);
+//                mark = 25;
+//                break;
+//
+//            case 25:
+//                //TFT      接收F4    发B2
+//                while (rbyte[2] != (byte) (0xF4)) ;
+//                qrhandler.sendEmptyMessage(207);
+//                MainActivity_two.state_camera = 37;      //三号预设位，右前方
+//                yanchi(2000);
+//                //识别形状
+//                send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
+//                qrhandler.sendEmptyMessage(208);
+//                mark = 30;
+//                break;
+//
+//            case 30:
+//                //LCD车牌识别
+//                //LCD      接收F2    发B3
+//                while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
+//                qrhandler.sendEmptyMessage(209);
+//                MainActivity_two.state_camera = 39;     //四号预设位，右方
+//                qrhandler.sendEmptyMessage(210);
+//                yanchi(2000);
+//                //车牌识别
+//                send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
+//                qrhandler.sendEmptyMessage(211);
+//                mark = 35;
+//                break;
+//
+//
+//            case 35:
+//                MainActivity_two.state_camera = 33;        //调用摄像头1
+//                qrhandler.sendEmptyMessage(212);
+//                mark = 40;
+//                break;
+//
+//            case 40:
+//                MainActivity_two.moni1 = false;
+//                break;
+//            default:
+//                break;
+//
+//
+//            //TFT      接收F4    发B2
+//            //LCD      接收F2    发B3
+//        }
+//
+//    }
+//}
 
-    public void moni1_2() {
+    public void moni1_5() {
         switch (mark) {
             case 5:
-                MainActivity_two.state_camera = 33;        //调用摄像头1
-                Start_motion(num, 5);                    //开始运行  发送主车起始坐标 与终点坐标
-
-//                if (num == 2)
-                mark = 10;
-//                else
-//                    mark = 11;
-                break;
-
-            case 11:
-                MainActivity_two.state_camera = 33;        //调用摄像头1
-                yanchi(3000);
-                mark = 10;
-                break;
-
-            case 10:
-                send_Car_text_Fruit();                //进行传输 形状个数、车牌参数
-                yanchi(1000);
-                mark = 15;
-                break;
-            case 15:
-                MainActivity_two.state_camera = 39;        //调用摄像头4
-                yanchi(1000);
-                mark = 20;
-                break;
-            case 20:
-                qrhandler.sendEmptyMessage(10);        //识别二维码
-                mark = -25;
-                break;
-            case 25:
-                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
-                mark = 30;
-                break;
-            case 30:
-                MainActivity_two.state_camera = 10;        //调用摄像头2
-                mark = 40;
-                break;
-            case 40:
-                send_Caution_Text();                //发送红外报警数据
-                yanchi(2000);
-//                mark = 400;
-                MainActivity_two.moni1 = false;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void moni1_3() {
-        switch (mark) {
-            case 5:
-                MainActivity_two.state_camera = 33;      //一号预设位，正前方
-                Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
-                mark = 10;
-                break;
-
-            case 10:
-                MainActivity_two.state_camera = 33;
-                //TFT识别形状
-                while (rbyte[2] != (byte) (0xF4)) ; //F4代表到达TFT，需要识别形状
-                yanchi(2000);
-                //识别形状
-                send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
-                mark = 15;
-                break;
-
-            case 15:
-                //LCD车牌识别
-                while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
-                MainActivity_two.state_camera = 39;
-                yanchi(2000);
-                //车牌识别
-                send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
-                mark = 20;
-                break;
-
-            case 20:
-                //二维码识别
-                while (rbyte[2] != (byte) (0xE2)) ; //F2代表到达LCD，需要摄像头继续右转
-                //识别
-                MainActivity_two.state_camera = 39;
-                qrhandler.sendEmptyMessage(10);
-                mark = -25;
-                break;
-
-            case 25:
-                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
-                mark = 30;
-                break;
-
-            case 30:
-                MainActivity_two.state_camera = 33;        //调用摄像头2
-                mark = 40;
-                break;
-
-            case 40:
-                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
-                MainActivity_two.moni1 = false;
-                break;
-            default:
-                break;
-
-        }
-    }
-
-    public void moni1_4() {
-        switch (mark) {
-            case 5:
-                MainActivity_two.state_camera = 33;      //一号预设位，正前方
+                MainActivity_two.state_camera = 39;      //一号预设位，正前方
                 qrhandler.sendEmptyMessage(201);
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 qrhandler.sendEmptyMessage(202);
                 mark = 10;
                 break;
+
             case 10:
-//                MainActivity_two.state_camera = 37;
-                Log.e("等待:", "WIFI");
-                //二维码   接受F5    发B4   摄像头向左
-                while (rbyte[2] != (byte) (0xF5)) ; //F5代表到达二维码处，需要摄像头左转
+                Log.e("等待:", "WIFI01");
+
+//                while ((rbyte[2] != (byte) (0x01)) && (sbyte[2] != (byte) (0x01))) ;
+                while (rbyte[2] != (byte) (0x01)) ;
                 qrhandler.sendEmptyMessage(203);
-                Log.e("WiFi收到", new String(rbyte));
-                //识别
-                MainActivity_two.state_camera = 35;      //二号预设位，左方
+                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
+                MainActivity_two.state_camera = 33;
                 qrhandler.sendEmptyMessage(204);
                 yanchi(200);
-                qrhandler.sendEmptyMessage(10);
-                mark = -15;
+                mark = 15;
                 break;
 
             case 15:
-                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
-                qrhandler.sendEmptyMessage(205);
+                mine_send_car_text_value();
+                mine_send_shape_value();
+                yanchi(200);
                 mark = 20;
                 break;
 
+
             case 20:
-                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
-                qrhandler.sendEmptyMessage(206);
-                mark = 25;
+                Log.i("等待:", "WIFI02");
+                //二维码   接受F5    发B4   摄像头向左
+                Log.i("WiFi02收到", String.valueOf(rbyte[2]));
+                /*while ((rbyte[2] != (byte) (0x02)) && (sbyte[2] != (byte) (0x02)))*/
+//                while (rbyte[2] != (byte) (0x04)) ;
+                if (rbyte[2] == (byte) (0x04)) {
+                    Log.i("WiFi02收到2", String.valueOf(rbyte[2]));
+
+                }
+
+
+//                qrhandler.sendEmptyMessage(203);
+//                Log.e("WiFi02收到", String.valueOf(rbyte));
+//                //识别
+//                MainActivity_two.state_camera = 35;
+//                qrhandler.sendEmptyMessage(204);
+//                yanchi(200);
+//                qrhandler.sendEmptyMessage(10);
+//                mark = -25;
                 break;
 
             case 25:
-                //TFT      接收F4    发B2
-                while (rbyte[2] != (byte) (0xF4)) ;
-                qrhandler.sendEmptyMessage(207);
-                MainActivity_two.state_camera = 37;      //三号预设位，右前方
-                yanchi(2000);
-                //识别形状
-                send_TFT_value();//发送B2   之后第一位   0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图  通过type 0x10 0x11 发送
-                qrhandler.sendEmptyMessage(208);
+//                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+                qrhandler.sendEmptyMessage(205);
                 mark = 30;
                 break;
 
             case 30:
-                //LCD车牌识别
-                //LCD      接收F2    发B3
-                while (rbyte[2] != (byte) (0xF2)) ; //F2代表到达LCD，需要摄像头右转
-                qrhandler.sendEmptyMessage(209);
-                MainActivity_two.state_camera = 39;     //四号预设位，右方
-                qrhandler.sendEmptyMessage(210);
-                yanchi(2000);
-                //车牌识别
-                send_LCD_value();//发送type B3     0x10 0x11 发送6位车牌号的16进制
-                qrhandler.sendEmptyMessage(211);
+                mine_send_qr_result();
+//                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
+                qrhandler.sendEmptyMessage(206);
                 mark = 35;
                 break;
 
-
             case 35:
-                MainActivity_two.state_camera = 33;        //调用摄像头1
-                qrhandler.sendEmptyMessage(212);
+                //TFT      接收F4    发B2
+                Log.e("等待:", "WIFI03");
+//                while ((rbyte[2] != (byte) (0x03)) && (sbyte[2] != (byte) (0x03))) ;
+                while (rbyte[2] != (byte) (0x03)) ;
+                qrhandler.sendEmptyMessage(207);
+                MainActivity_two.state_camera = 37;
+                yanchi(2000);
+                Traffic_Light traffic_light = new Traffic_Light();
+                traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
+                mine_send_TraffifcLight_result();
+                qrhandler.sendEmptyMessage(208);
                 mark = 40;
                 break;
-
             case 40:
                 MainActivity_two.moni1 = false;
                 break;
@@ -1370,8 +1531,6 @@ public class Socket_connect {
                 break;
 
 
-            //TFT      接收F4    发B2
-            //LCD      接收F2    发B3
         }
 
     }

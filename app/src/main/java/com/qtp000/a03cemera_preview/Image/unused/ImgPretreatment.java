@@ -1,4 +1,4 @@
-package com.qtp000.a03cemera_preview.Image;
+package com.qtp000.a03cemera_preview.Image.unused;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -60,13 +60,13 @@ public class ImgPretreatment {
 		//
 		// Bitmap result = selectBinarization(T);
 		Bitmap result = binarization(T1);
-		
+
 		img.recycle();
 		img = null;
 		ImgPretreatment.img = null;
 		imgPixels = null;                                          //这里是用来干什么的
-	
-		
+
+
 		return result;
 	}
 
@@ -239,7 +239,7 @@ public class ImgPretreatment {
 	}
 
 	// 计算最大最小灰度,保存在数组中
-	private static void getMinMaxGrayValue(int[] p) 
+	private static void getMinMaxGrayValue(int[] p)
 	{
 		int minGrayValue = 255;
 		int maxGrayValue = 0;
