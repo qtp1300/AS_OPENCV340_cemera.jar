@@ -81,12 +81,12 @@ public class Socket_connect {
     private Thread reThread = new Thread(new Runnable() {
         @Override
         public void run() {
-            Log.i("UDP网络协议","已建立");
+            Log.i("UDP网络协议", "已建立");
             // TODO Auto1-generated method stub
             while (socket != null && !socket.isClosed()) {
                 try {
                     bInputStream.read(rbyte);
-                    Log.i("WiFi信息更新", String.valueOf(rbyte[2]));
+                    Log.i("WiFi信息更新", String.valueOf(rbyte[1]) + "  " + String.valueOf(rbyte[2]));
                     Message msg = new Message();
                     msg.what = 1;
                     msg.obj = rbyte;
@@ -863,25 +863,25 @@ public class Socket_connect {
     private void mine_send_car_text_value() {
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA0;
-        FIRST = (short) 0x02;
+        FIRST = (short) 0x00;
         SECOND = (short) 0x00;
         THRID = (short) 0x00;
         send();
-        yanchi(2000);
+        yanchi(500);
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA1;
-        FIRST = (short) 0x02;
+        FIRST = (short) 0x00;
         SECOND = (short) 0x00;
         THRID = (short) 0x00;
         send();
-        yanchi(2000);
+        yanchi(500);
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA2;
         FIRST = (short) 0x02;
         SECOND = (short) 0x00;
         THRID = (short) 0x00;
         send();
-        yanchi(2000);
+        yanchi(500);
     }
 
     //颜色形状、车牌、光源目标档位
@@ -1226,7 +1226,7 @@ public class Socket_connect {
     }
 
 //
-//    public void moni1() {
+//    public void moni1_status() {
 //
 //        MainActivity_two.state_camera = 39;     //调用摄像头4位置，正前方。
 ////        Start_motion(2, 5);      //  1:B1    2:A2     3:A4
@@ -1297,7 +1297,7 @@ public class Socket_connect {
 //                send_Caution_Text();                //发送红外报警数据
 //                yanchi(2000);
 ////                mark = 400;
-//                MainActivity_two.moni1 = false;
+//                MainActivity_two.moni1_status = false;
 //                break;
 //            default:
 //                break;
@@ -1353,7 +1353,7 @@ public class Socket_connect {
 //
 //            case 40:
 //                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
-//                MainActivity_two.moni1 = false;
+//                MainActivity_two.moni1_status = false;
 //                break;
 //            default:
 //                break;
@@ -1431,7 +1431,7 @@ public class Socket_connect {
 //                break;
 //
 //            case 40:
-//                MainActivity_two.moni1 = false;
+//                MainActivity_two.moni1_status = false;
 //                break;
 //            default:
 //                break;
@@ -1455,12 +1455,15 @@ public class Socket_connect {
                 break;
 
             case 10:
-                Log.e("等待:", "WIFI01");
-
+                Log.i("等待:", "WIFI01");
 //                while ((rbyte[2] != (byte) (0x01)) && (sbyte[2] != (byte) (0x01))) ;
-                while (rbyte[2] != (byte) (0x01)) ;
+                byte[] rbyte10 = rbyte;
+                if (rbyte10[2] != (byte) (0x01)) {
+                    yanchi(300);
+                    break;
+                }
                 qrhandler.sendEmptyMessage(203);
-                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
+//                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
                 MainActivity_two.state_camera = 33;
                 qrhandler.sendEmptyMessage(204);
                 yanchi(200);
@@ -1474,27 +1477,23 @@ public class Socket_connect {
                 mark = 20;
                 break;
 
-
             case 20:
                 Log.i("等待:", "WIFI02");
                 //二维码   接受F5    发B4   摄像头向左
-                Log.i("WiFi02收到", String.valueOf(rbyte[2]));
                 /*while ((rbyte[2] != (byte) (0x02)) && (sbyte[2] != (byte) (0x02)))*/
-//                while (rbyte[2] != (byte) (0x04)) ;
-                if (rbyte[2] == (byte) (0x04)) {
-                    Log.i("WiFi02收到2", String.valueOf(rbyte[2]));
-
+                byte[] rbyte20 = rbyte;
+                if (rbyte20[2] != (byte) (0x02)) {
+                    yanchi(300);
+                    break;
                 }
-
-
-//                qrhandler.sendEmptyMessage(203);
-//                Log.e("WiFi02收到", String.valueOf(rbyte));
-//                //识别
-//                MainActivity_two.state_camera = 35;
-//                qrhandler.sendEmptyMessage(204);
-//                yanchi(200);
-//                qrhandler.sendEmptyMessage(10);
-//                mark = -25;
+                qrhandler.sendEmptyMessage(203);
+                Log.i("WiFi02收到4", String.valueOf(rbyte));
+                //识别
+                MainActivity_two.state_camera = 35;
+                qrhandler.sendEmptyMessage(204);
+                yanchi(200);
+                qrhandler.sendEmptyMessage(10);
+                mark = -25;
                 break;
 
             case 25:
@@ -1512,9 +1511,16 @@ public class Socket_connect {
 
             case 35:
                 //TFT      接收F4    发B2
-                Log.e("等待:", "WIFI03");
+                Log.i("等待:", "WIFI03");
 //                while ((rbyte[2] != (byte) (0x03)) && (sbyte[2] != (byte) (0x03))) ;
-                while (rbyte[2] != (byte) (0x03)) ;
+                byte[] rbyte35 = rbyte;
+                byte[] sbyte35 = sbyte;
+//                if (rbyte35[0] == (byte) (0x66)){
+                    if ((rbyte35[2] != (byte) (0x03)) && (sbyte[2] != (byte) (0x03))) {
+                        yanchi(300);
+                        break;
+                    }
+//                }
                 qrhandler.sendEmptyMessage(207);
                 MainActivity_two.state_camera = 37;
                 yanchi(2000);
@@ -1525,7 +1531,7 @@ public class Socket_connect {
                 mark = 40;
                 break;
             case 40:
-                MainActivity_two.moni1 = false;
+                MainActivity_two.moni1_status = false;
                 break;
             default:
                 break;

@@ -30,8 +30,8 @@ public class Traffic_Light {
                 int b = pixel & 0xff;
                 if(r > 0 && g > 0 && b > 0)
                 {
-                    Log.e("红：" + r,"绿:" + g);
-                    Log.e("蓝：" + b,"over...");
+                    Log.i("红：" + r,"绿:" + g);
+                    Log.i("蓝：" + b,"over...");
                     if(r > 200 && g > 80 && b > 100)
                     {
                         red++;

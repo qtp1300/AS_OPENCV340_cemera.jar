@@ -84,7 +84,7 @@ public class MainActivity_two extends AppCompatActivity {
     private int LICENSE_status = 0;
     private int PICTURE_status = 0;
     public static int cemera_step = 1;
-    public static boolean moni1 = false;
+    public static boolean moni1_status = false;
     public static int QR_time = 0;
     public static int run_time = 1;
 
@@ -268,7 +268,7 @@ public class MainActivity_two extends AppCompatActivity {
                     break;
                 case R.id.btn_stop:
                     Toast.makeText(getApplication(), "停止", Toast.LENGTH_SHORT).show();
-                    moni1 = false;
+                    moni1_status = false;
                     break;
                 case R.id.car_1:
                     run_time = 1;
@@ -699,15 +699,16 @@ public class MainActivity_two extends AppCompatActivity {
     }
 
     private void to_run_moni1_with_wifi() {
-        moni1 = true;
+        moni1_status = false;
         socket_connect.mark = 5;
         QR_time = 0;
+        moni1_status = true;
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                while (moni1) {
+                while (moni1_status) {
                     socket_connect.moni1_5();
                 }
                 Log.e("模拟1状态:", "应该结束了");
@@ -719,16 +720,16 @@ public class MainActivity_two extends AppCompatActivity {
     }
 
     private void to_run_moni1_with_serial() {
-        moni1 = false;
+        moni1_status = false;
         socket_connect.mark = 5;
         QR_time = 0;
-        moni1 = true;
+        moni1_status = true;
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 // TODO Auto-generated method stub
-                while (moni1) {
+                while (moni1_status) {
                     socket_connect.moni1_5();
                 }
                 Log.e("模拟1状态:", "应该结束了");
