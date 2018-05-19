@@ -36,7 +36,8 @@ public class ShapeActivity extends AppCompatActivity {
     Button grey_btn, Binarization_btn, canny_btn, geting_btn, canny_dilate_btn,
             contours_btn, dilate_contours_btn, dilate_contours_rectandle_btn,
             full_screen_btn,canny_equalizeHise_btn,
-    all_shape_contours_btn,grey_btn2,canny_btn2;
+    all_shape_contours_btn,grey_btn2,canny_btn2,
+    license_plate_btn;
     ImageView shape1, shape2, shape3;
     public static TextView canny_th1, canny_th2;
 
@@ -66,6 +67,8 @@ public class ShapeActivity extends AppCompatActivity {
         full_screen_btn = findViewById(R.id.btn_full_screen);
         all_shape_contours_btn = findViewById(R.id.btn_get_allshape_contours);
         canny_equalizeHise_btn = findViewById(R.id.btn_canny_equalizeHise);
+        license_plate_btn = findViewById(R.id.btn_license_plate);
+
         grey_btn.setOnClickListener(new btnListener());
         Binarization_btn.setOnClickListener(new btnListener());
         canny_btn.setOnClickListener(new btnListener());
@@ -77,6 +80,7 @@ public class ShapeActivity extends AppCompatActivity {
         full_screen_btn.setOnClickListener(new btnListener());
         all_shape_contours_btn.setOnClickListener(new btnListener());
         canny_equalizeHise_btn.setOnClickListener(new btnListener());
+        license_plate_btn.setOnClickListener(new btnListener());
 
         canny_btn2.setOnClickListener(new btnListener());
         grey_btn2.setOnClickListener(new btnListener());
@@ -196,6 +200,21 @@ public class ShapeActivity extends AppCompatActivity {
 
                     Bitmap canny_equalizeHise_bitmap = Mat2Bitmap(after_canny_equalizeHise);
                     shape2.setImageBitmap(canny_equalizeHise_bitmap);
+                    break;
+                case R.id.btn_license_plate:
+                    shape3.setDrawingCacheEnabled(true);
+                    Bitmap getted_license_plate = Bitmap.createBitmap(shape3.getDrawingCache());
+                    shape3.setDrawingCacheEnabled(false);
+
+//                    Mat pre_license_plate = Bitmap2Mat(getted_shape3_4);
+
+                    License_Plate license_plate = new License_Plate();
+                    license_plate.get_license_plate(getted_license_plate,"chi_sim");
+                    Log.i("车牌",license_plate.license_plate_string);
+
+//                    shape2.setImageBitmap(license_plate_bitmap);
+
+
                     break;
 
 

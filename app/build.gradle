@@ -49,7 +49,8 @@ dependencies {
     implementation project(':openCVLibrary340')
     implementation files('libs/camerautil.jar')
     implementation files('libs/core.jar')
-    compile(name:'usbSerialForAndroid-debug', ext:'aar')
-    compile(name:'WaitProgressDialog-debug', ext:'aar')
-    compile(name:'BottomNavigationViewLibrary-debug', ext:'aar')
+    compile(name: 'usbSerialForAndroid-debug', ext: 'aar')
+    compile(name: 'WaitProgressDialog-debug', ext: 'aar')
+    compile(name: 'BottomNavigationViewLibrary-debug', ext: 'aar')
+    implementation files('libs/tess-two.tesseract3.01-leptonica1.68-LibJPEG6b.jar')
 }

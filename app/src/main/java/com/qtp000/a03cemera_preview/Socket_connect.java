@@ -830,15 +830,16 @@ public class Socket_connect {
 
     private void mine_send_TraffifcLight_result() {
         MAJOR = 0xC0;           //交通灯内容
+        if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.RED) {
+            FIRST = 0x01;           //01红，02绿,03黄
+        }
         if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.GREEN) {
-            FIRST = 0x01;           //01红，02黄，03绿
+            FIRST = 0x02;           //01红，02绿,03黄
         }
         if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.YELLOW) {
-            FIRST = 0x02;           //01红，02黄，03绿
+            FIRST = 0x03;           //01红，02绿,03黄
         }
-        if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.RED) {
-            FIRST = 0x03;           //01红，02黄，03绿
-        }
+
         SECOND = 0x00;
         THRID = 0x00;
         send();
@@ -1458,6 +1459,10 @@ public class Socket_connect {
                 MainActivity_two.state_camera = 39;      //一号预设位，正前方
                 qrhandler.sendEmptyMessage(201);
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+                yanchi(100);
+                Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+                yanchi(100);
+                Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 qrhandler.sendEmptyMessage(202);
                 mark = 10;
                 break;
@@ -1483,9 +1488,17 @@ public class Socket_connect {
 
             case 15:
                 mine_send_car_text_value();
+                yanchi(10);
+                mine_send_car_text_value();
+                yanchi(10);
+                mine_send_car_text_value();
                 yanchi(400);
                 mine_send_shape_value();
-                yanchi(400);
+                yanchi(10);
+                mine_send_shape_value();
+                yanchi(10);
+                mine_send_shape_value();
+                yanchi(10);
                 mark = 20;
                 break;
 
@@ -1518,7 +1531,14 @@ public class Socket_connect {
                 break;
 
             case 30:
+                yanchi(500);
                 mine_send_qr_result();
+                yanchi(10);
+                mine_send_qr_result();
+                yanchi(10);
+                mine_send_qr_result();
+                yanchi(10);
+                MainActivity_two.state_camera = 37;
 //                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
                 qrhandler.sendEmptyMessage(206);
                 mark = 35;
@@ -1538,11 +1558,18 @@ public class Socket_connect {
                     else if((rbyte35[0] == (byte)(0x66)) || (sbyte35[0] == (byte)(0x66))) {
 //                }
                         qrhandler.sendEmptyMessage(207);
-                        MainActivity_two.state_camera = 37;
-                        yanchi(2000);
+                        yanchi(1000);
                         Traffic_Light traffic_light = new Traffic_Light();
                         traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
+                        Log.i("交通灯","识别完毕"+ValuesApplication.Traffic_Light_Status.toString());
                         mine_send_TraffifcLight_result();
+                        yanchi(10);
+                        mine_send_TraffifcLight_result();
+                        yanchi(10);
+                        mine_send_TraffifcLight_result();
+                        yanchi(10);
+                        Log.i("交通灯","识别并发送完毕"+ValuesApplication.Traffic_Light_Status.toString());
+
                         qrhandler.sendEmptyMessage(208);
                         mark = 40;
                     }
