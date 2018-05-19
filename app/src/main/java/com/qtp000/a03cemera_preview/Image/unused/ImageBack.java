@@ -20,7 +20,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.qtp000.a03cemera_preview.EmitContur;
-import com.qtp000.a03cemera_preview.Image.ColorBlobDetector;
 
 //该类的大部分作用是提取到显示屏轮廓并截取出来
 

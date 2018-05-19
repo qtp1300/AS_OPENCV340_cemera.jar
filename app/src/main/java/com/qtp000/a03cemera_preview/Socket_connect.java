@@ -1445,6 +1445,14 @@ public class Socket_connect {
 //}
 
     public void moni1_5() {
+
+        /*这种写法用来解决while时其它线程变量数据不能被本函数调用的神学问题
+        if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
+            yanchi(300);
+            break;
+        }
+        else if((rbyte10[0] == (byte)(0x66)) || (sbyte10[0] == (byte)(0x66))) {}*/
+
         switch (mark) {
             case 5:
                 MainActivity_two.state_camera = 39;      //一号预设位，正前方
@@ -1458,22 +1466,26 @@ public class Socket_connect {
                 Log.i("等待:", "WIFI01");
 //                while ((rbyte[2] != (byte) (0x01)) && (sbyte[2] != (byte) (0x01))) ;
                 byte[] rbyte10 = rbyte;
-                if (rbyte10[2] != (byte) (0x01)) {
+                byte[] sbyte10 = sbyte;
+                if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
                     yanchi(300);
                     break;
                 }
-                qrhandler.sendEmptyMessage(203);
+                else if((rbyte10[0] == (byte)(0x66)) || (sbyte10[0] == (byte)(0x66))) {
+                    qrhandler.sendEmptyMessage(203);
 //                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
-                MainActivity_two.state_camera = 33;
-                qrhandler.sendEmptyMessage(204);
-                yanchi(200);
-                mark = 15;
+                    MainActivity_two.state_camera = 33;
+                    qrhandler.sendEmptyMessage(204);
+                    yanchi(1000);
+                    mark = 15;
+                }
                 break;
 
             case 15:
                 mine_send_car_text_value();
+                yanchi(400);
                 mine_send_shape_value();
-                yanchi(200);
+                yanchi(400);
                 mark = 20;
                 break;
 
@@ -1482,18 +1494,21 @@ public class Socket_connect {
                 //二维码   接受F5    发B4   摄像头向左
                 /*while ((rbyte[2] != (byte) (0x02)) && (sbyte[2] != (byte) (0x02)))*/
                 byte[] rbyte20 = rbyte;
-                if (rbyte20[2] != (byte) (0x02)) {
+                byte[] sbyte20 = sbyte;
+                if ((rbyte20[2] != (byte) (0x02)) && (sbyte20[2] != (byte) (0x02))) {
                     yanchi(300);
                     break;
                 }
-                qrhandler.sendEmptyMessage(203);
-                Log.i("WiFi02收到4", String.valueOf(rbyte));
-                //识别
-                MainActivity_two.state_camera = 35;
-                qrhandler.sendEmptyMessage(204);
-                yanchi(200);
-                qrhandler.sendEmptyMessage(10);
-                mark = -25;
+                else if((rbyte20[0] == (byte)(0x66)) || (sbyte20[0] == (byte)(0x66))) {
+                    qrhandler.sendEmptyMessage(203);
+                    Log.i("WiFi02收到4", String.valueOf(rbyte));
+                    //识别
+                    MainActivity_two.state_camera = 35;
+                    qrhandler.sendEmptyMessage(204);
+                    yanchi(200);
+                    qrhandler.sendEmptyMessage(10);
+                    mark = -25;
+                }
                 break;
 
             case 25:
@@ -1516,19 +1531,21 @@ public class Socket_connect {
                 byte[] rbyte35 = rbyte;
                 byte[] sbyte35 = sbyte;
 //                if (rbyte35[0] == (byte) (0x66)){
-                    if ((rbyte35[2] != (byte) (0x03)) && (sbyte[2] != (byte) (0x03))) {
+                    if ((rbyte35[2] != (byte) (0x03)) && (sbyte35[2] != (byte) (0x03))) {
                         yanchi(300);
                         break;
                     }
+                    else if((rbyte35[0] == (byte)(0x66)) || (sbyte35[0] == (byte)(0x66))) {
 //                }
-                qrhandler.sendEmptyMessage(207);
-                MainActivity_two.state_camera = 37;
-                yanchi(2000);
-                Traffic_Light traffic_light = new Traffic_Light();
-                traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
-                mine_send_TraffifcLight_result();
-                qrhandler.sendEmptyMessage(208);
-                mark = 40;
+                        qrhandler.sendEmptyMessage(207);
+                        MainActivity_two.state_camera = 37;
+                        yanchi(2000);
+                        Traffic_Light traffic_light = new Traffic_Light();
+                        traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
+                        mine_send_TraffifcLight_result();
+                        qrhandler.sendEmptyMessage(208);
+                        mark = 40;
+                    }
                 break;
             case 40:
                 MainActivity_two.moni1_status = false;
