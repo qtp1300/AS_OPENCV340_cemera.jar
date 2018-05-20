@@ -86,7 +86,9 @@ public class Socket_connect {
             while (socket != null && !socket.isClosed()) {
                 try {
                     bInputStream.read(rbyte);
-                    Log.i("WiFi信息更新", String.valueOf(rbyte[1]) + "  " + String.valueOf(rbyte[2]));
+                    if(rbyte[0] == (byte)(0x66)){
+                        Log.i("WiFi信息更新", String.valueOf(rbyte[1]) + "  " + String.valueOf(rbyte[2]));
+                    }
                     Message msg = new Message();
                     msg.what = 1;
                     msg.obj = rbyte;
