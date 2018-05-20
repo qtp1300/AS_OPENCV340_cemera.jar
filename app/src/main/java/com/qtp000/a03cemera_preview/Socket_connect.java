@@ -1473,7 +1473,7 @@ public class Socket_connect {
                 Log.i("等待:", "WIFI01");
 //                while ((rbyte[2] != (byte) (0x01)) && (sbyte[2] != (byte) (0x01))) ;
                 byte[] rbyte10 = rbyte;
-                byte[] sbyte10 = sbyte;
+                byte[] sbyte10 = ValuesApplication.Serial_data;
                 if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
                     yanchi(300);
                     break;
@@ -1509,7 +1509,7 @@ public class Socket_connect {
                 //二维码   接受F5    发B4   摄像头向左
                 /*while ((rbyte[2] != (byte) (0x02)) && (sbyte[2] != (byte) (0x02)))*/
                 byte[] rbyte20 = rbyte;
-                byte[] sbyte20 = sbyte;
+                byte[] sbyte20 = ValuesApplication.Serial_data;
                 if ((rbyte20[2] != (byte) (0x02)) && (sbyte20[2] != (byte) (0x02))) {
                     yanchi(300);
                     break;
@@ -1551,7 +1551,7 @@ public class Socket_connect {
                 Log.i("等待:", "WIFI03");
 //                while ((rbyte[2] != (byte) (0x03)) && (sbyte[2] != (byte) (0x03))) ;
                 byte[] rbyte35 = rbyte;
-                byte[] sbyte35 = sbyte;
+                byte[] sbyte35 = ValuesApplication.Serial_data;
 //                if (rbyte35[0] == (byte) (0x66)){
                     if ((rbyte35[2] != (byte) (0x03)) && (sbyte35[2] != (byte) (0x03))) {
                         yanchi(300);
