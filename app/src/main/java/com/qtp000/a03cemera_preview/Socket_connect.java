@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.qtp000.a03cemera_preview.Image.Get_Shape;
 import com.qtp000.a03cemera_preview.Image.Traffic_Light;
 import com.qtp000.a03cemera_preview.Serial.SerialAcyivity_two;
 
@@ -87,7 +86,7 @@ public class Socket_connect {
             while (socket != null && !socket.isClosed()) {
                 try {
                     bInputStream.read(rbyte);
-                    if(rbyte[0] == (byte)(0x66)){
+                    if (rbyte[0] == (byte) (0x66)) {
                         Log.i("WiFi信息更新", String.valueOf(rbyte[1]) + "  " + String.valueOf(rbyte[2]));
                     }
                     Message msg = new Message();
@@ -971,6 +970,24 @@ public class Socket_connect {
         yanchi(1000);
     }
 
+    private void mine_send_up_tft() {
+        TYPE = (short) 0x0B;
+        MAJOR = (short) 0x10;
+        FIRST = (byte) 0x01;
+        SECOND = (byte) 0x00;
+        THRID = (byte) 0x00;
+        send();
+    }
+
+    private void mine_send_down_tft() {
+        TYPE = (short) 0x0B;
+        MAJOR = (short) 0x10;
+        FIRST = (byte) 0x02;
+        SECOND = (byte) 0x00;
+        THRID = (byte) 0x00;
+        send();
+    }
+
     private void algorithm_Data_MyhandlerMsg(int num, String initial_value) {
         if (num == 1)        //RSA密码解密
         {
@@ -1478,12 +1495,16 @@ public class Socket_connect {
                 if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
                     yanchi(300);
                     break;
-                }
-                else if((rbyte10[0] == (byte)(0x66)) || (sbyte10[0] == (byte)(0x66))) {
+                } else if ((rbyte10[0] == (byte) (0x66)) || (sbyte10[0] == (byte) (0x66))) {
                     qrhandler.sendEmptyMessage(203);
 //                    MainActivity_two.state_camera = 33;
                     qrhandler.sendEmptyMessage(204);
-                    yanchi(3000);
+//                    yanchi(3000);
+                    mine_send_up_tft();
+                    yanchi(4000);
+                    qrhandler.sendEmptyMessage(22);
+                    mine_send_up_tft();
+                    yanchi(4000);
                     qrhandler.sendEmptyMessage(22);
 //                    mark = -12;
 //                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
@@ -1524,8 +1545,7 @@ public class Socket_connect {
                 if ((rbyte20[2] != (byte) (0x02)) && (sbyte20[2] != (byte) (0x02))) {
                     yanchi(300);
                     break;
-                }
-                else if((rbyte20[0] == (byte)(0x66)) || (sbyte20[0] == (byte)(0x66))) {
+                } else if ((rbyte20[0] == (byte) (0x66)) || (sbyte20[0] == (byte) (0x66))) {
                     qrhandler.sendEmptyMessage(203);
                     Log.i("WiFi02收到4", String.valueOf(rbyte));
                     //识别
@@ -1564,28 +1584,27 @@ public class Socket_connect {
                 byte[] rbyte35 = rbyte;
                 byte[] sbyte35 = ValuesApplication.Serial_data;
 //                if (rbyte35[0] == (byte) (0x66)){
-                    if ((rbyte35[2] != (byte) (0x03)) && (sbyte35[2] != (byte) (0x03))) {
-                        yanchi(300);
-                        break;
-                    }
-                    else if((rbyte35[0] == (byte)(0x66)) || (sbyte35[0] == (byte)(0x66))) {
+                if ((rbyte35[2] != (byte) (0x03)) && (sbyte35[2] != (byte) (0x03))) {
+                    yanchi(300);
+                    break;
+                } else if ((rbyte35[0] == (byte) (0x66)) || (sbyte35[0] == (byte) (0x66))) {
 //                }
-                        qrhandler.sendEmptyMessage(207);
-                        yanchi(1000);
-                        Traffic_Light traffic_light = new Traffic_Light();
-                        traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
-                        Log.i("交通灯","识别完毕"+ValuesApplication.Traffic_Light_Status.toString());
-                        mine_send_TraffifcLight_result();
-                        yanchi(10);
-                        mine_send_TraffifcLight_result();
-                        yanchi(10);
-                        mine_send_TraffifcLight_result();
-                        yanchi(10);
-                        Log.i("交通灯","识别并发送完毕"+ValuesApplication.Traffic_Light_Status.toString());
+                    qrhandler.sendEmptyMessage(207);
+                    yanchi(1000);
+                    Traffic_Light traffic_light = new Traffic_Light();
+                    traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
+                    Log.i("交通灯", "识别完毕" + ValuesApplication.Traffic_Light_Status.toString());
+                    mine_send_TraffifcLight_result();
+                    yanchi(10);
+                    mine_send_TraffifcLight_result();
+                    yanchi(10);
+                    mine_send_TraffifcLight_result();
+                    yanchi(10);
+                    Log.i("交通灯", "识别并发送完毕" + ValuesApplication.Traffic_Light_Status.toString());
 
-                        qrhandler.sendEmptyMessage(208);
-                        mark = 40;
-                    }
+                    qrhandler.sendEmptyMessage(208);
+                    mark = 40;
+                }
                 break;
             case 40:
                 MainActivity_two.moni1_status = false;
