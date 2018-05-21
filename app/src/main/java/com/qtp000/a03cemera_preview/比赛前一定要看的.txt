@@ -1,4 +1,4 @@
-1、把所有（现在有两个）Canny方法的两个阈值改成固定的
+1、把所有（现在有两个）Canny方法的两个阈值改成固定的   get_shape.class 的canny_equalizeHist需要改
 
 
 把车牌第一位以字符串方式提取，可以获得汉字

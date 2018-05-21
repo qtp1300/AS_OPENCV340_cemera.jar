@@ -282,7 +282,7 @@ public class Get_Contours {
         return processed_mat;
     }
 
-    public Mat Contours_rectandle_get_point_FullScreen(Mat input_mat) {           //得到显示屏外轮廓的外围坐标
+    public Mat Contours_rectandle_get_point_FullScreen(Mat input_mat) {           //得到显示屏外轮廓\\\\\\\的外围坐标
         Mat processing_mat;
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->膨胀->边缘->四边形->变形全屏", Toast.LENGTH_SHORT).show();
@@ -368,6 +368,7 @@ public class Get_Contours {
             Log.i("没找到合适比例的轮廓","");
 //            Toast.makeText(getApplication(),"没找到合适比例的轮廓",Toast.LENGTH_SHORT).show();
             Imgproc.drawContours(processed_mat, mContours, -1, new Scalar(0, 0, 255), 1);         //自己加的，画出找到的所有轮廓
+//            return null;
         } else {
 //            Log.i("mContour3是否为空","不空");
 //            Toast.makeText(getApplication(),"找到合适比例的轮廓"+mContour3.toString(),Toast.LENGTH_SHORT).show();
@@ -493,7 +494,7 @@ public class Get_Contours {
         if (poitI[0].x < poitI[1].x) {
             startX = poitI[1].x;
         }
-        if (poitI[2].x < poitI[3].x) {
+        if (poitI[3].x < poitI[2].x) {
             endX = poitI[2].x;
         }
         if (poitI[1].y < poitI[2].y) {

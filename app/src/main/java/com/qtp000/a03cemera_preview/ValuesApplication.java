@@ -1,6 +1,7 @@
 package com.qtp000.a03cemera_preview;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.os.Handler;
 
 //import java.util.logging.Handler;
@@ -23,6 +24,8 @@ public class ValuesApplication extends Application {
     public static byte[] Serial_data = new byte[11];
     public static boolean Serial_data_update = false;
 
+    public static Bitmap sourcebitmap;
+
     private Handler Mainhandler = null;
 
     public void set_Mainhandler(Handler input_handler) {
@@ -36,6 +39,16 @@ public class ValuesApplication extends Application {
     public static Traffic_Light_Mode Traffic_Light_Status = Traffic_Light_Mode.YELLOW;
 
     public enum Traffic_Light_Mode {GREEN, RED, YELLOW}
+
+    public enum TFT_status {SHAPE, License_Plate}
+
+    public static TFT_status tft_status = TFT_status.SHAPE;
+
+    public static int[][] shape_result = new int[9][5];
+    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
+     * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+
+    public static String license_plate_result;
 
 /*    @Override
     public void onCreate() {

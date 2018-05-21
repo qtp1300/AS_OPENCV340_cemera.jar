@@ -31,6 +31,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.qtp000.a03cemera_preview.Image.Get_Contours;
+import com.qtp000.a03cemera_preview.Image.Get_Shape;
 import com.qtp000.a03cemera_preview.Image.RgbLuminanceSource;
 import com.qtp000.a03cemera_preview.Image.ShapeActivity;
 import com.qtp000.a03cemera_preview.used_package.Camera_Server;
@@ -44,7 +46,8 @@ import static com.qtp000.a03cemera_preview.FunctionActivity.result;
 
 
 public class MainActivity_two extends AppCompatActivity {
-
+    Get_Contours get_contours = new Get_Contours();
+    Get_Shape get_shape = new Get_Shape();
     Button btn1;
     Button btn_function, btn_moni1, bakbtn4, bakbtn5, btn_old_112, btn_stop;
     Button btn_cemera_init, btn_cemera_32, btn_cemera_33, btn_cemera_34, btn_cemera_35, btn_cemera_36, btn_cemera_37, btn_cemera_38, btn_cemera_39;
@@ -394,6 +397,7 @@ public class MainActivity_two extends AppCompatActivity {
     // 得到当前摄像头的图片信息
     public void getBitmap() {
         bitmap = cameraCommandUtil.httpForImage(IPCamera);
+        ValuesApplication.sourcebitmap = Bitmap.createBitmap(bitmap);
         phHandler.sendEmptyMessage(10);
     }
 
@@ -531,6 +535,20 @@ public class MainActivity_two extends AppCompatActivity {
                         socket_connect.mark = -socket_connect.mark;
                     }
                     //mark = -mark;
+                    break;
+                case 22:
+                    Log.i("Mainactivity","已收到图像处理");
+                    get_shape.get_all_shape_contours(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
+                    if (socket_connect.mark < 0){
+                        socket_connect.mark = -socket_connect.mark;
+                    }
+                    if (ValuesApplication.tft_status == ValuesApplication.TFT_status.SHAPE){
+                        Log.i("Mainactivity","已进行图像处理"+ "圆形" + ValuesApplication.shape_result[8][1] + "  矩形" + ValuesApplication.shape_result[8][2] + "  五角星" + ValuesApplication.shape_result[8][4] + "  三角形" + ValuesApplication.shape_result[8][0] + "  菱形" + ValuesApplication.shape_result[8][3]);
+                    }else {
+                        Log.i("Mainactivity","已进行车牌处理   "+ValuesApplication.license_plate_result);
+
+                    }
+
                     break;
                 case 31:
                     textView.setText("结果:" + "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[0]) & 0xFF)) + "; " +

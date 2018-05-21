@@ -1459,7 +1459,7 @@ public class Socket_connect {
 
         switch (mark) {
             case 5:
-                MainActivity_two.state_camera = 39;      //一号预设位，正前方
+                MainActivity_two.state_camera = 33;      //一号预设位，正前方
                 qrhandler.sendEmptyMessage(201);
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 yanchi(100);
@@ -1481,16 +1481,21 @@ public class Socket_connect {
                 }
                 else if((rbyte10[0] == (byte)(0x66)) || (sbyte10[0] == (byte)(0x66))) {
                     qrhandler.sendEmptyMessage(203);
+//                    MainActivity_two.state_camera = 33;
+                    qrhandler.sendEmptyMessage(204);
+                    yanchi(3000);
+                    qrhandler.sendEmptyMessage(22);
+//                    mark = -12;
 //                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
-                    Get_Shape get_shape = new Get_Shape();
-                    get_shape.get_shape_without_input();
+//                    Get_Shape get_shape = new Get_Shape();
+//                    get_shape.get_shape_without_input();
+//                    get_shape.get_all_shape_contours(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
+//                    get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap);
                     /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
                      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
-                    Log.i("图形个数", "圆形" + get_shape.shape_result[0][1] + "  矩形" + get_shape.shape_result[0][2] + "  五角星" + get_shape.shape_result[0][4] + "  三角形" + get_shape.shape_result[0][0] + "  菱形" + get_shape.shape_result[0][3]);
-                    MainActivity_two.state_camera = 33;
-                    qrhandler.sendEmptyMessage(204);
-                    yanchi(1000);
-                    mark = 15;
+//                    Log.i("图形个数", "圆形" + get_shape.shape_result[0][1] + "  矩形" + get_shape.shape_result[0][2] + "  五角星" + get_shape.shape_result[0][4] + "  三角形" + get_shape.shape_result[0][0] + "  菱形" + get_shape.shape_result[0][3]);
+
+                    mark = -15;
                 }
                 break;
 

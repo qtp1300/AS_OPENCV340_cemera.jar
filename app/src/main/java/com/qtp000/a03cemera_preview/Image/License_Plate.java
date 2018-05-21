@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
+import com.qtp000.a03cemera_preview.MainActivity_two;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -25,6 +26,8 @@ import java.util.List;
 
 public class License_Plate {
     public String license_plate_string,true_ocr_string;
+    Get_Contours get_contours = new Get_Contours();
+    Get_Shape get_shape = new Get_Shape();
 
     public void get_license_plate(Bitmap input_bitmap, String language) {
         Bitmap pre_ocr = getCenterPicture(input_bitmap);
@@ -37,6 +40,17 @@ public class License_Plate {
         tessBaseAPI.clear();
         tessBaseAPI.end();
     }
+
+////    pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input);      //再次运算得到截取后的图形
+//    public Bitmap get_full_screen_bitmap(Bitmap input_bitmap){
+//        Mat pre_full_screen,prossing_mat;
+//        Bitmap full_screen_bitmap;
+//        pre_full_screen = get_shape.Bitmap2Mat(input_bitmap);
+//        prossing_mat = get_contours.Contours_rectandle_get_point_FullScreen(pre_full_screen);
+//        full_screen_bitmap = get_shape.Mat2Bitmap(prossing_mat);
+//        return full_screen_bitmap;
+//    }
+
 
     public static String getSDPath() {
         File sdDir = null;

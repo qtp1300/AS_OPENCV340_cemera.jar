@@ -3,7 +3,7 @@ package com.qtp000.a03cemera_preview.Image;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.qtp000.a03cemera_preview.MainActivity_two;
+import com.qtp000.a03cemera_preview.ValuesApplication;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -24,13 +24,13 @@ import static java.lang.Math.abs;
 public class Get_Shape {
     Get_Contours get_contours = new Get_Contours();
 
-    public int[][] shape_result = new int[8][5];
-    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
+    public int[][] shape_result = new int[9][5];
+    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
-    public void get_shape_without_input(){
-        get_all_shape_contours(Bitmap2Mat(MainActivity_two.bitmap));
-
-    }
+//    public void get_shape_without_input(){
+//        get_all_shape_contours(Bitmap2Mat(ValuesApplication.sourcebitmap));
+//
+//    }
 
     public Mat get_all_shape_contours(Mat input) {
         Mat pre_process_mat;
@@ -40,9 +40,12 @@ public class Get_Shape {
 
 
         pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input);      //再次运算得到截取后的图形
-
-        processed_mat = this.Contours(pre_process_mat);     //得到contour边缘
-
+//        if (pre_process_mat == null){
+//            Log.i("图像处理失败保护","pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input)得到空null了，需要再获取一次图片");
+//        }
+//        else {
+            processed_mat = this.Contours(pre_process_mat);     //得到contour边缘
+//        }
 
         /*处理流程*/
 
@@ -107,70 +110,6 @@ public class Get_Shape {
         Imgproc.drawContours(processed_mat, /*contours*/mContours, -1, new Scalar(255, 0, 0), 1);         //自己加的，画不出来；画出来了
         Log.i("剪切完的图形共有轮廓", mContours.size() + "个");
 
-
-        int yuan = 0;
-        int ju = 0;
-        int sanjiao = 0;
-        int wujiaoxing = 0;
-        int ling = 0;
-        List<MatOfPoint> after_DP_MatOfPoint = new ArrayList<MatOfPoint>();
-        Iterator<MatOfPoint> pre_approxPolyDP = mContours.iterator();
-        while (pre_approxPolyDP.hasNext()) {
-            MatOfPoint pre_approxPolyDP_matofpoint = pre_approxPolyDP.next();
-            MatOfPoint2f pre_approxPolyDP_matofpoint2f = new MatOfPoint2f(pre_approxPolyDP_matofpoint.toArray());
-            MatOfPoint2f after_approxPolyDP_matofpoint2f = new MatOfPoint2f();
-            List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
-            Imgproc.approxPolyDP(pre_approxPolyDP_matofpoint2f, after_approxPolyDP_matofpoint2f, 15, true);
-            Log.i("迭代", "多边形拟合成了" + after_approxPolyDP_matofpoint2f.total() + "边形");
-            Log.i("拟合后的图形坐标", after_approxPolyDP_matofpoint2f.toList().toString());
-
-            MatOfPoint after_approxPolyDP_matofpoint = new MatOfPoint(after_approxPolyDP_matofpoint2f.toArray());
-            List<Point> after_approxPolyDP_point = after_approxPolyDP_matofpoint.toList();
-
-            switch ((int) after_approxPolyDP_matofpoint2f.total()) {
-                case 3:
-                    sanjiao += 1;
-                    break;
-                case 10:
-                case 11:
-                case 12:
-                    wujiaoxing += 1;
-                    break;
-                case 8:
-                case 7:
-                case 6:
-                    yuan += 1;
-                    break;
-                case 4:
-                    RotatedRect wtrect = Imgproc.minAreaRect(after_approxPolyDP_matofpoint2f);
-                    Log.i("外接矩形面积", "" + wtrect.size.area());
-
-                    Log.i("矩形面积", Imgproc.contourArea(after_approxPolyDP_matofpoint2f) + "");
-                    if (abs(wtrect.size.area() - Imgproc.contourArea(after_approxPolyDP_matofpoint2f)) > 950) {
-                        ling += 1;
-                    } else {
-                        ju += 1;
-                    }
-
-                    break;
-            }
-
-            after_DP_MatOfPoint.add(after_approxPolyDP_matofpoint);
-
-
-//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List" + pre_approxPolyDP_matofpoint2List.toString());
-//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List 长度" + pre_approxPolyDP_matofpoint2List.size());
-
-        }
-        Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
-        shape_result[0][0] = sanjiao;
-        shape_result[0][1] = yuan;
-        shape_result[0][2] = ju;
-        shape_result[0][3] = ling;
-        shape_result[0][0] = wujiaoxing;
-        /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
-         * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
-        Log.i("图形个数", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
 /*
         List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
         MatOfPoint2f approxCurve = new MatOfPoint2f();
@@ -202,15 +141,94 @@ public class Get_Shape {
 
         if (mContours.size() > 5) {
             Log.i("剪切完的图形认为是", "图形");
+            ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
+
+            int yuan = 0;
+            int ju = 0;
+            int sanjiao = 0;
+            int wujiaoxing = 0;
+            int ling = 0;
+            List<MatOfPoint> after_DP_MatOfPoint = new ArrayList<MatOfPoint>();
+            Iterator<MatOfPoint> pre_approxPolyDP = mContours.iterator();
+            while (pre_approxPolyDP.hasNext()) {
+                MatOfPoint pre_approxPolyDP_matofpoint = pre_approxPolyDP.next();
+                MatOfPoint2f pre_approxPolyDP_matofpoint2f = new MatOfPoint2f(pre_approxPolyDP_matofpoint.toArray());
+                MatOfPoint2f after_approxPolyDP_matofpoint2f = new MatOfPoint2f();
+                List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
+                Imgproc.approxPolyDP(pre_approxPolyDP_matofpoint2f, after_approxPolyDP_matofpoint2f, 15, true);
+                Log.i("迭代", "多边形拟合成了" + after_approxPolyDP_matofpoint2f.total() + "边形");
+                Log.i("拟合后的图形坐标", after_approxPolyDP_matofpoint2f.toList().toString());
+
+                MatOfPoint after_approxPolyDP_matofpoint = new MatOfPoint(after_approxPolyDP_matofpoint2f.toArray());
+                List<Point> after_approxPolyDP_point = after_approxPolyDP_matofpoint.toList();
+
+                switch ((int) after_approxPolyDP_matofpoint2f.total()) {
+                    case 3:
+                        sanjiao += 1;
+                        break;
+                    case 10:
+                    case 11:
+                    case 12:
+                        wujiaoxing += 1;
+                        break;
+                    case 8:
+                    case 7:
+                    case 6:
+                        yuan += 1;
+                        break;
+                    case 4:
+                        RotatedRect wtrect = Imgproc.minAreaRect(after_approxPolyDP_matofpoint2f);
+                        Log.i("外接矩形面积", "" + wtrect.size.area());
+
+                        Log.i("矩形面积", Imgproc.contourArea(after_approxPolyDP_matofpoint2f) + "");
+                        if (abs(wtrect.size.area() - Imgproc.contourArea(after_approxPolyDP_matofpoint2f)) > 950) {
+                            ling += 1;
+                        } else {
+                            ju += 1;
+                        }
+
+                        break;
+                }
+
+                after_DP_MatOfPoint.add(after_approxPolyDP_matofpoint);
+
+
+//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List" + pre_approxPolyDP_matofpoint2List.toString());
+//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List 长度" + pre_approxPolyDP_matofpoint2List.size());
+
+            }
+            Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
+            shape_result[8][0] = sanjiao % 2 == 0?sanjiao/2:(sanjiao/2)+1;
+            shape_result[8][1] = yuan % 2 == 0?yuan/2:(yuan/2)+1;
+            shape_result[8][2] = ju % 2 == 0?ju/2:(ju/2)+1;
+            shape_result[8][3] = ling % 2 == 0?ling/2:(ling/2)+1;
+            shape_result[8][4] = wujiaoxing % 2 == 0?wujiaoxing/2:(wujiaoxing/2)+1;
+            /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
+             * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+            Log.i("图形个数原始", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
+            Log.i("图形个数最终", "圆形" + shape_result[8][1] + "  矩形" + shape_result[8][2] + "  五角星" + shape_result[8][4] + "  三角形" + shape_result[8][0] + "  菱形" + shape_result[8][3]);
+            ValuesApplication.shape_result = this.shape_result;
         } else {
             Log.i("剪切完的图形认为是", "车牌");
+            ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
+            License_Plate license_plate = new License_Plate();
+            license_plate.get_license_plate(Mat2Bitmap(input_mat),"chi_sim");
+            ValuesApplication.license_plate_result = license_plate.license_plate_string;
+
+
         }
         return processed_mat;
     }
 
     public Mat canny_equalizeHist(Mat input_mat) {
-        int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
-        int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
+        int th1 = 20;int th2 = 190;
+
+        if (ShapeActivity.canny_th1 != null){
+            th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
+        }
+        if (ShapeActivity.canny_th2 != null){
+            th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
+        }
         Mat processing_mat = new Mat();
 //        Mat processing_mat2 = new Mat();
         Mat processed_mat = new Mat();
@@ -253,7 +271,7 @@ public class Get_Shape {
         return processed_mat;
     }
 
-    private Mat Bitmap2Mat(Bitmap in_bitmap) {
+    public Mat Bitmap2Mat(Bitmap in_bitmap) {
         int width = in_bitmap.getWidth();
         int height = in_bitmap.getHeight();
         Mat return_mat = new Mat(height, width, CvType.CV_8UC3);
@@ -261,7 +279,7 @@ public class Get_Shape {
         return return_mat;
     }
 
-    private Bitmap Mat2Bitmap(Mat in_mat) {
+    public Bitmap Mat2Bitmap(Mat in_mat) {
         int width = in_mat.width();
         int height = in_mat.height();
         Bitmap return_bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
