@@ -1,7 +1,11 @@
 package com.qtp000.a03cemera_preview.Image;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.qtp000.a03cemera_preview.MainActivity_two;
+
+import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -19,6 +23,14 @@ import static java.lang.Math.abs;
 
 public class Get_Shape {
     Get_Contours get_contours = new Get_Contours();
+
+    public int[][] shape_result = new int[8][5];
+    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
+     * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+    public void get_shape_without_input(){
+        get_all_shape_contours(Bitmap2Mat(MainActivity_two.bitmap));
+
+    }
 
     public Mat get_all_shape_contours(Mat input) {
         Mat pre_process_mat;
@@ -110,7 +122,7 @@ public class Get_Shape {
             List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
             Imgproc.approxPolyDP(pre_approxPolyDP_matofpoint2f, after_approxPolyDP_matofpoint2f, 15, true);
             Log.i("迭代", "多边形拟合成了" + after_approxPolyDP_matofpoint2f.total() + "边形");
-            Log.i("拟合后的图形坐标",after_approxPolyDP_matofpoint2f.toList().toString());
+            Log.i("拟合后的图形坐标", after_approxPolyDP_matofpoint2f.toList().toString());
 
             MatOfPoint after_approxPolyDP_matofpoint = new MatOfPoint(after_approxPolyDP_matofpoint2f.toArray());
             List<Point> after_approxPolyDP_point = after_approxPolyDP_matofpoint.toList();
@@ -151,7 +163,13 @@ public class Get_Shape {
 
         }
         Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
-
+        shape_result[0][0] = sanjiao;
+        shape_result[0][1] = yuan;
+        shape_result[0][2] = ju;
+        shape_result[0][3] = ling;
+        shape_result[0][0] = wujiaoxing;
+        /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
+         * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
         Log.i("图形个数", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
 /*
         List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
@@ -233,6 +251,23 @@ public class Get_Shape {
         Imgproc.Canny(processing_mat, processed_mat, th1, th2);
 //        Imgproc.Canny(processing_mat, processed_mat, 20, 100);
         return processed_mat;
+    }
+
+    private Mat Bitmap2Mat(Bitmap in_bitmap) {
+        int width = in_bitmap.getWidth();
+        int height = in_bitmap.getHeight();
+        Mat return_mat = new Mat(height, width, CvType.CV_8UC3);
+        Utils.bitmapToMat(in_bitmap, return_mat);
+        return return_mat;
+    }
+
+    private Bitmap Mat2Bitmap(Mat in_mat) {
+        int width = in_mat.width();
+        int height = in_mat.height();
+        Bitmap return_bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(in_mat, return_bitmap);
+        return return_bitmap;
+
     }
 
 }

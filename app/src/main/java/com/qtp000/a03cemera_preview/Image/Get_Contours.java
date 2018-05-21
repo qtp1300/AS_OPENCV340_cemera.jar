@@ -44,8 +44,8 @@ public class Get_Contours {
     }
 
     public Mat canny_dilate(Mat input_mat) {
-        int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
-        int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
+//        int th1 = Integer.parseInt(ShapeActivity.canny_th1.getText().toString());
+//        int th2 = Integer.parseInt(ShapeActivity.canny_th2.getText().toString());
         Mat processing_mat = new Mat();
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->膨胀", Toast.LENGTH_SHORT).show();
