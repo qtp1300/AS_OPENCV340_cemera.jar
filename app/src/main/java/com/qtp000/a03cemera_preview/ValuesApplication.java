@@ -49,6 +49,8 @@ public class ValuesApplication extends Application {
      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
 
     public static String license_plate_result;
+    public static char[] license_plate_result_char;
+    public static byte[] license_plate_result_byte;
 
 /*    @Override
     public void onCreate() {

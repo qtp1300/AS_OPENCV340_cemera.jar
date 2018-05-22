@@ -208,6 +208,13 @@ public class Get_Shape {
             Log.i("图形个数原始", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
             Log.i("图形个数最终", "圆形" + shape_result[8][1] + "  矩形" + shape_result[8][2] + "  五角星" + shape_result[8][4] + "  三角形" + shape_result[8][0] + "  菱形" + shape_result[8][3]);
             ValuesApplication.shape_result = this.shape_result;
+            if (shape_result[8][0]+shape_result[8][1]+shape_result[8][2]+shape_result[8][3]+shape_result[8][4] < 3 ){
+                Log.i("剪切完的图形认为是", "还是车牌车牌");
+                ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
+                License_Plate license_plate = new License_Plate();
+                license_plate.get_license_plate(Mat2Bitmap(input_mat),"chi_sim");
+                ValuesApplication.license_plate_result = license_plate.license_plate_string;
+            }
         } else {
             Log.i("剪切完的图形认为是", "车牌");
             ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;

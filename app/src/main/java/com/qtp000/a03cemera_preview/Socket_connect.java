@@ -855,6 +855,40 @@ public class Socket_connect {
     }
 
     private void mine_send_shape_value() {
+//        public int[][] shape_result = new int[9][5];
+//        /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
+//         * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+        MAJOR = 0xA3;           //三角形
+        FIRST = (short)ValuesApplication.shape_result[8][0];
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
+        MAJOR = 0xA4;           //圆形
+        FIRST = (short)ValuesApplication.shape_result[8][1];
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
+        MAJOR = 0xA5;           //矩形
+        FIRST = (short)ValuesApplication.shape_result[8][2];
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
+        MAJOR = 0xA6;           //菱形
+        FIRST = (short)ValuesApplication.shape_result[8][3];
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
+        MAJOR = 0xA7;           //五角星
+        FIRST = (short)ValuesApplication.shape_result[8][4];
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
+
         MAJOR = 0xAA;           //图像内容传输完毕标志
         FIRST = 0x01;
         SECOND = 0x00;
@@ -863,24 +897,30 @@ public class Socket_connect {
         yanchi(1000);
     }
 
-    private void mine_send_car_text_value() {
+    private void mine_send_car_text_value(Byte one,Byte two,Byte three,Byte four,Byte five,Byte six) {
+//        Byte one = 0x00;
+//        Byte two = 0x00;
+//        Byte three = 0x00;
+//        Byte four = 0x00;
+//        Byte five = 0x00;
+//        Byte six = 0x00;
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA0;
-        FIRST = (short) 0x00;
-        SECOND = (short) 0x00;
-        THRID = (short) 0x00;
+        FIRST = (short) one;
+        SECOND = (short) two;
+        THRID = (short) three;
         send();
         yanchi(500);
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA1;
-        FIRST = (short) 0x00;
-        SECOND = (short) 0x00;
-        THRID = (short) 0x00;
+        FIRST = (short) four;
+        SECOND = (short) five;
+        THRID = (short) six;
         send();
         yanchi(500);
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA2;
-        FIRST = (short) 0x02;
+        FIRST = (short) 0x00;
         SECOND = (short) 0x00;
         THRID = (short) 0x00;
         send();
@@ -1477,7 +1517,7 @@ public class Socket_connect {
         switch (mark) {
             case 5:
                 MainActivity_two.state_camera = 33;      //一号预设位，正前方
-                qrhandler.sendEmptyMessage(201);
+                qrhandler.sendEmptyMessage(201);        //进度
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
                 yanchi(100);
                 Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
@@ -1502,7 +1542,8 @@ public class Socket_connect {
 //                    yanchi(3000);
                     mine_send_up_tft();
                     yanchi(4000);
-                    qrhandler.sendEmptyMessage(22);
+                    qrhandler.sendEmptyMessage(22);     //进行识别
+                    yanchi(4000);
                     mine_send_up_tft();
                     yanchi(4000);
                     qrhandler.sendEmptyMessage(22);
@@ -1516,23 +1557,36 @@ public class Socket_connect {
                      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
 //                    Log.i("图形个数", "圆形" + get_shape.shape_result[0][1] + "  矩形" + get_shape.shape_result[0][2] + "  五角星" + get_shape.shape_result[0][4] + "  三角形" + get_shape.shape_result[0][0] + "  菱形" + get_shape.shape_result[0][3]);
 
-                    mark = -15;
+                    mark = 15;
                 }
                 break;
 
             case 15:
-                mine_send_car_text_value();
+                ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result.getBytes();
+                mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                        ValuesApplication.license_plate_result_byte[1],
+                        ValuesApplication.license_plate_result_byte[2],
+                        ValuesApplication.license_plate_result_byte[3],
+                        ValuesApplication.license_plate_result_byte[4],
+                        ValuesApplication.license_plate_result_byte[5]);
                 yanchi(10);
-                mine_send_car_text_value();
+                mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                        ValuesApplication.license_plate_result_byte[1],
+                        ValuesApplication.license_plate_result_byte[2],
+                        ValuesApplication.license_plate_result_byte[3],
+                        ValuesApplication.license_plate_result_byte[4],
+                        ValuesApplication.license_plate_result_byte[5]);
                 yanchi(10);
-                mine_send_car_text_value();
+                mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                        ValuesApplication.license_plate_result_byte[1],
+                        ValuesApplication.license_plate_result_byte[2],
+                        ValuesApplication.license_plate_result_byte[3],
+                        ValuesApplication.license_plate_result_byte[4],
+                        ValuesApplication.license_plate_result_byte[5]);
                 yanchi(400);
                 mine_send_shape_value();
-                yanchi(10);
                 mine_send_shape_value();
-                yanchi(10);
                 mine_send_shape_value();
-                yanchi(10);
                 mark = 20;
                 break;
 

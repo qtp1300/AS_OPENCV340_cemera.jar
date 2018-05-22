@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 import com.qtp000.a03cemera_preview.MainActivity_two;
+import com.qtp000.a03cemera_preview.ValuesApplication;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
@@ -64,16 +65,25 @@ public class License_Plate {
 
     private String getLicense_plate_string_true(String input_string) {      //把非所需字符排除掉
         String true_string = new String();
-        String num_word = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 1 2 3 4 5 6 7 8 9 0 国 ";
+        String num_word = "Az Bz Cz Dz Ez Fz Gz Hz Iz Jz Kz Lz Mz Nz Oz Pz Qz Rz Sz Tz Uz Vz Wz Xz Yz Zz 1z 2z 3z 4z 5z 6z 7z 8z 9z 0z "; /*国z*/
         for (int i = 0; i < input_string.length(); i++) {
             char c = input_string.charAt(i);
             Log.i("车牌处理", "第" + i + "位是" + c);
-            if (num_word.contains(c + "")) {
+            if (num_word.contains(c + "z")) {
                 Log.i("车牌处理", "该字符为正常字符" + "第" + i + "位是" + c);
                 true_string = true_string + c;
             }
         }
         Log.i("车牌处理", "最终结果" + true_string);
+        ValuesApplication.license_plate_result_byte = true_string.getBytes();
+        Log.i("车牌处理", "最终结果长度" + ValuesApplication.license_plate_result_byte.length);
+
+
+        for (Byte b :
+                ValuesApplication.license_plate_result_byte) {
+            Log.i("车牌处理", "转为Byte  " + "0x"+Integer.toHexString(b));
+
+        }
         return true_string;
     }
 

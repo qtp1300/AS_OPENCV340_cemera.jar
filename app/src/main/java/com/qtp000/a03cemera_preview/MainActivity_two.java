@@ -16,6 +16,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -55,6 +56,9 @@ public class MainActivity_two extends AppCompatActivity {
     Button btn_car_1, btn_car_2, btn_car_test;
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
+    EditText edittext_input_1,edittext_input_2,edittext_input_3,edittext_input_4;
+
+
 
     ImageView imageView;
     ImageButton btn_up;
@@ -319,6 +323,11 @@ public class MainActivity_two extends AppCompatActivity {
         btn_car_2 = findViewById(R.id.car_2);
         btn_car_test = findViewById(R.id.car_test);
 
+        edittext_input_1 = findViewById(R.id.input_1);
+        edittext_input_2 = findViewById(R.id.input_2);
+        edittext_input_3 = findViewById(R.id.input_3);
+        edittext_input_4 = findViewById(R.id.input_4);
+
 
     }
 
@@ -539,11 +548,11 @@ public class MainActivity_two extends AppCompatActivity {
                 case 22:
                     Log.i("Mainactivity","已收到图像处理");
                     get_shape.get_all_shape_contours(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
-                    if (socket_connect.mark < 0){
-                        socket_connect.mark = -socket_connect.mark;
-                    }
+//                    if (socket_connect.mark < 0){
+//                        socket_connect.mark = -socket_connect.mark;
+//                    }
                     if (ValuesApplication.tft_status == ValuesApplication.TFT_status.SHAPE){
-                        Log.i("Mainactivity","已进行图像处理"+ "圆形" + ValuesApplication.shape_result[8][1] + "  矩形" + ValuesApplication.shape_result[8][2] + "  五角星" + ValuesApplication.shape_result[8][4] + "  三角形" + ValuesApplication.shape_result[8][0] + "  菱形" + ValuesApplication.shape_result[8][3]);
+                        Log.i("Mainactivity","已进行图形处理"+ "圆形" + ValuesApplication.shape_result[8][1] + "  矩形" + ValuesApplication.shape_result[8][2] + "  五角星" + ValuesApplication.shape_result[8][4] + "  三角形" + ValuesApplication.shape_result[8][0] + "  菱形" + ValuesApplication.shape_result[8][3]);
                     }else {
                         Log.i("Mainactivity","已进行车牌处理   "+ValuesApplication.license_plate_result);
 
