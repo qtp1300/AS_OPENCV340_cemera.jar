@@ -68,6 +68,13 @@ public class License_Plate {
         String num_word = "Az Bz Cz Dz Ez Fz Gz Hz Iz Jz Kz Lz Mz Nz Oz Pz Qz Rz Sz Tz Uz Vz Wz Xz Yz Zz 1z 2z 3z 4z 5z 6z 7z 8z 9z 0z "; /*国z*/
         for (int i = 0; i < input_string.length(); i++) {
             char c = input_string.charAt(i);
+            if (c == 'ó'){
+                c = '6';
+            }
+            if (c == '」'){
+                c = 'J';
+            }
+
             Log.i("车牌处理", "第" + i + "位是" + c);
             if (num_word.contains(c + "z")) {
                 Log.i("车牌处理", "该字符为正常字符" + "第" + i + "位是" + c);

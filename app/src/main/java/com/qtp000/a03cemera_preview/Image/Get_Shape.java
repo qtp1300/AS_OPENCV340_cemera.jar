@@ -54,6 +54,8 @@ public class Get_Shape {
     }
 
     public Mat Contours(Mat input_mat) {        //膨胀或不膨胀  取所有点或者拐点
+        shape_result[8][0] = 0;shape_result[8][1] = 0;shape_result[8][2] = 0;
+        shape_result[8][3] = 0;shape_result[8][4] = 0;
         Mat processing_mat;
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->边缘", Toast.LENGTH_SHORT).show();
@@ -221,6 +223,9 @@ public class Get_Shape {
             License_Plate license_plate = new License_Plate();
             license_plate.get_license_plate(Mat2Bitmap(input_mat),"chi_sim");
             ValuesApplication.license_plate_result = license_plate.license_plate_string;
+            if (ValuesApplication.license_plate_result.length()<5){
+
+            }
 
 
         }
