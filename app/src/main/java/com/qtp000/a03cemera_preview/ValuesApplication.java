@@ -4,6 +4,8 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.os.Handler;
 
+import java.security.PublicKey;
+
 //import java.util.logging.Handler;
 
 //import static com.qtp000.a03cemera_preview.ValuesApplication.Mode.SerialAcyivity_two;
@@ -47,10 +49,14 @@ public class ValuesApplication extends Application {
     public static int[][] shape_result = new int[9][5];
     /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+    public static int[][] shape_result_manual = new int[9][5];
 
     public static String license_plate_result;
     public static char[] license_plate_result_char;
     public static byte[] license_plate_result_byte;
+
+    public enum AUTO_MANUAL {AUTO, MANUAL}
+    public static AUTO_MANUAL AutoOrManual = AUTO_MANUAL.AUTO;
 
 /*    @Override
     public void onCreate() {

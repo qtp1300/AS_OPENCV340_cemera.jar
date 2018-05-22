@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">03cemera_preview</string>
-    <string name="btn1_string">切换界面</string>
+    <string name="btn1_string">摄像头界面</string>
     <string name="btn_back">返回</string>
     <string name="digital_title">第几行数据:</string>
     <string name="QrCode_Name">QrCode_Name</string>
@@ -19,5 +19,7 @@
     <string name="brn_wireless_connect">无线连接</string>
     <string name="input_img">input_img</string>
     <string name="Processed_img">Processed_img</string>
+    <string name="Auto">识别</string>
+    <string name="Manual">手动</string>
 
 </resources>

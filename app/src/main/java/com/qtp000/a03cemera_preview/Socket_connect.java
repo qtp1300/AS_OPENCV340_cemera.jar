@@ -1256,18 +1256,18 @@ public class Socket_connect {
         //0x41 0x38 0x38 0x36 0x46 0x37
         //infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
 
-        if (MainActivity_two.run_time == 1) {
-            //0x46 0x35 0x37 0x33 0x59 0x38    第一轮
-            infrared((byte) 0x46, (byte) 0x35, (byte) 0x37, (byte) 0x33, (byte) 0x59, (byte) 0x38);    //发送车牌识别结果
-        }
-        if (MainActivity_two.run_time == 2) {
-            //0x4A 0x33 0x38 0x36 0x44 0x34     第二轮
-            infrared((byte) 0x4A, (byte) 0x33, (byte) 0x38, (byte) 0x36, (byte) 0x44, (byte) 0x34);    //发送车牌识别结果
-        }
-        if (MainActivity_two.run_time == 3) {
-            //0x41 0x38 0x38 0x36 0x46 0x37     测试
-            infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
-        }
+//        if (MainActivity_two.run_time == 1) {
+//            //0x46 0x35 0x37 0x33 0x59 0x38    第一轮
+//            infrared((byte) 0x46, (byte) 0x35, (byte) 0x37, (byte) 0x33, (byte) 0x59, (byte) 0x38);    //发送车牌识别结果
+//        }
+//        if (MainActivity_two.run_time == 2) {
+//            //0x4A 0x33 0x38 0x36 0x44 0x34     第二轮
+//            infrared((byte) 0x4A, (byte) 0x33, (byte) 0x38, (byte) 0x36, (byte) 0x44, (byte) 0x34);    //发送车牌识别结果
+//        }
+//        if (MainActivity_two.run_time == 3) {
+//            //0x41 0x38 0x38 0x36 0x46 0x37     测试
+//            infrared((byte) 0x41, (byte) 0x38, (byte) 0x38, (byte) 0x36, (byte) 0x46, (byte) 0x37);    //发送车牌识别结果
+//        }
 
 
 //        infrared((byte) 0x43, (byte) 0x34, (byte) 0x32,
@@ -1563,26 +1563,33 @@ public class Socket_connect {
 
             case 15:
                 ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result.getBytes();
-                mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                        ValuesApplication.license_plate_result_byte[1],
-                        ValuesApplication.license_plate_result_byte[2],
-                        ValuesApplication.license_plate_result_byte[3],
-                        ValuesApplication.license_plate_result_byte[4],
-                        ValuesApplication.license_plate_result_byte[5]);
+                if (ValuesApplication.license_plate_result_byte.length == 6){
+                    mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                            ValuesApplication.license_plate_result_byte[1],
+                            ValuesApplication.license_plate_result_byte[2],
+                            ValuesApplication.license_plate_result_byte[3],
+                            ValuesApplication.license_plate_result_byte[4],
+                            ValuesApplication.license_plate_result_byte[5]);
+                }
+
                 yanchi(10);
-                mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                        ValuesApplication.license_plate_result_byte[1],
-                        ValuesApplication.license_plate_result_byte[2],
-                        ValuesApplication.license_plate_result_byte[3],
-                        ValuesApplication.license_plate_result_byte[4],
-                        ValuesApplication.license_plate_result_byte[5]);
+                if (ValuesApplication.license_plate_result_byte.length == 6){
+                    mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                            ValuesApplication.license_plate_result_byte[1],
+                            ValuesApplication.license_plate_result_byte[2],
+                            ValuesApplication.license_plate_result_byte[3],
+                            ValuesApplication.license_plate_result_byte[4],
+                            ValuesApplication.license_plate_result_byte[5]);
+                }
                 yanchi(10);
-                mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                        ValuesApplication.license_plate_result_byte[1],
-                        ValuesApplication.license_plate_result_byte[2],
-                        ValuesApplication.license_plate_result_byte[3],
-                        ValuesApplication.license_plate_result_byte[4],
-                        ValuesApplication.license_plate_result_byte[5]);
+                if (ValuesApplication.license_plate_result_byte.length == 6){
+                    mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                            ValuesApplication.license_plate_result_byte[1],
+                            ValuesApplication.license_plate_result_byte[2],
+                            ValuesApplication.license_plate_result_byte[3],
+                            ValuesApplication.license_plate_result_byte[4],
+                            ValuesApplication.license_plate_result_byte[5]);
+                }
                 yanchi(400);
                 mine_send_shape_value();
                 mine_send_shape_value();

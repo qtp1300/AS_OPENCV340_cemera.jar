@@ -42,7 +42,8 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MainActivity_two"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"></activity>
         <activity android:name=".Function_method"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".FunctionActivity"

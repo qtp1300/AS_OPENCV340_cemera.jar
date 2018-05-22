@@ -52,8 +52,8 @@ public class MainActivity_two extends AppCompatActivity {
     Button btn1;
     Button btn_function, btn_moni1, bakbtn4, bakbtn5, btn_old_112, btn_stop;
     Button btn_cemera_init, btn_cemera_32, btn_cemera_33, btn_cemera_34, btn_cemera_35, btn_cemera_36, btn_cemera_37, btn_cemera_38, btn_cemera_39;
-    Button btn_lingxing, btn_juxing, btn_yuanxing, btn_sanjiao;
-    Button btn_car_1, btn_car_2, btn_car_test;
+//    Button btn_lingxing, btn_juxing, btn_yuanxing, btn_sanjiao;
+//    Button btn_car_1, btn_car_2, btn_car_test;
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
     EditText edittext_input_1,edittext_input_2,edittext_input_3,edittext_input_4;
@@ -93,7 +93,7 @@ public class MainActivity_two extends AppCompatActivity {
     public static int cemera_step = 1;
     public static boolean moni1_status = false;
     public static int QR_time = 0;
-    public static int run_time = 1;
+//    public static int run_time = 1;
 
     private byte[] mByte = new byte[11];
 
@@ -230,23 +230,23 @@ public class MainActivity_two extends AppCompatActivity {
                     Toast toast_down = Toast.makeText(getApplicationContext(), "下", Toast.LENGTH_SHORT);
                     toast_down.show();
                     break;
-                case R.id.lingxing:
-                    Toast.makeText(getApplication(), "菱形 0x04", Toast.LENGTH_SHORT).show();
-                    set_shape = 0x04;
-//                    Log.e("按键","Button1");
-                    break;
-                case R.id.juxing:
-                    Toast.makeText(getApplication(), "矩形 0x01", Toast.LENGTH_SHORT).show();
-                    set_shape = 0x01;
-                    break;
-                case R.id.yuanxing:
-                    Toast.makeText(getApplication(), "圆形 0x02", Toast.LENGTH_SHORT).show();
-                    set_shape = 0x02;
-                    break;
-                case R.id.sanjiaoxing:
-                    Toast.makeText(getApplication(), "三角形 0x03", Toast.LENGTH_SHORT).show();
-                    set_shape = 0x03;
-                    break;
+//                case R.id.lingxing:
+//                    Toast.makeText(getApplication(), "菱形 0x04", Toast.LENGTH_SHORT).show();
+//                    set_shape = 0x04;
+////                    Log.e("按键","Button1");
+//                    break;
+//                case R.id.juxing:
+//                    Toast.makeText(getApplication(), "矩形 0x01", Toast.LENGTH_SHORT).show();
+//                    set_shape = 0x01;
+//                    break;
+//                case R.id.yuanxing:
+//                    Toast.makeText(getApplication(), "圆形 0x02", Toast.LENGTH_SHORT).show();
+//                    set_shape = 0x02;
+//                    break;
+//                case R.id.sanjiaoxing:
+//                    Toast.makeText(getApplication(), "三角形 0x03", Toast.LENGTH_SHORT).show();
+//                    set_shape = 0x03;
+//                    break;
                 case R.id.btn_function:
                     Toast.makeText(getApplication(), "跳转至功能页", Toast.LENGTH_SHORT).show();
                     Intent intent2FunctionActivity = new Intent(MainActivity_two.this, FunctionActivity.class);
@@ -267,28 +267,28 @@ public class MainActivity_two extends AppCompatActivity {
                     Intent toshape = new Intent(MainActivity_two.this, ShapeActivity.class);
                     startActivity(toshape);
                     break;
-                case R.id.old_112:
-                    Toast.makeText(getApplication(), "原112", Toast.LENGTH_SHORT).show();
-                    state_camera = 10;
-                    model_112 = 10;
-                    full_Thread_model_112();
-                    break;
+//                case R.id.old_112:
+//                    Toast.makeText(getApplication(), "原112", Toast.LENGTH_SHORT).show();
+//                    state_camera = 10;
+//                    model_112 = 10;
+//                    full_Thread_model_112();
+//                    break;
                 case R.id.btn_stop:
                     Toast.makeText(getApplication(), "停止", Toast.LENGTH_SHORT).show();
                     moni1_status = false;
                     break;
-                case R.id.car_1:
-                    run_time = 1;
-                    Toast.makeText(getApplication(), "一轮", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.car_2:
-                    run_time = 2;
-                    Toast.makeText(getApplication(), "二轮", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.car_test:
-                    run_time = 3;
-                    Toast.makeText(getApplication(), "测试", Toast.LENGTH_SHORT).show();
-                    break;
+//                case R.id.car_1:
+//                    run_time = 1;
+//                    Toast.makeText(getApplication(), "一轮", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case R.id.car_2:
+//                    run_time = 2;
+//                    Toast.makeText(getApplication(), "二轮", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case R.id.car_test:
+//                    run_time = 3;
+//                    Toast.makeText(getApplication(), "测试", Toast.LENGTH_SHORT).show();
+//                    break;
             }
         }
     }
@@ -306,22 +306,22 @@ public class MainActivity_two extends AppCompatActivity {
         textView = findViewById(R.id.textView);
         textView_isrunning = findViewById(R.id.isrunning);
 
-        btn_lingxing = findViewById(R.id.lingxing);
-        btn_juxing = findViewById(R.id.juxing);
-        btn_yuanxing = findViewById(R.id.yuanxing);
-        btn_sanjiao = findViewById(R.id.sanjiaoxing);
+//        btn_lingxing = findViewById(R.id.lingxing);
+//        btn_juxing = findViewById(R.id.juxing);
+//        btn_yuanxing = findViewById(R.id.yuanxing);
+//        btn_sanjiao = findViewById(R.id.sanjiaoxing);
 
 
         btn_function = findViewById(R.id.btn_function);
         btn_moni1 = findViewById(R.id.btn_moni1);
-        bakbtn4 = findViewById(R.id.car_1);
+//        bakbtn4 = findViewById(R.id.car_1);
         bakbtn5 = findViewById(R.id.btn_toshape);
-        btn_old_112 = findViewById(R.id.old_112);
+//        btn_old_112 = findViewById(R.id.old_112);
         btn_stop = findViewById(R.id.btn_stop);
 
-        btn_car_1 = findViewById(R.id.car_1);
-        btn_car_2 = findViewById(R.id.car_2);
-        btn_car_test = findViewById(R.id.car_test);
+//        btn_car_1 = findViewById(R.id.car_1);
+//        btn_car_2 = findViewById(R.id.car_2);
+//        btn_car_test = findViewById(R.id.car_test);
 
         edittext_input_1 = findViewById(R.id.input_1);
         edittext_input_2 = findViewById(R.id.input_2);
@@ -334,25 +334,25 @@ public class MainActivity_two extends AppCompatActivity {
     private void addlistener() {
         btn1.setOnClickListener(new btnclickListener());
 
-        btn_lingxing.setOnClickListener(new btnclickListener());
-        btn_juxing.setOnClickListener(new btnclickListener());
-        btn_yuanxing.setOnClickListener(new btnclickListener());
-        btn_sanjiao.setOnClickListener(new btnclickListener());
+//        btn_lingxing.setOnClickListener(new btnclickListener());
+//        btn_juxing.setOnClickListener(new btnclickListener());
+//        btn_yuanxing.setOnClickListener(new btnclickListener());
+//        btn_sanjiao.setOnClickListener(new btnclickListener());
 
         btn_function.setOnClickListener(new btnclickListener());
         btn_moni1.setOnClickListener(new btnclickListener());
-        bakbtn4.setOnClickListener(new btnclickListener());
+//        bakbtn4.setOnClickListener(new btnclickListener());
         bakbtn5.setOnClickListener(new btnclickListener());
-        btn_old_112.setOnClickListener(new btnclickListener());
+//        btn_old_112.setOnClickListener(new btnclickListener());
         btn_up.setOnClickListener(new btnclickListener());
         btn_left.setOnClickListener(new btnclickListener());
         btn_right.setOnClickListener(new btnclickListener());
         btn_down.setOnClickListener(new btnclickListener());
         btn_stop.setOnClickListener(new btnclickListener());
 
-        btn_car_1.setOnClickListener(new btnclickListener());
-        btn_car_2.setOnClickListener(new btnclickListener());
-        btn_car_test.setOnClickListener(new btnclickListener());
+//        btn_car_1.setOnClickListener(new btnclickListener());
+//        btn_car_2.setOnClickListener(new btnclickListener());
+//        btn_car_test.setOnClickListener(new btnclickListener());
 
 //        btn_up.setOnTouchListener(new btntouchListener());
 //        btn_down.setOnTouchListener(new btntouchListener());
@@ -415,34 +415,34 @@ public class MainActivity_two extends AppCompatActivity {
             while (true) {
                 getBitmap();        //获取并显示摄像头图像
                 switch (state_camera) {
-
-                    case 25:
-                        cameraCommandUtil.postHttp(IPCamera, 25, 0);
-                        break;
-                    case 32:
-                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
-                        break;
-                    case 33:
-                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
-                        break;
-                    case 34:
-                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
-                        break;
-                    case 35:
-                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
-                        break;
-                    case 36:
-                        cameraCommandUtil.postHttp(IPCamera, 36, 0);
-                        break;
-                    case 37:
-                        cameraCommandUtil.postHttp(IPCamera, 37, 0);
-                        break;
-                    case 38:
-                        cameraCommandUtil.postHttp(IPCamera, 38, 0);
-                        break;
-                    case 39:
-                        cameraCommandUtil.postHttp(IPCamera, 39, 0);
-                        break;
+//
+//                    case 25:
+//                        cameraCommandUtil.postHttp(IPCamera, 25, 0);
+//                        break;
+//                    case 32:
+//                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
+//                        break;
+//                    case 33:
+//                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
+//                        break;
+//                    case 34:
+//                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
+//                        break;
+//                    case 35:
+//                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
+//                        break;
+//                    case 36:
+//                        cameraCommandUtil.postHttp(IPCamera, 36, 0);
+//                        break;
+//                    case 37:
+//                        cameraCommandUtil.postHttp(IPCamera, 37, 0);
+//                        break;
+//                    case 38:
+//                        cameraCommandUtil.postHttp(IPCamera, 38, 0);
+//                        break;
+//                    case 39:
+//                        cameraCommandUtil.postHttp(IPCamera, 39, 0);
+//                        break;
                     case 500:            //抬头
                         cameraCommandUtil.postHttp(IPCamera, 0, cemera_step);
                         break;
