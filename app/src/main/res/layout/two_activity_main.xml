@@ -182,7 +182,7 @@
         app:layout_constraintTop_toTopOf="@+id/input_3" />
 
     <Switch
-        android:id="@+id/auto_manual"
+        android:id="@+id/switch_auto_manual"
         android:layout_width="84dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"

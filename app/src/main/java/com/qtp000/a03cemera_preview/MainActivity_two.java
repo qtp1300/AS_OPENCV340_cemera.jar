@@ -16,10 +16,12 @@ import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class MainActivity_two extends AppCompatActivity {
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
     EditText edittext_input_1,edittext_input_2,edittext_input_3,edittext_input_4;
+    Switch auto_manual_status;
 
 
 
@@ -328,6 +331,8 @@ public class MainActivity_two extends AppCompatActivity {
         edittext_input_3 = findViewById(R.id.input_3);
         edittext_input_4 = findViewById(R.id.input_4);
 
+        auto_manual_status = findViewById(R.id.switch_auto_manual);
+
 
     }
 
@@ -349,6 +354,20 @@ public class MainActivity_two extends AppCompatActivity {
         btn_right.setOnClickListener(new btnclickListener());
         btn_down.setOnClickListener(new btnclickListener());
         btn_stop.setOnClickListener(new btnclickListener());
+
+        auto_manual_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    buttonView.setText("手动");
+                    ValuesApplication.AutoOrManual = ValuesApplication.AUTO_MANUAL.MANUAL;
+                }
+                else {
+                    buttonView.setText("自动");
+                    ValuesApplication.AutoOrManual = ValuesApplication.AUTO_MANUAL.AUTO;
+                }
+            }
+        });
 
 //        btn_car_1.setOnClickListener(new btnclickListener());
 //        btn_car_2.setOnClickListener(new btnclickListener());
@@ -415,34 +434,34 @@ public class MainActivity_two extends AppCompatActivity {
             while (true) {
                 getBitmap();        //获取并显示摄像头图像
                 switch (state_camera) {
-//
-//                    case 25:
-//                        cameraCommandUtil.postHttp(IPCamera, 25, 0);
-//                        break;
-//                    case 32:
-//                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
-//                        break;
-//                    case 33:
-//                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
-//                        break;
-//                    case 34:
-//                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
-//                        break;
-//                    case 35:
-//                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
-//                        break;
-//                    case 36:
-//                        cameraCommandUtil.postHttp(IPCamera, 36, 0);
-//                        break;
-//                    case 37:
-//                        cameraCommandUtil.postHttp(IPCamera, 37, 0);
-//                        break;
-//                    case 38:
-//                        cameraCommandUtil.postHttp(IPCamera, 38, 0);
-//                        break;
-//                    case 39:
-//                        cameraCommandUtil.postHttp(IPCamera, 39, 0);
-//                        break;
+
+                    case 25:
+                        cameraCommandUtil.postHttp(IPCamera, 25, 0);
+                        break;
+                    case 32:
+                        cameraCommandUtil.postHttp(IPCamera, 32, 0);
+                        break;
+                    case 33:
+                        cameraCommandUtil.postHttp(IPCamera, 33, 0);
+                        break;
+                    case 34:
+                        cameraCommandUtil.postHttp(IPCamera, 34, 0);
+                        break;
+                    case 35:
+                        cameraCommandUtil.postHttp(IPCamera, 35, 0);
+                        break;
+                    case 36:
+                        cameraCommandUtil.postHttp(IPCamera, 36, 0);
+                        break;
+                    case 37:
+                        cameraCommandUtil.postHttp(IPCamera, 37, 0);
+                        break;
+                    case 38:
+                        cameraCommandUtil.postHttp(IPCamera, 38, 0);
+                        break;
+                    case 39:
+                        cameraCommandUtil.postHttp(IPCamera, 39, 0);
+                        break;
                     case 500:            //抬头
                         cameraCommandUtil.postHttp(IPCamera, 0, cemera_step);
                         break;
