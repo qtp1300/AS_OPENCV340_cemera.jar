@@ -52,11 +52,13 @@ public class ValuesApplication extends Application {
     public static int[][] shape_result_manual = new int[9][5];
 
     public static String license_plate_result;
+    public static String license_plate_result_manual;
     public static char[] license_plate_result_char;
     public static byte[] license_plate_result_byte;
 
     public enum AUTO_MANUAL {AUTO, MANUAL}
-    public static AUTO_MANUAL AutoOrManual = AUTO_MANUAL.AUTO;
+    public static AUTO_MANUAL shape_AutoOrManual = AUTO_MANUAL.AUTO;
+    public static AUTO_MANUAL license_plate_AutoOrManual = AUTO_MANUAL.AUTO;
 
 /*    @Override
     public void onCreate() {

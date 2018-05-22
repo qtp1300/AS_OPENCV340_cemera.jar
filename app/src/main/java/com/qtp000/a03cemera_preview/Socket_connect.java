@@ -831,6 +831,7 @@ public class Socket_connect {
     }
 
     private void mine_send_TraffifcLight_result() {
+        TYPE = 0XAA;
         MAJOR = 0xC0;           //交通灯内容
         if (ValuesApplication.Traffic_Light_Status == ValuesApplication.Traffic_Light_Mode.RED) {
             FIRST = 0x01;           //01红，02绿,03黄
@@ -846,6 +847,7 @@ public class Socket_connect {
         THRID = 0x00;
         send();
         yanchi(1000);
+        TYPE = 0XAA;
         MAJOR = 0xC5;           //交通灯传输完毕标志
         FIRST = 0x01;
         SECOND = 0x00;
@@ -858,8 +860,9 @@ public class Socket_connect {
 //        public int[][] shape_result = new int[9][5];
 //        /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
 //         * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+        TYPE = 0XAA;
         MAJOR = 0xA3;           //三角形
-        if (ValuesApplication.AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+        if (ValuesApplication.shape_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
             FIRST = (short) ValuesApplication.shape_result[8][0];
         } else {
             FIRST = (short) ValuesApplication.shape_result_manual[8][0];
@@ -868,8 +871,9 @@ public class Socket_connect {
         THRID = 0x00;
         send();
         yanchi(100);
+        TYPE = 0XAA;
         MAJOR = 0xA4;           //圆形
-        if (ValuesApplication.AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+        if (ValuesApplication.shape_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
             FIRST = (short) ValuesApplication.shape_result[8][1];
         } else {
             FIRST = (short) ValuesApplication.shape_result_manual[8][1];
@@ -878,8 +882,9 @@ public class Socket_connect {
         THRID = 0x00;
         send();
         yanchi(100);
+        TYPE = 0XAA;
         MAJOR = 0xA5;           //矩形
-        if (ValuesApplication.AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+        if (ValuesApplication.shape_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
             FIRST = (short) ValuesApplication.shape_result[8][2];
         } else {
             FIRST = (short) ValuesApplication.shape_result_manual[8][2];
@@ -888,8 +893,9 @@ public class Socket_connect {
         THRID = 0x00;
         send();
         yanchi(100);
+        TYPE = 0XAA;
         MAJOR = 0xA6;           //菱形
-        if (ValuesApplication.AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+        if (ValuesApplication.shape_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
             FIRST = (short) ValuesApplication.shape_result[8][3];
         } else {
             FIRST = (short) ValuesApplication.shape_result_manual[8][3];
@@ -898,8 +904,9 @@ public class Socket_connect {
         THRID = 0x00;
         send();
         yanchi(100);
+        TYPE = 0XAA;
         MAJOR = 0xA7;           //五角星
-        if (ValuesApplication.AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+        if (ValuesApplication.shape_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
             FIRST = (short) ValuesApplication.shape_result[8][4];
         } else {
             FIRST = (short) ValuesApplication.shape_result_manual[8][4];
@@ -908,7 +915,7 @@ public class Socket_connect {
         THRID = 0x00;
         send();
         yanchi(100);
-
+        TYPE = 0XAA;
         MAJOR = 0xAA;           //图像内容传输完毕标志
         FIRST = 0x01;
         SECOND = 0x00;
@@ -945,6 +952,7 @@ public class Socket_connect {
         THRID = (short) 0x00;
         send();
         yanchi(500);
+        Log.i("mine车牌已发送", "mine_send_car_text_value");
     }
 
     //颜色形状、车牌、光源目标档位
@@ -1586,42 +1594,50 @@ public class Socket_connect {
 
             case 15:
                 Log.i("故障排查", "进入case15");
-                if (ValuesApplication.license_plate_result == null) {
-                    Log.i("故障排查", "进入case15,车牌识别返回值为空");
-                    mark = 17;
-                } else {
-                    ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result.getBytes();
-                    Log.i("故障排查", "进入case15获得数组长度" + ValuesApplication.license_plate_result_byte.length);
-                    if (ValuesApplication.license_plate_result_byte.length == 6) {
-                        mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                                ValuesApplication.license_plate_result_byte[1],
-                                ValuesApplication.license_plate_result_byte[2],
-                                ValuesApplication.license_plate_result_byte[3],
-                                ValuesApplication.license_plate_result_byte[4],
-                                ValuesApplication.license_plate_result_byte[5]);
-                    }
+                if (ValuesApplication.license_plate_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+                    if (ValuesApplication.license_plate_result == null) {
+                        Log.i("故障排查", "进入case15,车牌识别返回值为空");
+                        mark = 17;
+                    } else {
+                        ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result.getBytes();
+                        Log.i("故障排查", "进入case15获得数组长度" + ValuesApplication.license_plate_result_byte.length);
+                        if (ValuesApplication.license_plate_result_byte.length == 6) {
+                            mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                                    ValuesApplication.license_plate_result_byte[1],
+                                    ValuesApplication.license_plate_result_byte[2],
+                                    ValuesApplication.license_plate_result_byte[3],
+                                    ValuesApplication.license_plate_result_byte[4],
+                                    ValuesApplication.license_plate_result_byte[5]);
+                        }
 
-                    yanchi(10);
-                    if (ValuesApplication.license_plate_result_byte.length == 6) {
-                        mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                                ValuesApplication.license_plate_result_byte[1],
-                                ValuesApplication.license_plate_result_byte[2],
-                                ValuesApplication.license_plate_result_byte[3],
-                                ValuesApplication.license_plate_result_byte[4],
-                                ValuesApplication.license_plate_result_byte[5]);
-                    }
-                    yanchi(10);
-                    if (ValuesApplication.license_plate_result_byte.length == 6) {
-                        mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                                ValuesApplication.license_plate_result_byte[1],
-                                ValuesApplication.license_plate_result_byte[2],
-                                ValuesApplication.license_plate_result_byte[3],
-                                ValuesApplication.license_plate_result_byte[4],
-                                ValuesApplication.license_plate_result_byte[5]);
-                    }
+                        yanchi(10);
+                        if (ValuesApplication.license_plate_result_byte.length == 6) {
+                            mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                                    ValuesApplication.license_plate_result_byte[1],
+                                    ValuesApplication.license_plate_result_byte[2],
+                                    ValuesApplication.license_plate_result_byte[3],
+                                    ValuesApplication.license_plate_result_byte[4],
+                                    ValuesApplication.license_plate_result_byte[5]);
+                        }
+                        yanchi(10);
+                        if (ValuesApplication.license_plate_result_byte.length == 6) {
+                            mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                                    ValuesApplication.license_plate_result_byte[1],
+                                    ValuesApplication.license_plate_result_byte[2],
+                                    ValuesApplication.license_plate_result_byte[3],
+                                    ValuesApplication.license_plate_result_byte[4],
+                                    ValuesApplication.license_plate_result_byte[5]);
+                        }
 
-                    mark = 18;
+                        mark = 18;
+                    }
                 }
+                else {
+                    ValuesApplication.license_plate_result_manual = "B34H67";       //待续
+//                    if(MainActivity_two.)
+
+                }
+
                 break;
 
             case 17:
@@ -1640,6 +1656,7 @@ public class Socket_connect {
 
             case 18:
                 yanchi(400);
+                Log.i("故障排查", "进入case18");
                 mine_send_shape_value();
                 mine_send_shape_value();
                 mine_send_shape_value();

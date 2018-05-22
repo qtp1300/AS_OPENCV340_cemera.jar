@@ -58,8 +58,8 @@ public class MainActivity_two extends AppCompatActivity {
 //    Button btn_car_1, btn_car_2, btn_car_test;
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
-    EditText edittext_input_1,edittext_input_2,edittext_input_3,edittext_input_4;
-    Switch auto_manual_status;
+    EditText edittext_input_1,edittext_input_2,edittext_input_3,edittext_input_4,edittext_input_5,edittext_input_6,input_license;
+    Switch shape_auto_manual_status,license_plate_auto_manual_status;
 
 
 
@@ -330,8 +330,13 @@ public class MainActivity_two extends AppCompatActivity {
         edittext_input_2 = findViewById(R.id.input_2);
         edittext_input_3 = findViewById(R.id.input_3);
         edittext_input_4 = findViewById(R.id.input_4);
+        edittext_input_5 = findViewById(R.id.input_5);
+        edittext_input_6 = findViewById(R.id.input_6);
+        input_license = findViewById(R.id.input_license_plate);
 
-        auto_manual_status = findViewById(R.id.switch_auto_manual);
+        shape_auto_manual_status = findViewById(R.id.switch_shape_auto_manual);
+        license_plate_auto_manual_status = findViewById(R.id.switch_license_auto_manual);
+
 
 
     }
@@ -355,16 +360,29 @@ public class MainActivity_two extends AppCompatActivity {
         btn_down.setOnClickListener(new btnclickListener());
         btn_stop.setOnClickListener(new btnclickListener());
 
-        auto_manual_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        shape_auto_manual_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     buttonView.setText("手动");
-                    ValuesApplication.AutoOrManual = ValuesApplication.AUTO_MANUAL.MANUAL;
+                    ValuesApplication.shape_AutoOrManual = ValuesApplication.AUTO_MANUAL.MANUAL;
                 }
                 else {
                     buttonView.setText("自动");
-                    ValuesApplication.AutoOrManual = ValuesApplication.AUTO_MANUAL.AUTO;
+                    ValuesApplication.shape_AutoOrManual = ValuesApplication.AUTO_MANUAL.AUTO;
+                }
+            }
+        });
+        license_plate_auto_manual_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    buttonView.setText("手动");
+                    ValuesApplication.license_plate_AutoOrManual = ValuesApplication.AUTO_MANUAL.MANUAL;
+                }
+                else {
+                    buttonView.setText("自动");
+                    ValuesApplication.license_plate_AutoOrManual = ValuesApplication.AUTO_MANUAL.AUTO;
                 }
             }
         });
@@ -566,7 +584,7 @@ public class MainActivity_two extends AppCompatActivity {
                     break;
                 case 22:
                     Log.i("Mainactivity","已收到图像处理");
-                    get_shape.get_all_shape_contours(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
+                    get_shape.get_all_shape_license(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
 //                    if (socket_connect.mark < 0){
 //                        socket_connect.mark = -socket_connect.mark;
 //                    }

@@ -114,6 +114,7 @@ public class License_Plate {
             Scalar color = new Scalar(255, 0, 0);
             //这个方法的功能是按比例去中间图片  最后的数字是比例值
             Imgproc.drawContours(grayMat, contours, idx, new Scalar(255, 0, 0), 75);
+            //Imgproc.drawContours(被绘制的Mat, 需要绘制的轮廓集, 需要绘制的轮廓在轮廓集中的序号, 颜色new Scalar(255, 0, 0), 绘制的轮廓粗细);
             Log.e("运行到这里", "已经执行");
         }
         //0 <= _colRange.start && _colRange.start <= _colRange.end && _colRange.end <= m.cols

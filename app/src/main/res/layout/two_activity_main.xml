@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context="com.qtp000.a03cemera_preview.MainActivity_two">
 
+    <EditText
+        android:id="@+id/input_5"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/input_4"
+        app:layout_constraintTop_toTopOf="@+id/input_4" />
+
+    <EditText
+        android:id="@+id/input_6"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/input_5"
+        app:layout_constraintTop_toTopOf="@+id/input_5" />
+
     <Button
         android:id="@+id/btn1"
         android:layout_width="124dp"
@@ -141,10 +161,10 @@
         android:id="@+id/input_1"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginStart="16dp"
         android:ems="10"
         android:inputType="number"
-        android:text="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView" />
 
@@ -155,7 +175,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
-        android:text="2"
         app:layout_constraintStart_toEndOf="@+id/input_1"
         app:layout_constraintTop_toTopOf="@+id/input_1" />
 
@@ -166,7 +185,6 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
-        android:text="3"
         app:layout_constraintStart_toEndOf="@+id/input_2"
         app:layout_constraintTop_toTopOf="@+id/input_2" />
 
@@ -174,21 +192,44 @@
         android:id="@+id/input_4"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="number"
-        android:text="4"
         app:layout_constraintStart_toEndOf="@+id/input_3"
         app:layout_constraintTop_toTopOf="@+id/input_3" />
 
     <Switch
-        android:id="@+id/switch_auto_manual"
+        android:id="@+id/switch_shape_auto_manual"
         android:layout_width="84dp"
         android:layout_height="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginTop="16dp"
         android:textOff="@string/Auto"
         android:textOn="@string/Manual"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_license_plate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch_license_auto_manual" />
+
+    <Switch
+        android:id="@+id/switch_license_auto_manual"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Switch"
+        android:textOff="MANUAL"
+        android:textOn="AUTO"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
