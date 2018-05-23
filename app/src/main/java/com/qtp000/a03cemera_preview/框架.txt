@@ -18,3 +18,6 @@ phHandler接收到消息设置显示图片
 
 
 
+ValuesApplication 中有计次数据，需要在stop按键或结束时清空
+
+

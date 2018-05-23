@@ -128,7 +128,7 @@ public class License_Plate {
 
         //当获取到图片亮度过暗，黑白处理后可能全变成黑色，
         // 所以在处理前需要调整亮度，修改下面方法亮度参数即可
-        bmp = ContrastPicture(bmp);//提高对比度
+        bmp = ContrastPicture(bmp,60);//提高亮度或对比度
 
         Bitmap bwbmp = ImgPretreatment.doPretreatment(bmp);//将图片黑白处理
 
@@ -145,10 +145,10 @@ public class License_Plate {
     }
 
     //提高对比度
-    private Bitmap ContrastPicture(Bitmap bmp)
+    private Bitmap ContrastPicture(Bitmap bmp,float input_light)
     {
         ColorMatrix cm = new ColorMatrix();
-        float brightness = 30;  //亮度
+        float brightness = input_light;  //亮度
         float contrast = 2;        //对比度
         cm.set(new float[] {
                 contrast, 0, 0, 0, brightness,

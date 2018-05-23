@@ -56,6 +56,8 @@ public class ValuesApplication extends Application {
     public static char[] license_plate_result_char;
     public static byte[] license_plate_result_byte;
 
+    public static int shibiecishu = 0;
+
     public enum AUTO_MANUAL {AUTO, MANUAL}
     public static AUTO_MANUAL shape_AutoOrManual = AUTO_MANUAL.AUTO;
     public static AUTO_MANUAL license_plate_AutoOrManual = AUTO_MANUAL.AUTO;

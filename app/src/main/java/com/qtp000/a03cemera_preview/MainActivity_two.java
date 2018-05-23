@@ -54,13 +54,12 @@ public class MainActivity_two extends AppCompatActivity {
     Button btn1;
     Button btn_function, btn_moni1, bakbtn4, bakbtn5, btn_old_112, btn_stop;
     Button btn_cemera_init, btn_cemera_32, btn_cemera_33, btn_cemera_34, btn_cemera_35, btn_cemera_36, btn_cemera_37, btn_cemera_38, btn_cemera_39;
-//    Button btn_lingxing, btn_juxing, btn_yuanxing, btn_sanjiao;
+    //    Button btn_lingxing, btn_juxing, btn_yuanxing, btn_sanjiao;
 //    Button btn_car_1, btn_car_2, btn_car_test;
     public static short set_shape = 0x02;       //默认 0x01/矩形    0x02/圆形  0x03/三角形   0x04/菱形  0x05/梯形   0x06/饼图  0x07/靶图   0x08/条形图
     ProgressBar progressBar;
-    EditText edittext_input_1,edittext_input_2,edittext_input_3,edittext_input_4,edittext_input_5,edittext_input_6,input_license;
-    Switch shape_auto_manual_status,license_plate_auto_manual_status;
-
+    public EditText edittext_input_1, edittext_input_2, edittext_input_3, edittext_input_4, edittext_input_5, edittext_input_6, input_license;
+    Switch shape_auto_manual_status, license_plate_auto_manual_status;
 
 
     ImageView imageView;
@@ -258,8 +257,30 @@ public class MainActivity_two extends AppCompatActivity {
                     break;
                 case R.id.btn_moni1:
                     Toast.makeText(getApplication(), "模拟1", Toast.LENGTH_SHORT).show();
+
+                    if (ValuesApplication.license_plate_AutoOrManual == ValuesApplication.AUTO_MANUAL.MANUAL) {
+                        ValuesApplication.license_plate_result_manual = input_license.getText().toString();
+                        Log.i("手动输入", "Mainactivity中已将ValuesApplication.license_plate_result_manual设置为" + input_license.getText().toString());
+                    }
+                    if (ValuesApplication.shape_AutoOrManual == ValuesApplication.AUTO_MANUAL.MANUAL) {
+                        Log.i("手动输入", "Mainactivity中已将ValuesApplication.shape_result_manual设置为" +
+                                edittext_input_1.getText().toString()+"  "+
+                                edittext_input_2.getText().toString()+"  "+
+                                edittext_input_3.getText().toString()+"  "+
+                                edittext_input_4.getText().toString()+"  "+
+                                edittext_input_5.getText().toString()+"  "+
+                                edittext_input_6.getText().toString());
+                        ValuesApplication.shape_result_manual[8][0] = Integer.parseInt(edittext_input_1.getText().toString());
+                        ValuesApplication.shape_result_manual[8][1] = Integer.parseInt(edittext_input_2.getText().toString());
+                        ValuesApplication.shape_result_manual[8][2] = Integer.parseInt(edittext_input_3.getText().toString());
+                        ValuesApplication.shape_result_manual[8][3] = Integer.parseInt(edittext_input_4.getText().toString());
+                        ValuesApplication.shape_result_manual[8][4] = Integer.parseInt(edittext_input_5.getText().toString());
+
+                    }
                     to_run_moni1_with_wifi();
                     textView_isrunning.setText("运行中");
+
+
 //                    btn_moni1.setSelected(true);
                     break;
 //                case R.id.car_1:
@@ -279,6 +300,7 @@ public class MainActivity_two extends AppCompatActivity {
                 case R.id.btn_stop:
                     Toast.makeText(getApplication(), "停止", Toast.LENGTH_SHORT).show();
                     moni1_status = false;
+                    ValuesApplication.shibiecishu = 0;
                     break;
 //                case R.id.car_1:
 //                    run_time = 1;
@@ -338,7 +360,6 @@ public class MainActivity_two extends AppCompatActivity {
         license_plate_auto_manual_status = findViewById(R.id.switch_license_auto_manual);
 
 
-
     }
 
     private void addlistener() {
@@ -363,11 +384,10 @@ public class MainActivity_two extends AppCompatActivity {
         shape_auto_manual_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     buttonView.setText("手动");
                     ValuesApplication.shape_AutoOrManual = ValuesApplication.AUTO_MANUAL.MANUAL;
-                }
-                else {
+                } else {
                     buttonView.setText("自动");
                     ValuesApplication.shape_AutoOrManual = ValuesApplication.AUTO_MANUAL.AUTO;
                 }
@@ -376,11 +396,10 @@ public class MainActivity_two extends AppCompatActivity {
         license_plate_auto_manual_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     buttonView.setText("手动");
                     ValuesApplication.license_plate_AutoOrManual = ValuesApplication.AUTO_MANUAL.MANUAL;
-                }
-                else {
+                } else {
                     buttonView.setText("自动");
                     ValuesApplication.license_plate_AutoOrManual = ValuesApplication.AUTO_MANUAL.AUTO;
                 }
@@ -583,18 +602,21 @@ public class MainActivity_two extends AppCompatActivity {
                     //mark = -mark;
                     break;
                 case 22:
-                    Log.i("Mainactivity","已收到图像处理");
+                    ValuesApplication.shibiecishu++;
+                    Log.i("Mainactivity", "已收到图像处理");
                     get_shape.get_all_shape_license(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
 //                    if (socket_connect.mark < 0){
 //                        socket_connect.mark = -socket_connect.mark;
 //                    }
-                    if (ValuesApplication.tft_status == ValuesApplication.TFT_status.SHAPE){
-                        Log.i("Mainactivity","已进行图形处理"+ "圆形" + ValuesApplication.shape_result[8][1] + "  矩形" + ValuesApplication.shape_result[8][2] + "  五角星" + ValuesApplication.shape_result[8][4] + "  三角形" + ValuesApplication.shape_result[8][0] + "  菱形" + ValuesApplication.shape_result[8][3]);
-                    }else {
-                        Log.i("Mainactivity","已进行车牌处理   "+ValuesApplication.license_plate_result);
+                    if (ValuesApplication.tft_status == ValuesApplication.TFT_status.SHAPE) {
+                        Log.i("Mainactivity", "已进行图形处理" + "圆形" + ValuesApplication.shape_result[8][1] + "  矩形" + ValuesApplication.shape_result[8][2] + "  五角星" + ValuesApplication.shape_result[8][4] + "  三角形" + ValuesApplication.shape_result[8][0] + "  菱形" + ValuesApplication.shape_result[8][3]);
+                    } else {
+                        Log.i("Mainactivity", "已进行车牌处理   " + ValuesApplication.license_plate_result);
 
                     }
-
+                    if (ValuesApplication.shibiecishu == 2 && socket_connect.mark < 0){
+                        socket_connect.mark = -socket_connect.mark;
+                    }
                     break;
                 case 31:
                     textView.setText("结果:" + "0x" + new Algorithm().BToH((char) ((socket_connect.order_data[0]) & 0xFF)) + "; " +
@@ -766,6 +788,7 @@ public class MainActivity_two extends AppCompatActivity {
         moni1_status = false;
         socket_connect.mark = 5;
         QR_time = 0;
+        ValuesApplication.shibiecishu = 0;
         moni1_status = true;
         new Thread(new Runnable() {
 
@@ -803,6 +826,7 @@ public class MainActivity_two extends AppCompatActivity {
             }
         }).start();
     }
+
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.

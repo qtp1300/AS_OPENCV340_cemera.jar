@@ -62,7 +62,7 @@ public class Get_Shape {
         License_Plate license_plate = new License_Plate();
         license_plate.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
         ValuesApplication.license_plate_result = license_plate.license_plate_string;
-        if (ValuesApplication.license_plate_result.length() <= 5) {
+        if (ValuesApplication.license_plate_result.length() != 6) {
             ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
             processed_mat = this.Contours2(pre_process_mat);     //得到图形
         }
@@ -295,36 +295,6 @@ public class Get_Shape {
         Imgproc.drawContours(processed_mat, /*contours*/mContours, -1, new Scalar(255, 0, 0), 1);         //自己加的，画不出来；画出来了
         Log.i("剪切完的图形共有轮廓", mContours.size() + "个");
 
-/*
-        List<MatOfPoint> mContours = new ArrayList<MatOfPoint>();
-        MatOfPoint2f approxCurve = new MatOfPoint2f();
-        List<MatOfPoint> mContour2 = new ArrayList<MatOfPoint>();
-        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();        //ArrayList可以存放Object
-        Iterator<MatOfPoint> each = contours.iterator();        //1迭代器，依次取出contours内的各个轮廓
-        each = mContours.iterator();
-        while (each.hasNext())
-        {
-            MatOfPoint contour = each.next();
-            MatOfPoint2f new_mat = new MatOfPoint2f(contour.toArray());       //把轮廓的点转化为数组并以数组建立新的MatOfPoint对象new_mat
-            Imgproc.approxPolyDP(new_mat, approxCurve, 30, true);
-
-            //Imgproc.approxPolyDP(输入的轮廓点的点集，输出的多边形点集，输出精度——和另一个轮廓点的最大距离数;输出精度可以认为是输出的线段的长度，输出的多边形是否闭合)
-            long total = approxCurve.total();      //边的数量？   确定，边的数量
-//            Log.i("approxCurve",approxCurve.toString());
-//            Log.i("approxCurve.total",total+"");
-            if (total == 4) {                                  //找到四边形
-                MatOfPoint contour2 = new MatOfPoint(approxCurve.toArray());       //把边的点集转化为MatOfPoint
-                mContour2.add(contour2);        //把点集的MatOfPoint加入列表mContour2，四边形的集合
-            }
-        }
-        */
-//        MatOfPoint test = mContours.get(0);
-//        Log.i("test单独", test.toString());
-////        test.isSubmatrix()
-//        List<Point> test_point = test.toList();
-////        Log.i("test的点", test_point.toString());
-
-//        ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
         int yuan = 0;
         int ju = 0;
         int sanjiao = 0;
@@ -338,7 +308,6 @@ public class Get_Shape {
             MatOfPoint2f after_approxPolyDP_matofpoint2f = new MatOfPoint2f();
             List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
             Imgproc.approxPolyDP(pre_approxPolyDP_matofpoint2f, after_approxPolyDP_matofpoint2f, 15, true);
-//            Log.i("迭代", "多边形拟合成了" + after_approxPolyDP_matofpoint2f.total() + "边形");
 //            Log.i("拟合后的图形坐标", after_approxPolyDP_matofpoint2f.toList().toString());
 
             MatOfPoint after_approxPolyDP_matofpoint = new MatOfPoint(after_approxPolyDP_matofpoint2f.toArray());
@@ -375,9 +344,6 @@ public class Get_Shape {
             after_DP_MatOfPoint.add(after_approxPolyDP_matofpoint);
 
 
-//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List" + pre_approxPolyDP_matofpoint2List.toString());
-//            Log.i("迭代", "pre_approxPolyDP_matofpoint2List 长度" + pre_approxPolyDP_matofpoint2List.size());
-
         }
         Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
         shape_result[8][0] = sanjiao % 2 == 0 ? sanjiao / 2 : (sanjiao / 2) + 1;
@@ -387,7 +353,7 @@ public class Get_Shape {
         shape_result[8][4] = wujiaoxing % 2 == 0 ? wujiaoxing / 2 : (wujiaoxing / 2) + 1;
         /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
          * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
-        Log.i("图形个数原始", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
+//        Log.i("图形个数原始", "圆形" + yuan + "  矩形" + ju + "  五角星" + wujiaoxing + "  三角形" + sanjiao + "  菱形" + ling);
         Log.i("图形个数最终", "圆形" + shape_result[8][1] + "  矩形" + shape_result[8][2] + "  五角星" + shape_result[8][4] + "  三角形" + shape_result[8][0] + "  菱形" + shape_result[8][3]);
         ValuesApplication.shape_result = this.shape_result;
 

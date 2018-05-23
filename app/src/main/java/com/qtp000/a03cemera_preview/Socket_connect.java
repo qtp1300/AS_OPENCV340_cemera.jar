@@ -856,7 +856,7 @@ public class Socket_connect {
         yanchi(1000);
     }
 
-    private void mine_send_shape_value() {
+    private void mine_send_shape_value() {      //内部有判断是否为手动发送
 //        public int[][] shape_result = new int[9][5];
 //        /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
 //         * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
@@ -925,12 +925,6 @@ public class Socket_connect {
     }
 
     private void mine_send_car_text_value(Byte one, Byte two, Byte three, Byte four, Byte five, Byte six) {
-//        Byte one = 0x00;
-//        Byte two = 0x00;
-//        Byte three = 0x00;
-//        Byte four = 0x00;
-//        Byte five = 0x00;
-//        Byte six = 0x00;
         TYPE = (short) 0xAA;
         MAJOR = (short) 0xA0;
         FIRST = (short) one;
@@ -952,7 +946,53 @@ public class Socket_connect {
         THRID = (short) 0x00;
         send();
         yanchi(500);
-        Log.i("mine车牌已发送", "mine_send_car_text_value");
+        Log.i("mine车牌已发送1", "mine_send_car_text_value");
+
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA0;
+        FIRST = (short) one;
+        SECOND = (short) two;
+        THRID = (short) three;
+        send();
+        yanchi(500);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA1;
+        FIRST = (short) four;
+        SECOND = (short) five;
+        THRID = (short) six;
+        send();
+        yanchi(500);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA2;
+        FIRST = (short) 0x00;
+        SECOND = (short) 0x00;
+        THRID = (short) 0x00;
+        send();
+        yanchi(500);
+        Log.i("mine车牌已发送2", "mine_send_car_text_value");
+
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA0;
+        FIRST = (short) one;
+        SECOND = (short) two;
+        THRID = (short) three;
+        send();
+        yanchi(500);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA1;
+        FIRST = (short) four;
+        SECOND = (short) five;
+        THRID = (short) six;
+        send();
+        yanchi(500);
+        TYPE = (short) 0xAA;
+        MAJOR = (short) 0xA2;
+        FIRST = (short) 0x00;
+        SECOND = (short) 0x00;
+        THRID = (short) 0x00;
+        send();
+        yanchi(500);
+        Log.i("mine车牌已发送3", "mine_send_car_text_value");
     }
 
     //颜色形状、车牌、光源目标档位
@@ -1577,6 +1617,8 @@ public class Socket_connect {
                     yanchi(4000);
                     qrhandler.sendEmptyMessage(22);
                     Log.i("故障排查", "第二次识别完成");
+
+                    mark = -15;
 //                    yanchi(5000);
 //                    mark = -12;
 //                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
@@ -1588,7 +1630,6 @@ public class Socket_connect {
                      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
 //                    Log.i("图形个数", "圆形" + get_shape.shape_result[0][1] + "  矩形" + get_shape.shape_result[0][2] + "  五角星" + get_shape.shape_result[0][4] + "  三角形" + get_shape.shape_result[0][0] + "  菱形" + get_shape.shape_result[0][3]);
 
-                    mark = 15;
                 }
                 break;
 
@@ -1609,39 +1650,23 @@ public class Socket_connect {
                                     ValuesApplication.license_plate_result_byte[4],
                                     ValuesApplication.license_plate_result_byte[5]);
                         }
-
-                        yanchi(10);
-                        if (ValuesApplication.license_plate_result_byte.length == 6) {
-                            mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                                    ValuesApplication.license_plate_result_byte[1],
-                                    ValuesApplication.license_plate_result_byte[2],
-                                    ValuesApplication.license_plate_result_byte[3],
-                                    ValuesApplication.license_plate_result_byte[4],
-                                    ValuesApplication.license_plate_result_byte[5]);
-                        }
-                        yanchi(10);
-                        if (ValuesApplication.license_plate_result_byte.length == 6) {
-                            mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
-                                    ValuesApplication.license_plate_result_byte[1],
-                                    ValuesApplication.license_plate_result_byte[2],
-                                    ValuesApplication.license_plate_result_byte[3],
-                                    ValuesApplication.license_plate_result_byte[4],
-                                    ValuesApplication.license_plate_result_byte[5]);
-                        }
-
                         mark = 18;
                     }
-                }
-                else {
-                    ValuesApplication.license_plate_result_manual = "B34H67";       //待续
-//                    if(MainActivity_two.)
-
+                } else {
+                    ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result_manual.getBytes();
+                    mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                            ValuesApplication.license_plate_result_byte[1],
+                            ValuesApplication.license_plate_result_byte[2],
+                            ValuesApplication.license_plate_result_byte[3],
+                            ValuesApplication.license_plate_result_byte[4],
+                            ValuesApplication.license_plate_result_byte[5]);
+                    mark = 18;
                 }
 
                 break;
 
             case 17:
-                Log.i("故障排查", "进入case19");
+                Log.i("故障排查", "进入case17");
                 yanchi(500);
                 TYPE = (short) 0xAA;
                 MAJOR = (short) 0xA2;
