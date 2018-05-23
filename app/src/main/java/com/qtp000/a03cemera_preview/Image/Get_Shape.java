@@ -62,7 +62,7 @@ public class Get_Shape {
         License_Plate license_plate = new License_Plate();
         license_plate.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
         ValuesApplication.license_plate_result = license_plate.license_plate_string;
-        if (ValuesApplication.license_plate_result.length() != 6) {
+        if (ValuesApplication.license_plate_result.length() < 5) {
             ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
             processed_mat = this.Contours2(pre_process_mat);     //得到图形
         }

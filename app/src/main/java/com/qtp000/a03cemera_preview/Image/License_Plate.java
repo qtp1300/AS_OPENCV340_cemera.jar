@@ -74,6 +74,12 @@ public class License_Plate {
             if (c == '」'){
                 c = 'J';
             }
+//            if (c == 'c' && (i<input_string.length()-1)){
+//                if (input_string.charAt(i+1) == '5'){
+//                    c = 'G';
+//                    input_string
+//                }
+//            }
 
             Log.i("车牌处理", "第" + i + "位是" + c);
             if (num_word.contains(c + "z")) {
@@ -88,7 +94,7 @@ public class License_Plate {
 
         for (Byte b :
                 ValuesApplication.license_plate_result_byte) {
-            Log.i("车牌处理", "转为Byte  " + "0x"+Integer.toHexString(b));
+//            Log.i("车牌处理", "转为Byte  " + "0x"+Integer.toHexString(b));
 
         }
         return true_string;

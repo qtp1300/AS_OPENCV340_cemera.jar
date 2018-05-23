@@ -1112,6 +1112,10 @@ public class Socket_connect {
             algorithm.MOSI_Code(initial_value, order_data, order_data_2);
 
         }
+
+        else if (num == 5){
+
+        }
         //qrhandler_show_task(num,31,order_data);
         qrhandler.sendEmptyMessage(31);
     }
@@ -1709,7 +1713,8 @@ public class Socket_connect {
                 break;
 
             case 25:
-//                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+                Log.i("故障排查", "进入case25，二维码数据"+MainActivity_two.result_qr);
+                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
                 qrhandler.sendEmptyMessage(205);
                 mark = 30;
                 break;
