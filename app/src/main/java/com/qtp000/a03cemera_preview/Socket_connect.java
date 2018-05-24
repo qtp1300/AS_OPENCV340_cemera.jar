@@ -1772,4 +1772,205 @@ public class Socket_connect {
         }
 
     }
+
+
+    public void mine_send_start(){
+        Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+        yanchi(100);
+        Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+        yanchi(100);
+        Start_motion(0x00, 0x00);                    //开始运行  发送主车起始坐标 与终点坐标
+        qrhandler.sendEmptyMessage(202);
+    }
+    public void moni1_6() {
+
+        /*这种写法用来解决while时其它线程变量数据不能被本函数调用的神学问题
+        if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
+            yanchi(300);
+            break;
+        }
+        else if((rbyte10[0] == (byte)(0x66)) || (sbyte10[0] == (byte)(0x66))) {}*/
+
+        switch (mark) {
+            case 5:
+                MainActivity_two.state_camera = 33;      //一号预设位，正前方
+                qrhandler.sendEmptyMessage(201);        //进度
+                mine_send_start();
+                mark = 10;
+                break;
+
+            case 10:
+                Log.i("等待:", "WIFI01");
+//                while ((rbyte[2] != (byte) (0x01)) && (sbyte[2] != (byte) (0x01))) ;
+                byte[] rbyte10 = rbyte;
+                byte[] sbyte10 = ValuesApplication.Serial_data;
+                if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
+                    yanchi(300);
+                    break;
+                } else if ((rbyte10[0] == (byte) (0x66)) || (sbyte10[0] == (byte) (0x66))) {
+                    qrhandler.sendEmptyMessage(203);
+//                    MainActivity_two.state_camera = 33;
+                    qrhandler.sendEmptyMessage(204);
+//                    yanchi(3000);
+                    mine_send_up_tft();
+                    yanchi(4000);
+                    qrhandler.sendEmptyMessage(22);     //进行识别
+                    Log.i("故障排查", "第一次识别完成");
+                    yanchi(4000);
+                    mine_send_up_tft();
+                    yanchi(4000);
+                    qrhandler.sendEmptyMessage(22);
+                    Log.i("故障排查", "第二次识别完成");
+
+                    mark = -15;
+//                    yanchi(5000);
+//                    mark = -12;
+//                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
+//                    Get_Shape get_shape = new Get_Shape();
+//                    get_shape.get_shape_without_input();
+//                    get_shape.get_all_shape_contours(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
+//                    get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap);
+                    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
+                     * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+//                    Log.i("图形个数", "圆形" + get_shape.shape_result[0][1] + "  矩形" + get_shape.shape_result[0][2] + "  五角星" + get_shape.shape_result[0][4] + "  三角形" + get_shape.shape_result[0][0] + "  菱形" + get_shape.shape_result[0][3]);
+
+                }
+                break;
+
+            case 15:
+                Log.i("故障排查", "进入case15");
+                if (ValuesApplication.license_plate_AutoOrManual == ValuesApplication.AUTO_MANUAL.AUTO) {
+                    if (ValuesApplication.license_plate_result == null) {
+                        Log.i("故障排查", "进入case15,车牌识别返回值为空");
+                        mark = 17;
+                    } else {
+                        ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result.getBytes();
+                        Log.i("故障排查", "进入case15获得数组长度" + ValuesApplication.license_plate_result_byte.length);
+                        if (ValuesApplication.license_plate_result_byte.length == 6) {
+                            mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                                    ValuesApplication.license_plate_result_byte[1],
+                                    ValuesApplication.license_plate_result_byte[2],
+                                    ValuesApplication.license_plate_result_byte[3],
+                                    ValuesApplication.license_plate_result_byte[4],
+                                    ValuesApplication.license_plate_result_byte[5]);
+                        }
+                        mark = 18;
+                    }
+                } else {
+                    ValuesApplication.license_plate_result_byte = ValuesApplication.license_plate_result_manual.getBytes();
+                    mine_send_car_text_value(ValuesApplication.license_plate_result_byte[0],
+                            ValuesApplication.license_plate_result_byte[1],
+                            ValuesApplication.license_plate_result_byte[2],
+                            ValuesApplication.license_plate_result_byte[3],
+                            ValuesApplication.license_plate_result_byte[4],
+                            ValuesApplication.license_plate_result_byte[5]);
+                    mark = 18;
+                }
+
+                break;
+
+            case 17:
+                Log.i("故障排查", "进入case17");
+                yanchi(500);
+                TYPE = (short) 0xAA;
+                MAJOR = (short) 0xA2;
+                FIRST = (short) 0x00;
+                SECOND = (short) 0x00;
+                THRID = (short) 0x00;
+                send();
+                yanchi(500);
+                Log.i("故障排查", "case17执行完毕");
+                mark = 18;
+                break;
+
+            case 18:
+                yanchi(400);
+                Log.i("故障排查", "进入case18");
+                mine_send_shape_value();
+                mine_send_shape_value();
+                mine_send_shape_value();
+                mark = 20;
+                break;
+            case 20:
+                Log.i("等待:", "WIFI02");
+                //二维码   接受F5    发B4   摄像头向左
+                /*while ((rbyte[2] != (byte) (0x02)) && (sbyte[2] != (byte) (0x02)))*/
+                byte[] rbyte20 = rbyte;
+                byte[] sbyte20 = ValuesApplication.Serial_data;
+                if ((rbyte20[2] != (byte) (0x02)) && (sbyte20[2] != (byte) (0x02))) {
+                    yanchi(300);
+                    break;
+                } else if ((rbyte20[0] == (byte) (0x66)) || (sbyte20[0] == (byte) (0x66))) {
+                    qrhandler.sendEmptyMessage(203);
+                    Log.i("WiFi02收到4", String.valueOf(rbyte));
+                    //识别
+                    MainActivity_two.state_camera = 35;
+                    qrhandler.sendEmptyMessage(204);
+                    yanchi(200);
+                    qrhandler.sendEmptyMessage(10);
+                    mark = -25;
+                }
+                break;
+
+            case 25:
+                Log.i("故障排查", "进入case25，二维码数据"+MainActivity_two.result_qr);
+                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+                qrhandler.sendEmptyMessage(205);
+                mark = 30;
+                break;
+
+            case 30:
+                yanchi(500);
+                mine_send_qr_result();
+                yanchi(10);
+                mine_send_qr_result();
+                yanchi(10);
+                mine_send_qr_result();
+                yanchi(10);
+                MainActivity_two.state_camera = 37;
+//                send_QR_value();//发送type B4     0x10 0x11报警码 0x12光强 RFID
+                qrhandler.sendEmptyMessage(206);
+                mark = 35;
+                break;
+
+            case 35:
+                //TFT      接收F4    发B2
+                Log.i("等待:", "WIFI03");
+//                while ((rbyte[2] != (byte) (0x03)) && (sbyte[2] != (byte) (0x03))) ;
+                byte[] rbyte35 = rbyte;
+                byte[] sbyte35 = ValuesApplication.Serial_data;
+//                if (rbyte35[0] == (byte) (0x66)){
+                if ((rbyte35[2] != (byte) (0x03)) && (sbyte35[2] != (byte) (0x03))) {
+                    yanchi(300);
+                    break;
+                } else if ((rbyte35[0] == (byte) (0x66)) || (sbyte35[0] == (byte) (0x66))) {
+//                }
+                    qrhandler.sendEmptyMessage(207);
+                    yanchi(1000);
+                    Traffic_Light traffic_light = new Traffic_Light();
+                    traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
+                    Log.i("交通灯", "识别完毕" + ValuesApplication.Traffic_Light_Status.toString());
+                    mine_send_TraffifcLight_result();
+                    yanchi(10);
+                    mine_send_TraffifcLight_result();
+                    yanchi(10);
+                    mine_send_TraffifcLight_result();
+                    yanchi(10);
+                    Log.i("交通灯", "识别并发送完毕" + ValuesApplication.Traffic_Light_Status.toString());
+
+                    qrhandler.sendEmptyMessage(208);
+                    mark = 40;
+                }
+                break;
+            case 40:
+                MainActivity_two.moni1_status = false;
+                break;
+            default:
+                break;
+
+
+        }
+
+    }
+
 }

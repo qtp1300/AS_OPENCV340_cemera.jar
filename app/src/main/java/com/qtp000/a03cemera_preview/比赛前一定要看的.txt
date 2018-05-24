@@ -13,3 +13,5 @@ get_shape.class 的Contours和Contours2参数务必相同，才能保证在单�
 
 
 在开始按键moni1_5处获取输入框数据，之后判断使用。
+
+要不要加上颜色判断车牌图形？
