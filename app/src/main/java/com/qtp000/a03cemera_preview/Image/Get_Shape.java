@@ -342,10 +342,13 @@ public class Get_Shape {
             }
 
             after_DP_MatOfPoint.add(after_approxPolyDP_matofpoint);
-
+            Log.i("图形元素多余二十个", "认为是车牌误识别"+"圆形" + shape_result[8][1] + "  矩形" + shape_result[8][2] + "  五角星" + shape_result[8][4] + "  三角形" + shape_result[8][0] + "  菱形" + shape_result[8][3]);
 
         }
         Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
+        if(after_DP_MatOfPoint.size() >=20){
+            return processed_mat;
+        }
         shape_result[8][0] = sanjiao % 2 == 0 ? sanjiao / 2 : (sanjiao / 2) + 1;
         shape_result[8][1] = yuan % 2 == 0 ? yuan / 2 : (yuan / 2) + 1;
         shape_result[8][2] = ju % 2 == 0 ? ju / 2 : (ju / 2) + 1;

@@ -827,7 +827,19 @@ public class Socket_connect {
         SECOND = 0x00;
         THRID = 0x00;
         send();
-        yanchi(1000);
+        yanchi(100);
+        MAJOR = 0xB5;           //二维码完毕标志
+        FIRST = 0x01;
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
+        MAJOR = 0xB5;           //二维码完毕标志
+        FIRST = 0x01;
+        SECOND = 0x00;
+        THRID = 0x00;
+        send();
+        yanchi(100);
     }
 
     private void mine_send_TraffifcLight_result() {
@@ -1714,17 +1726,13 @@ public class Socket_connect {
 
             case 25:
                 Log.i("故障排查", "进入case25，二维码数据"+MainActivity_two.result_qr);
-                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
+//                algorithm_Data_MyhandlerMsg(4, MainActivity_two.result_qr);
                 qrhandler.sendEmptyMessage(205);
                 mark = 30;
                 break;
 
             case 30:
                 yanchi(500);
-                mine_send_qr_result();
-                yanchi(10);
-                mine_send_qr_result();
-                yanchi(10);
                 mine_send_qr_result();
                 yanchi(10);
                 MainActivity_two.state_camera = 37;
@@ -1752,10 +1760,7 @@ public class Socket_connect {
                     Log.i("交通灯", "识别完毕" + ValuesApplication.Traffic_Light_Status.toString());
                     mine_send_TraffifcLight_result();
                     yanchi(10);
-                    mine_send_TraffifcLight_result();
-                    yanchi(10);
-                    mine_send_TraffifcLight_result();
-                    yanchi(10);
+
                     Log.i("交通灯", "识别并发送完毕" + ValuesApplication.Traffic_Light_Status.toString());
 
                     qrhandler.sendEmptyMessage(208);
@@ -1801,7 +1806,6 @@ public class Socket_connect {
 
             case 10:
                 Log.i("等待:", "WIFI01");
-//                while ((rbyte[2] != (byte) (0x01)) && (sbyte[2] != (byte) (0x01))) ;
                 byte[] rbyte10 = rbyte;
                 byte[] sbyte10 = ValuesApplication.Serial_data;
                 if ((rbyte10[2] != (byte) (0x01)) && (sbyte10[2] != (byte) (0x01))) {
@@ -1823,16 +1827,9 @@ public class Socket_connect {
                     Log.i("故障排查", "第二次识别完成");
 
                     mark = -15;
-//                    yanchi(5000);
-//                    mark = -12;
-//                Log.e("WiFi01收到", String.valueOf(rbyte[2]));
-//                    Get_Shape get_shape = new Get_Shape();
-//                    get_shape.get_shape_without_input();
-//                    get_shape.get_all_shape_contours(get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap));
-//                    get_shape.Bitmap2Mat(ValuesApplication.sourcebitmap);
+
                     /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色
                      * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
-//                    Log.i("图形个数", "圆形" + get_shape.shape_result[0][1] + "  矩形" + get_shape.shape_result[0][2] + "  五角星" + get_shape.shape_result[0][4] + "  三角形" + get_shape.shape_result[0][0] + "  菱形" + get_shape.shape_result[0][3]);
 
                 }
                 break;
