@@ -1,6 +1,7 @@
 package com.qtp000.a03cemera_preview.Image;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,18 +17,6 @@ import com.qtp000.a03cemera_preview.R;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.utils.Converters;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class ShapeActivity extends AppCompatActivity {
     Get_Contours get_contours = new Get_Contours();
@@ -35,9 +24,9 @@ public class ShapeActivity extends AppCompatActivity {
     public static Bitmap input_bitmap, temp_bitmap;
     Button grey_btn, Binarization_btn, canny_btn, geting_btn, canny_dilate_btn,
             contours_btn, dilate_contours_btn, dilate_contours_rectandle_btn,
-            full_screen_btn,canny_equalizeHise_btn,
-    all_shape_contours_btn,grey_btn2,canny_btn2,
-    license_plate_btn;
+            full_screen_btn, canny_equalizeHise_btn,
+            all_shape_contours_btn, grey_btn2, canny_btn2,
+            license_plate_btn;
     ImageView shape1, shape2, shape3;
     public static TextView canny_th1, canny_th2;
 
@@ -109,6 +98,19 @@ public class ShapeActivity extends AppCompatActivity {
                     shape2.setImageBitmap(grayed_bitmap);
                     break;
                 case R.id.btn_Binarization:
+
+                    shape3.setDrawingCacheEnabled(true);
+                    Bitmap getted_CheckImageBack = Bitmap.createBitmap(shape3.getDrawingCache());
+                    shape3.setDrawingCacheEnabled(false);
+                    Mat pre_CheckImageBack = Bitmap2Mat(getted_CheckImageBack);
+
+//                    Mat pre_CheckImageBack = Bitmap2Mat(temp_bitmap);
+                    int coooolor;
+//                    Mat after_grey = get_contours.gray(pre_gray);
+
+                    coooolor = get_shape.CheckImageBack(pre_CheckImageBack);
+                    Log.i("颜色", "" + coooolor);
+                    Toast.makeText(getApplication(),"颜色" + coooolor,Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.btn_canny:
                     Mat pre_canny = Bitmap2Mat(temp_bitmap);
@@ -152,7 +154,7 @@ public class ShapeActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_full_screen:
                     Mat pre_full_screen = Bitmap2Mat(temp_bitmap);
-                    Log.i("拿到的图形分辨率",pre_full_screen.size().toString());
+                    Log.i("拿到的图形分辨率", pre_full_screen.size().toString());
 
                     Mat after_full_screen = get_contours.Contours_rectandle_get_point_FullScreen(pre_full_screen);
 
@@ -209,8 +211,8 @@ public class ShapeActivity extends AppCompatActivity {
 //                    Mat pre_license_plate = Bitmap2Mat(getted_shape3_4);
 
                     License_Plate license_plate = new License_Plate();
-                    license_plate.get_license_plate(getted_license_plate,"chi_sim");
-                    Log.i("车牌",license_plate.license_plate_string);
+                    license_plate.get_license_plate(getted_license_plate, "chi_sim");
+                    Log.i("车牌", license_plate.license_plate_string);
 
 //                    shape2.setImageBitmap(license_plate_bitmap);
 

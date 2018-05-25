@@ -38,6 +38,7 @@ import com.qtp000.a03cemera_preview.Image.Get_Contours;
 import com.qtp000.a03cemera_preview.Image.Get_Shape;
 import com.qtp000.a03cemera_preview.Image.RgbLuminanceSource;
 import com.qtp000.a03cemera_preview.Image.ShapeActivity;
+import com.qtp000.a03cemera_preview.Image.Traffic_Light;
 import com.qtp000.a03cemera_preview.used_package.Camera_Server;
 
 import java.util.HashMap;
@@ -217,7 +218,12 @@ public class MainActivity_two extends AppCompatActivity {
                 case R.id.btn_up:
                     Toast toast_up = Toast.makeText(getApplicationContext(), "上", Toast.LENGTH_SHORT);
                     toast_up.show();
-                    socket_connect.go(80, 2000);
+
+                    Traffic_Light traffic_light = new Traffic_Light();
+                    traffic_light.get_traffic_light_mode(MainActivity_two.bitmap);
+                    Log.i("交通灯", "识别完毕" + ValuesApplication.Traffic_Light_Status.toString());
+                    Toast.makeText(getApplication(),"交通灯"+ValuesApplication.Traffic_Light_Status.toString(),Toast.LENGTH_SHORT).show();
+//                    socket_connect.go(80, 2000);
                     break;
                 case R.id.btn_left:
                     Toast toast_left = Toast.makeText(getApplicationContext(), "左", Toast.LENGTH_SHORT);
