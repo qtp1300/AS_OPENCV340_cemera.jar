@@ -58,10 +58,58 @@ public class Get_Shape {
     }
 
     public Mat get_all_shape_license(Mat input) {
+        int backcolor;
         Mat pre_process_mat;
         Mat processed_mat = new Mat();
         pre_process_mat = get_contours.Contours_rectandle_get_point_FullScreen(input);      //再次运算得到截取后的图形
 
+        try {
+            Thread.sleep(500);          //延迟，等待图像处理完毕，否则容易得不到正确颜色
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        backcolor = CheckImageBack(pre_process_mat);
+        Log.i("get_all_shape_license","颜色"+backcolor);
+//        Log.i("get_all_shape_license","正经颜色黄色"+Color.YELLOW);
+
+        switch (backcolor){
+            case Color.RED & 0xFFFFFF:
+                Log.i("背景颜色","红色");
+                break;
+            case Color.GREEN & 0xFFFFFF:
+                Log.i("背景颜色","绿色");
+                break;
+            case Color.BLUE & 0xFFFFFF:
+                Log.i("背景颜色","蓝色");
+                break;
+            case Color.YELLOW & 0xFFFFFF:
+                Log.i("背景颜色","黄色");
+                ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
+                processed_mat = this.Contours2(pre_process_mat);     //得到图形
+                return  processed_mat;
+            case Color.MAGENTA & 0xFFFFFF:
+                Log.i("背景颜色","品色");
+                break;
+            case Color.CYAN & 0xFFFFFF:
+                Log.i("背景颜色","青色");
+                ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
+                License_Plate license_plate_qing = new License_Plate();
+                license_plate_qing.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
+                ValuesApplication.license_plate_result = license_plate_qing.license_plate_string;
+                break;
+            case Color.BLACK & 0xFFFFFF:
+                Log.i("背景颜色","黑色");
+                break;
+            case Color.WHITE & 0xFFFFFF:
+                Log.i("背景颜色","白色");
+                ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
+                License_Plate license_plate_bai = new License_Plate();
+                license_plate_bai.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
+                ValuesApplication.license_plate_result = license_plate_bai.license_plate_string;
+                break;
+        }
+/*      //原来的按识别出来的文字数量判断是否为车牌或图形     隐藏序号 A001
         ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
         License_Plate license_plate = new License_Plate();
         license_plate.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
@@ -69,7 +117,7 @@ public class Get_Shape {
         if (ValuesApplication.license_plate_result.length() < 5) {
             ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
             processed_mat = this.Contours2(pre_process_mat);     //得到图形
-        }
+        }*/
 
         return processed_mat;
     }
@@ -368,7 +416,7 @@ public class Get_Shape {
     }
 
     public Mat canny_equalizeHist(Mat input_mat) {
-        int th1 = 20;
+        int th1 = 50;
         int th2 = 190;
 
         if (ShapeActivity.canny_th1 != null) {
@@ -445,6 +493,7 @@ public class Get_Shape {
         {
             //小于20代表三种颜色接近
             //80是经验值，不需要大的改动
+//            Log.i("检测颜色时","R="+rgbR);
             int R  = rgbR > 80?255:0;
             int G  = rgbR > 80?255:0;
             int B =  rgbR > 80?255:0;

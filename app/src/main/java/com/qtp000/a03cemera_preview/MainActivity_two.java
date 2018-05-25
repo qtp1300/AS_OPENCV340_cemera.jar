@@ -468,8 +468,11 @@ public class MainActivity_two extends AppCompatActivity {
     // 得到当前摄像头的图片信息
     public void getBitmap() {
         bitmap = cameraCommandUtil.httpForImage(IPCamera);
-        ValuesApplication.sourcebitmap = Bitmap.createBitmap(bitmap);
-        phHandler.sendEmptyMessage(10);
+        if (bitmap != null){
+            ValuesApplication.sourcebitmap = Bitmap.createBitmap(bitmap);
+            phHandler.sendEmptyMessage(10);
+        }
+
     }
 
     private Thread phThread = new Thread(new Runnable() {

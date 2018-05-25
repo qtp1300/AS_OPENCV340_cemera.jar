@@ -232,7 +232,7 @@ public class ImgPretreatment {
 		}
 
 		Bitmap result = Bitmap
-				.createBitmap(imgWidth, imgHeight, Config.RGB_565);
+				.createBitmap(imgWidth, imgHeight, Config.ARGB_8888);
 		result.setPixels(imgPixels, 0, imgWidth, 0, 0, imgWidth, imgHeight);
 
 		return result;

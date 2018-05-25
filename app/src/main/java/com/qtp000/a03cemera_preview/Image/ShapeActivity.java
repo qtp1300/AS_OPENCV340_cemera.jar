@@ -165,10 +165,11 @@ public class ShapeActivity extends AppCompatActivity {
                 case R.id.btn_get_allshape_contours:
                     Mat pre_get_allshape_contours = Bitmap2Mat(temp_bitmap);
 
-                    Mat after_get_allshape_contours = get_shape.get_all_shape_contours(pre_get_allshape_contours);
+                    Mat after_get_allshape_contours = get_shape.get_all_shape_license(pre_get_allshape_contours);
 
-                    Bitmap get_allshape_contours_bitmap = Mat2Bitmap(after_get_allshape_contours);
-                    shape2.setImageBitmap(get_allshape_contours_bitmap);
+//                    Mat after_get_allshape_contours = get_shape.get_all_shape_contours(pre_get_allshape_contours);
+//                    Bitmap get_allshape_contours_bitmap = Mat2Bitmap(after_get_allshape_contours);
+//                    shape2.setImageBitmap(get_allshape_contours_bitmap);
                     break;
                 case R.id.btn_canny2:
                     shape3.setDrawingCacheEnabled(true);
@@ -211,10 +212,10 @@ public class ShapeActivity extends AppCompatActivity {
 //                    Mat pre_license_plate = Bitmap2Mat(getted_shape3_4);
 
                     License_Plate license_plate = new License_Plate();
-                    license_plate.get_license_plate(getted_license_plate, "chi_sim");
+                    Bitmap per_ocr = license_plate.get_license_plate(getted_license_plate, "chi_sim");      //chi_sim   eng
                     Log.i("车牌", license_plate.license_plate_string);
 
-//                    shape2.setImageBitmap(license_plate_bitmap);
+                    shape2.setImageBitmap(per_ocr);
 
 
                     break;
