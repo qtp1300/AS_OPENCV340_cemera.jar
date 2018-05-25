@@ -70,39 +70,39 @@ public class Get_Shape {
         }
 
         backcolor = CheckImageBack(pre_process_mat);
-        Log.i("get_all_shape_license","颜色"+backcolor);
+        Log.i("get_all_shape_license", "颜色" + backcolor);
 //        Log.i("get_all_shape_license","正经颜色黄色"+Color.YELLOW);
 
-        switch (backcolor){
+        switch (backcolor) {
             case Color.RED & 0xFFFFFF:
-                Log.i("背景颜色","红色");
+                Log.i("背景颜色", "红色");
                 break;
             case Color.GREEN & 0xFFFFFF:
-                Log.i("背景颜色","绿色");
+                Log.i("背景颜色", "绿色");
                 break;
             case Color.BLUE & 0xFFFFFF:
-                Log.i("背景颜色","蓝色");
+                Log.i("背景颜色", "蓝色");
                 break;
             case Color.YELLOW & 0xFFFFFF:
-                Log.i("背景颜色","黄色");
+                Log.i("背景颜色", "黄色");
                 ValuesApplication.tft_status = ValuesApplication.TFT_status.SHAPE;
                 processed_mat = this.Contours2(pre_process_mat);     //得到图形
-                return  processed_mat;
+                return processed_mat;
             case Color.MAGENTA & 0xFFFFFF:
-                Log.i("背景颜色","品色");
+                Log.i("背景颜色", "品色");
                 break;
             case Color.CYAN & 0xFFFFFF:
-                Log.i("背景颜色","青色");
+                Log.i("背景颜色", "青色");
                 ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
                 License_Plate license_plate_qing = new License_Plate();
                 license_plate_qing.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
                 ValuesApplication.license_plate_result = license_plate_qing.license_plate_string;
                 break;
             case Color.BLACK & 0xFFFFFF:
-                Log.i("背景颜色","黑色");
+                Log.i("背景颜色", "黑色");
                 break;
             case Color.WHITE & 0xFFFFFF:
-                Log.i("背景颜色","白色");
+                Log.i("背景颜色", "白色");
                 ValuesApplication.tft_status = ValuesApplication.TFT_status.License_Plate;
                 License_Plate license_plate_bai = new License_Plate();
                 license_plate_bai.get_license_plate(Mat2Bitmap(pre_process_mat), "chi_sim");
@@ -290,7 +290,7 @@ public class Get_Shape {
     }
 
     //上面那个是原版，这个是为了主流程识别而复制的，务必要保证两个方法识别参数相同
-    public Mat Contours2(Mat input_mat) {        //膨胀或不膨胀  取所有点或者拐点
+    public Mat Contours2(Mat input_mat) {        //膨胀或不膨胀  取所有点或者拐点     //识别图形
         Mat processing_mat;
         Mat processed_mat = new Mat();
 //        Toast.makeText(getApplication(), "灰化->边缘检测->边缘", Toast.LENGTH_SHORT).show();
@@ -307,13 +307,7 @@ public class Get_Shape {
         Imgproc.findContours(processing_mat, contours, hierarchy, Imgproc.RETR_CCOMP, Imgproc.CHAIN_APPROX_SIMPLE/*Imgproc.CHAIN_APPROX_SIMPLE*/);
 //        Log.i("之后hierarchy.toString", hierarchy.toString());
         Log.i("原始轮廓个数", contours.size() + "");
-//        String sss = hierarchy.dump();
-//        Log.i("hierarchy转储", sss);
-//        long sha = hierarchy.total();
 
-        //学长Imgproc.CHAIN_APPROX_SIMPLE只取了拐点
-        //hierarchy[i][后一个轮廓，前一个轮廓，父轮廓，内嵌轮廓]   的编号，没有相应内容的会被置-1,i与contours的编号对应。
-//        double maxAr = 320 * 280 * 0.95;
         double maxAr = 640 * 360 * 0.95;
 //        Log.i("截取过的面积",input_mat.size().toString()+"");
         double maxArea = 0;
@@ -358,25 +352,158 @@ public class Get_Shape {
             MatOfPoint pre_approxPolyDP_matofpoint = pre_approxPolyDP.next();
             MatOfPoint2f pre_approxPolyDP_matofpoint2f = new MatOfPoint2f(pre_approxPolyDP_matofpoint.toArray());
             MatOfPoint2f after_approxPolyDP_matofpoint2f = new MatOfPoint2f();
-            List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
+//            List<Point> pre_approxPolyDP_matofpoint2List = pre_approxPolyDP_matofpoint.toList();
             Imgproc.approxPolyDP(pre_approxPolyDP_matofpoint2f, after_approxPolyDP_matofpoint2f, 15, true);
 //            Log.i("拟合后的图形坐标", after_approxPolyDP_matofpoint2f.toList().toString());
 
             MatOfPoint after_approxPolyDP_matofpoint = new MatOfPoint(after_approxPolyDP_matofpoint2f.toArray());
             List<Point> after_approxPolyDP_point = after_approxPolyDP_matofpoint.toList();
+            Log.i("点的坐标", after_approxPolyDP_point.toString());
+
+//            after_approxPolyDP_point
+            Point yuanxin = new Point();
+            float[] banjingmen = new float[1];
+            Imgproc.minEnclosingCircle(after_approxPolyDP_matofpoint2f, yuanxin, banjingmen);
+            Log.i("圆心", "X: " + yuanxin.x + "   Y:" + yuanxin.y);
+//            Log.i("半径", "  " +banjingmen[0]);
+//            int shapecolor;
+//            shapecolor = CheckImageColor(pre_process_mat);
+
 
             switch ((int) after_approxPolyDP_matofpoint2f.total()) {
                 case 3:
-                    sanjiao += 1;
+                    int sanjiao_color;
+                    Point[] dianji = after_approxPolyDP_matofpoint.toArray();
+                    double zx_x = (dianji[0].x + dianji[1].x + dianji[2].x) / 3;
+                    double zx_y = (dianji[0].y + dianji[1].y + dianji[2].y) / 3;
+                    Point zhongxin = new Point(zx_x, zx_y);        //重心
+//                    double isin = Imgproc.pointPolygonTest(after_approxPolyDP_matofpoint2f, zhongxin, true);
+//                    Log.i("是否在圆内", "   " + isin);
+                    sanjiao_color = CheckImageColor(input_mat, zhongxin);
+                    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
+                     * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+                    switch (sanjiao_color) {
+                        case Color.RED & 0xFFFFFF:
+                            Log.i("三角颜色", "红色");
+                            shape_result[0][0]++;
+                            break;
+                        case Color.GREEN & 0xFFFFFF:
+                            Log.i("三角颜色", "绿色");
+                            shape_result[1][0]++;
+                            break;
+                        case Color.BLUE & 0xFFFFFF:
+                            Log.i("三角颜色", "蓝色");
+                            shape_result[2][0]++;
+                            break;
+                        case Color.YELLOW & 0xFFFFFF:
+                            Log.i("三角颜色", "黄色");
+                            shape_result[3][0]++;
+                            break;
+                        case Color.MAGENTA & 0xFFFFFF:
+                            Log.i("三角颜色", "品色");
+                            shape_result[4][0]++;
+                            break;
+                        case Color.CYAN & 0xFFFFFF:
+                            Log.i("三角颜色", "青色");
+                            shape_result[5][0]++;
+                            break;
+                        case Color.BLACK & 0xFFFFFF:
+                            Log.i("三角颜色", "黑色");
+                            shape_result[6][0]++;
+                            break;
+                        case Color.WHITE & 0xFFFFFF:
+                            Log.i("三角颜色", "白色");
+                            shape_result[7][0]++;
+                            break;
+                    }
+                    shape_result[8][0]++;
+                    sanjiao++;
                     break;
                 case 10:
                 case 11:
                 case 12:
+                    int wujiao_color;
+                    wujiao_color = CheckImageColor(input_mat, yuanxin);
+                    switch (wujiao_color) {
+                        case Color.RED & 0xFFFFFF:
+                            Log.i("五角星颜色", "红色");
+                            shape_result[0][4]++;
+                            break;
+                        case Color.GREEN & 0xFFFFFF:
+                            Log.i("五角星颜色", "绿色");
+                            shape_result[1][4]++;
+                            break;
+                        case Color.BLUE & 0xFFFFFF:
+                            Log.i("五角星颜色", "蓝色");
+                            shape_result[2][4]++;
+                            break;
+                        case Color.YELLOW & 0xFFFFFF:
+                            Log.i("五角星颜色", "黄色");
+                            shape_result[3][4]++;
+                            break;
+                        case Color.MAGENTA & 0xFFFFFF:
+                            Log.i("五角星颜色", "品色");
+                            shape_result[4][4]++;
+                            break;
+                        case Color.CYAN & 0xFFFFFF:
+                            Log.i("五角星颜色", "青色");
+                            shape_result[5][4]++;
+                            break;
+                        case Color.BLACK & 0xFFFFFF:
+                            Log.i("五角星颜色", "黑色");
+                            shape_result[6][4]++;
+                            break;
+                        case Color.WHITE & 0xFFFFFF:
+                            Log.i("五角星颜色", "白色");
+                            shape_result[7][4]++;
+                            break;
+                    }
                     wujiaoxing += 1;
+                    shape_result[8][4]++;
                     break;
                 case 8:
                 case 7:
                 case 6:
+                    /*0 红色  1 绿色    2 蓝色    3 黄色    4 品色    5 青色    6 黑色    7 白色    8 不区分颜色
+                     * 0 三角形 1 圆形    2 矩形    3 菱形    4 五角星*/
+                    int yuan_color;
+                    yuan_color = CheckImageColor(input_mat, yuanxin);
+                    switch (yuan_color) {
+                        case Color.RED & 0xFFFFFF:
+                            Log.i("圆颜色", "红色");
+                            shape_result[0][1]++;
+                            break;
+                        case Color.GREEN & 0xFFFFFF:
+                            Log.i("圆颜色", "绿色");
+                            shape_result[1][1]++;
+                            break;
+                        case Color.BLUE & 0xFFFFFF:
+                            Log.i("圆颜色", "蓝色");
+                            shape_result[2][1]++;
+                            break;
+                        case Color.YELLOW & 0xFFFFFF:
+                            Log.i("圆颜色", "黄色");
+                            shape_result[3][1]++;
+                            break;
+                        case Color.MAGENTA & 0xFFFFFF:
+                            Log.i("圆颜色", "品色");
+                            shape_result[4][1]++;
+                            break;
+                        case Color.CYAN & 0xFFFFFF:
+                            Log.i("圆颜色", "青色");
+                            shape_result[5][1]++;
+                            break;
+                        case Color.BLACK & 0xFFFFFF:
+                            Log.i("圆颜色", "黑色");
+                            shape_result[6][1]++;
+                            break;
+                        case Color.WHITE & 0xFFFFFF:
+                            Log.i("圆颜色", "白色");
+                            shape_result[7][1]++;
+                            break;
+                    }
+
+                    shape_result[8][1]++;
                     yuan += 1;
                     break;
                 case 4:
@@ -385,8 +512,86 @@ public class Get_Shape {
 
                     Log.i("矩形面积", Imgproc.contourArea(after_approxPolyDP_matofpoint2f) + "");
                     if (abs(wtrect.size.area() - Imgproc.contourArea(after_approxPolyDP_matofpoint2f)) > 950) {
+
+                        int ling_color;
+                        ling_color = CheckImageColor(input_mat, yuanxin);
+                        switch (ling_color) {
+                            case Color.RED & 0xFFFFFF:
+                                Log.i("菱形颜色", "红色");
+                                shape_result[0][3]++;
+                                break;
+                            case Color.GREEN & 0xFFFFFF:
+                                Log.i("菱形颜色", "绿色");
+                                shape_result[1][3]++;
+                                break;
+                            case Color.BLUE & 0xFFFFFF:
+                                Log.i("菱形颜色", "蓝色");
+                                shape_result[2][3]++;
+                                break;
+                            case Color.YELLOW & 0xFFFFFF:
+                                Log.i("菱形颜色", "黄色");
+                                shape_result[3][3]++;
+                                break;
+                            case Color.MAGENTA & 0xFFFFFF:
+                                Log.i("菱形颜色", "品色");
+                                shape_result[4][3]++;
+                                break;
+                            case Color.CYAN & 0xFFFFFF:
+                                Log.i("菱形颜色", "青色");
+                                shape_result[5][3]++;
+                                break;
+                            case Color.BLACK & 0xFFFFFF:
+                                Log.i("菱形颜色", "黑色");
+                                shape_result[6][3]++;
+                                break;
+                            case Color.WHITE & 0xFFFFFF:
+                                Log.i("菱形颜色", "白色");
+                                shape_result[7][3]++;
+                                break;
+                        }
+
+                        shape_result[8][3]++;
                         ling += 1;
                     } else {
+
+                        int ju_color;
+                        ju_color = CheckImageColor(input_mat, yuanxin);
+                        switch (ju_color) {
+                            case Color.RED & 0xFFFFFF:
+                                Log.i("矩形颜色", "红色");
+                                shape_result[0][2]++;
+                                break;
+                            case Color.GREEN & 0xFFFFFF:
+                                Log.i("矩形颜色", "绿色");
+                                shape_result[1][2]++;
+                                break;
+                            case Color.BLUE & 0xFFFFFF:
+                                Log.i("矩形颜色", "蓝色");
+                                shape_result[2][2]++;
+                                break;
+                            case Color.YELLOW & 0xFFFFFF:
+                                Log.i("矩形颜色", "黄色");
+                                shape_result[3][2]++;
+                                break;
+                            case Color.MAGENTA & 0xFFFFFF:
+                                Log.i("矩形颜色", "品色");
+                                shape_result[4][2]++;
+                                break;
+                            case Color.CYAN & 0xFFFFFF:
+                                Log.i("矩形颜色", "青色");
+                                shape_result[5][2]++;
+                                break;
+                            case Color.BLACK & 0xFFFFFF:
+                                Log.i("矩形颜色", "黑色");
+                                shape_result[6][2]++;
+                                break;
+                            case Color.WHITE & 0xFFFFFF:
+                                Log.i("矩形颜色", "白色");
+                                shape_result[7][2]++;
+                                break;
+                        }
+
+                        shape_result[8][2]++;
                         ju += 1;
                     }
 
@@ -394,11 +599,11 @@ public class Get_Shape {
             }
 
             after_DP_MatOfPoint.add(after_approxPolyDP_matofpoint);
-            Log.i("图形元素多余二十个", "认为是车牌误识别"+"圆形" + shape_result[8][1] + "  矩形" + shape_result[8][2] + "  五角星" + shape_result[8][4] + "  三角形" + shape_result[8][0] + "  菱形" + shape_result[8][3]);
+//            Log.i("图形元素多余二十个", "认为是车牌误识别"+"圆形" + shape_result[8][1] + "  矩形" + shape_result[8][2] + "  五角星" + shape_result[8][4] + "  三角形" + shape_result[8][0] + "  菱形" + shape_result[8][3]);
 
         }
         Log.i("after_DP_MatOfPoint", "共有" + after_DP_MatOfPoint.size() + "个元素");
-        if(after_DP_MatOfPoint.size() >=20){
+        if (after_DP_MatOfPoint.size() >= 20) {
             return processed_mat;
         }
         shape_result[8][0] = sanjiao % 2 == 0 ? sanjiao / 2 : (sanjiao / 2) + 1;
@@ -413,7 +618,7 @@ public class Get_Shape {
         ValuesApplication.shape_result = this.shape_result;
 
         return processed_mat;
-    }
+    }       //识别图形
 
     public Mat canny_equalizeHist(Mat input_mat) {
         int th1 = 50;
@@ -454,133 +659,253 @@ public class Get_Shape {
         return processed_mat2;
     }
 
-    public int CheckImageBack(Mat src)
-    {
-        Scalar scalar = getRectScaleFromeMat(src,new Rect(src.width()/2,10,4,4));		//中心线上部取4*4像素
-        Scalar scalar1 = getRectScaleFromeMat(src,new Rect(src.width()/2,src.height()-10,4,4));	//中心线上部取4*4像素
-        if(scalar == null)
+    public int CheckImageBack(Mat src) {
+        Scalar scalar = getRectScaleFromeMat(src, new Rect(src.width() / 2, 10, 4, 4));        //中心线上部取4*4像素
+        Scalar scalar1 = getRectScaleFromeMat(src, new Rect(src.width() / 2, src.height() - 10, 4, 4));    //中心线上部取4*4像素
+        if (scalar == null) {
+            Log.i("CheckImageBack", "1scalar == null");
             return -1;
+        }
         // Mat Canny_grayMatE = new Mat();
-        int rgbR  = (int) scalar.val[0];
-        int rgbG  = (int) scalar.val[1];
+        int rgbR = (int) scalar.val[0];
+        int rgbG = (int) scalar.val[1];
         int rgbB = (int) scalar.val[2];
-        int rgbSum = (rgbR + rgbG + rgbB)/3;//取出rgb的平均值
+        int rgbSum = (rgbR + rgbG + rgbB) / 3;//取出rgb的平均值
         int rgbMax = 0;
-        if(rgbR > rgbMax)			//找到截取面积内最大RGB
+        if (rgbR > rgbMax)            //找到截取面积内最大RGB
             rgbMax = rgbR;
-        if(rgbG > rgbMax)
+        if (rgbG > rgbMax)
             rgbMax = rgbG;
-        if(rgbB > rgbMax)
+        if (rgbB > rgbMax)
             rgbMax = rgbB;
         double light = 1;
         int alp = 50;
-        if(rgbMax < 100)//对比度调高
+        if (rgbMax < 100)//对比度调高
         {
             light = 1;
             alp = 80;
-        }
-        else if(rgbMax < 170)
-        {
-            light = 1;				//当前光照强度
-            alp = 50;				//当前对比度
-        }
-        else//�Աȶȵ���//降低亮度对比度？
+        } else if (rgbMax < 170) {
+            light = 1;                //当前光照强度
+            alp = 50;                //当前对比度
+        } else//�Աȶȵ���//降低亮度对比度？
         {
             light = 0.9;
             alp = 40;
         }
-        if(Math.abs(rgbR - rgbSum)<20 &&Math.abs(rgbG - rgbSum)<20&&Math.abs(rgbG - rgbSum)<20)
-        {
+        if (Math.abs(rgbR - rgbSum) < 20 && Math.abs(rgbG - rgbSum) < 20 && Math.abs(rgbG - rgbSum) < 20) {
             //小于20代表三种颜色接近
             //80是经验值，不需要大的改动
 //            Log.i("检测颜色时","R="+rgbR);
-            int R  = rgbR > 80?255:0;
-            int G  = rgbR > 80?255:0;
-            int B =  rgbR > 80?255:0;
+            int R = rgbR > 80 ? 255 : 0;
+            int G = rgbR > 80 ? 255 : 0;
+            int B = rgbR > 80 ? 255 : 0;
             rgbR = R;
             rgbG = G;
             rgbB = B;
-        }
-        else
-        {
-            if(rgbR >= rgbSum)
+        } else {
+            if (rgbR >= rgbSum)
                 rgbR = 255;
             else
                 rgbR = 0;
-            if(rgbG >= rgbSum)
+            if (rgbG >= rgbSum)
                 rgbG = 255;
             else
                 rgbG = 0;
-            if(rgbB >= rgbSum)
+            if (rgbB >= rgbSum)
                 rgbB = 255;
             else
                 rgbB = 0;
         }
         int color = Color.argb(0, rgbR, rgbG, rgbB);
-        Drawcenter(src,new Point(src.width()/2-2,10-2),new Scalar(255,0,0));		//在中心点向右上方扩展4个像素并画出方框
-        if(scalar1 == null)
+        Drawcenter(src, new Point(src.width() / 2 - 2, 10 - 2), new Scalar(255, 0, 0));        //在中心点向右上方扩展4个像素并画出方框
+        if (scalar1 == null) {
+            Log.i("CheckImageBack", "2scalar == null");
             return -1;
+        }
+
         // Mat Canny_grayMatE = new Mat();
-        int rgbR1  = (int) scalar1.val[0];
-        int rgbG1  = (int) scalar1.val[1];
+        int rgbR1 = (int) scalar1.val[0];
+        int rgbG1 = (int) scalar1.val[1];
         int rgbB1 = (int) scalar1.val[2];
-        int rgbSum1 = (rgbR1 + rgbG1 + rgbB1)/3;//取出rgb的平均值
+        int rgbSum1 = (rgbR1 + rgbG1 + rgbB1) / 3;//取出rgb的平均值
         int rgbMax1 = 0;
-        if(rgbR1 > rgbMax1)
+        if (rgbR1 > rgbMax1)
             rgbMax1 = rgbR1;
-        if(rgbG1 > rgbMax1)
+        if (rgbG1 > rgbMax1)
             rgbMax1 = rgbG1;
-        if(rgbB1 > rgbMax1)
+        if (rgbB1 > rgbMax1)
             rgbMax1 = rgbB1;
         double light1 = 1;
         int alp1 = 50;
-        if(rgbMax1 < 100)//对比度调高
+        if (rgbMax1 < 100)//对比度调高
         {
             light1 = 1;
             alp1 = 80;
-        }
-        else if(rgbMax1 < 170)
-        {
-            light1 = 1;				//当前光照强度
-            alp1 = 50;				//当前对比度
-        }
-        else//对比度调低
+        } else if (rgbMax1 < 170) {
+            light1 = 1;                //当前光照强度
+            alp1 = 50;                //当前对比度
+        } else//对比度调低
         {
             light1 = 0.9;
             alp1 = 40;
         }
-        if(Math.abs(rgbR1 - rgbSum1)<20 &&Math.abs(rgbG1 - rgbSum1)<20&&Math.abs(rgbG1 - rgbSum1)<20)
-        {
+        if (Math.abs(rgbR1 - rgbSum1) < 20 && Math.abs(rgbG1 - rgbSum1) < 20 && Math.abs(rgbG1 - rgbSum1) < 20) {
             //小于20代表三种颜色接近
             //80是经验值，不需要大的改动
-            int R  = rgbR1 > 80?255:0;
-            int G  = rgbR1 > 80?255:0;
-            int B =  rgbR1 > 80?255:0;
+            int R = rgbR1 > 80 ? 255 : 0;
+            int G = rgbR1 > 80 ? 255 : 0;
+            int B = rgbR1 > 80 ? 255 : 0;
             rgbR1 = R;
             rgbG1 = G;
             rgbB1 = B;
-        }
-        else
-        {
-            if(rgbR1 >= rgbSum1)
+        } else {
+            if (rgbR1 >= rgbSum1)
                 rgbR1 = 255;
             else
                 rgbR1 = 0;
-            if(rgbG1 >= rgbSum1)
+            if (rgbG1 >= rgbSum1)
                 rgbG1 = 255;
             else
                 rgbG1 = 0;
-            if(rgbB1 >= rgbSum1)
+            if (rgbB1 >= rgbSum1)
                 rgbB1 = 255;
             else
                 rgbB1 = 0;
         }
         int color1 = Color.argb(0, rgbR1, rgbG1, rgbB1);
-        Drawcenter(src,new Point(src.width()/2-2,src.height()-10+2),new Scalar(255,0,0));
+        Drawcenter(src, new Point(src.width() / 2 - 2, src.height() - 10 + 2), new Scalar(255, 0, 0));
 //        displayMat(src);
-        if(color1 != color)		//上下方取值如果不相同
+
+        if (color1 != color)        //上下方取值如果不相同
+        {
+            Log.i("CheckImageBack", "color1:"+color1+"   color:"+color);
+            Log.i("CheckImageBack", "color1 != color");
             return -1;
-        return color;		//返回取得的颜色值
+        }
+
+        return color;        //返回取得的颜色值
+    }
+
+    public int CheckImageColor(Mat src, Point input_yuanxin) {
+        Scalar scalar = getRectScaleFromeMat(src, new Rect((int) input_yuanxin.x, (int) input_yuanxin.y, 4, 4));        //中心线上部取4*4像素
+//        Scalar scalar1 = getRectScaleFromeMat(src,new Rect(src.width()/2,src.height()-10,4,4));	//中心线上部取4*4像素
+        if (scalar == null)
+            return -1;
+        // Mat Canny_grayMatE = new Mat();
+        int rgbR = (int) scalar.val[0];
+        int rgbG = (int) scalar.val[1];
+        int rgbB = (int) scalar.val[2];
+        int rgbSum = (rgbR + rgbG + rgbB) / 3;//取出rgb的平均值
+        int rgbMax = 0;
+        if (rgbR > rgbMax)            //找到截取面积内最大RGB
+            rgbMax = rgbR;
+        if (rgbG > rgbMax)
+            rgbMax = rgbG;
+        if (rgbB > rgbMax)
+            rgbMax = rgbB;
+        double light = 1;
+        int alp = 50;
+        if (rgbMax < 100)//对比度调高
+        {
+            light = 1;
+            alp = 80;
+        } else if (rgbMax < 170) {
+            light = 1;                //当前光照强度
+            alp = 50;                //当前对比度
+        } else//�Աȶȵ���//降低亮度对比度？
+        {
+            light = 0.9;
+            alp = 40;
+        }
+        if (Math.abs(rgbR - rgbSum) < 20 && Math.abs(rgbG - rgbSum) < 20 && Math.abs(rgbG - rgbSum) < 20) {
+            //小于20代表三种颜色接近
+            //80是经验值，不需要大的改动
+//            Log.i("检测颜色时","R="+rgbR);
+            int R = rgbR > 80 ? 255 : 0;
+            int G = rgbR > 80 ? 255 : 0;
+            int B = rgbR > 80 ? 255 : 0;
+            rgbR = R;
+            rgbG = G;
+            rgbB = B;
+        } else {
+            if (rgbR >= rgbSum)
+                rgbR = 255;
+            else
+                rgbR = 0;
+            if (rgbG >= rgbSum)
+                rgbG = 255;
+            else
+                rgbG = 0;
+            if (rgbB >= rgbSum)
+                rgbB = 255;
+            else
+                rgbB = 0;
+        }
+        int color = Color.argb(0, rgbR, rgbG, rgbB);
+//        Drawcenter(src,new Point(src.width()/2-2,10-2),new Scalar(255,0,0));		//在中心点向右上方扩展4个像素并画出方框
+//        if(scalar1 == null)
+//            return -1;
+//        // Mat Canny_grayMatE = new Mat();
+//        int rgbR1  = (int) scalar1.val[0];
+//        int rgbG1  = (int) scalar1.val[1];
+//        int rgbB1 = (int) scalar1.val[2];
+//        int rgbSum1 = (rgbR1 + rgbG1 + rgbB1)/3;//取出rgb的平均值
+//        int rgbMax1 = 0;
+//        if(rgbR1 > rgbMax1)
+//            rgbMax1 = rgbR1;
+//        if(rgbG1 > rgbMax1)
+//            rgbMax1 = rgbG1;
+//        if(rgbB1 > rgbMax1)
+//            rgbMax1 = rgbB1;
+//        double light1 = 1;
+//        int alp1 = 50;
+//        if(rgbMax1 < 100)//对比度调高
+//        {
+//            light1 = 1;
+//            alp1 = 80;
+//        }
+//        else if(rgbMax1 < 170)
+//        {
+//            light1 = 1;				//当前光照强度
+//            alp1 = 50;				//当前对比度
+//        }
+//        else//对比度调低
+//        {
+//            light1 = 0.9;
+//            alp1 = 40;
+//        }
+//        if(Math.abs(rgbR1 - rgbSum1)<20 &&Math.abs(rgbG1 - rgbSum1)<20&&Math.abs(rgbG1 - rgbSum1)<20)
+//        {
+//            //小于20代表三种颜色接近
+//            //80是经验值，不需要大的改动
+//            int R  = rgbR1 > 80?255:0;
+//            int G  = rgbR1 > 80?255:0;
+//            int B =  rgbR1 > 80?255:0;
+//            rgbR1 = R;
+//            rgbG1 = G;
+//            rgbB1 = B;
+//        }
+//        else
+//        {
+//            if(rgbR1 >= rgbSum1)
+//                rgbR1 = 255;
+//            else
+//                rgbR1 = 0;
+//            if(rgbG1 >= rgbSum1)
+//                rgbG1 = 255;
+//            else
+//                rgbG1 = 0;
+//            if(rgbB1 >= rgbSum1)
+//                rgbB1 = 255;
+//            else
+//                rgbB1 = 0;
+//        }
+//        int color1 = Color.argb(0, rgbR1, rgbG1, rgbB1);
+//        Drawcenter(src,new Point(src.width()/2-2,src.height()-10+2),new Scalar(255,0,0));
+//        displayMat(src);
+//        if(color1 != color)		//上下方取值如果不相同
+//            return -1;
+        return color;        //返回取得的颜色值
     }
 
     private Scalar getRectScaleFromeMat(Mat src, Rect rect) {
